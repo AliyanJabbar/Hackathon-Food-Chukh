@@ -15,18 +15,18 @@ const Footer = () => {
     <footer className="text-white bg-blackish body-font h-fit">
       <div className="px-[7%] w-full pt-10">
         <UpperFooter />
-        <div className="flex flex-wrap gap-10 md:flex-row items-start justify-between md:text-left text-center order-first text-nowrap my-14">
+        <div className="flex flex-wrap gap-10 md:flex-row items-start justify-between md:text-left text-center order-first text-wrap sm:text-nowrap my-14">
           {/* About Us */}
-          <div className="sm:w-[45%] lg:w-auto">
+          <div className="sm:w-[45%] mx-auto sm:mx-0 lg:w-auto">
             <h2 className="font-sans font-semibold text-[20px] mb-7 shadow tracking-normal">
               About Us.
             </h2>
-            <p className="w-[380px] font-sans text-[18px] text-wrap mb-6">
+            <p className="w-[280px] min-[420px]:w-[380px] md:w-[360px] min-[800px]:w-[390px] font-sans text-[18px] text-wrap mb-6">
               orporate clients and leisure travelers hasbeen relying on
               Groundlink for dependablesafe, and professional chauffeured
               carservice in major cities across World.
             </p>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 ml-2 sm:ml-0">
               <Image src={Watch} alt="watch" />
               <div>
                 <h1 className="text-[18px] font-[300]">Opening Houres</h1>
@@ -114,11 +114,11 @@ const Footer = () => {
       </div>
       {/* copyright ending footer */}
       <div className="bg-txtGray h-[99px] w-full">
-        <div className="px-[7%] flex flex-row justify-between items-center h-[99px]">
-          <p className="text-[16px] font-[300]">
+        <div className="px-[7%] flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between sm:items-center h-[99px]">
+          <p className="text-[16px] font-[300] mx-auto sm:mx-0">
             Copyright © 2022 by Ayeman. All Rights Reserved.
           </p>
-          <nav className="flex gap-3">
+          <nav className="flex gap-3 mx-auto sm:mx-0">
             {/* facebook */}
             <div className="w-[36px] h-[33px] bg-white cursor-pointer rounded flex items-center justify-center group">
               <FaFacebookF className="text-icons group-hover:text-orangeLike transition-colors duration-150" />

@@ -5,7 +5,7 @@ const RoundBtn = (props: { text: string; link: string }) => {
   return (
     <div>
       <Link href={props.link}>
-        <button className="my-3 bg-orangeLike py-4 px-12 text-white rounded-full text-[16px] font-[300]">
+        <button className="my-3 bg-orangeLike hover:bg-orange-500 py-4 px-12 text-white rounded-full text-[16px] font-[300]">
           {props.text}
         </button>
       </Link>

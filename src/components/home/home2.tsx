@@ -15,62 +15,62 @@ const greatVibes = Great_Vibes({
 const Home2 = () => {
   return (
     <div className="bg-blackish">
-      <div className="pt-[100px] px-[7%] flex flex-row">
-        {/* text content */}
-        <div className="flex flex-col text-white space-y-4 w-[570px]">
-          {/* head div */}
+      <div className="pt-10 px-6 lg:pt-[100px] lg:px-[7%] flex flex-col lg:flex-row gap-10">
+        {/* Text Content */}
+        <div className="flex flex-col text-white lg:w-[570px]">
+          {/* Head Section */}
           <div>
             <h2
-              className={`${greatVibes.className} text-[32px] text-orangeLike`}
+              className={`${greatVibes.className} text-[24px] lg:text-[32px] text-orangeLike`}
             >
               About us
             </h2>
-            <h1 className="text-[48px] font-sans font-bold text-wrap">
+            <h1 className="text-[32px] lg:text-[48px] leading-[56px] font-sans font-bold">
               <span className="text-orangeLike">We</span> Create the best foody
               product
             </h1>
           </div>
-          {/* para div */}
-          <p className="text-[16px] font-[300] w-[518px]">
+          {/* Paragraph Section */}
+          <p className="text-[14px] mt-7 lg:text-[16px] font-[300] lg:w-[518px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
             diam pellentesque bibendum non dui volutpat fringilla bibendum.
             Urna, elit augue urna, vitae feugiat pretium donec id elementum.
             Ultrices mattis sed vitae mus risus. Lacus nisi, et ac dapibus sit
             eu velit in consequat.
           </p>
-          {/* points div*/}
-          <div>
-            <div className="flex flex-row items-end h-[26px] gap-5 my-5">
-              <Image src={check} alt="check" />
-              <p className="text-[18px] font-[300]">
-                Lacus nisi, et ac dapibus sit eu velit in consequat.
-              </p>
-            </div>
-            <div className="flex flex-row items-end h-[26px] gap-5 my-5">
-              <Image src={check} alt="check" />
-              <p className="text-[18px] font-[300]">
-                Quisque diam pellentesque bibendum non dui volutpat fringilla
-              </p>
-            </div>
-            <div className="flex flex-row items-end h-[26px] gap-5 mt-5">
-              <Image src={check} alt="check" />
-              <p className="text-[18px] font-[300]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-            </div>
+          {/* Points Section */}
+          <div className="mt-7">
+            {[
+              "Lacus nisi, et ac dapibus sit eu velit in consequat.",
+              "Quisque diam pellentesque bibendum non dui volutpat fringilla.",
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            ].map((text, index) => (
+              <div key={index} className="flex items-center gap-3 mb-5">
+                <Image src={check} alt="check" className="w-5 h-5" />
+                <p className="text-[14px] lg:text-[18px] font-[300]">{text}</p>
+              </div>
+            ))}
           </div>
-          {/* button */}
+          {/* Button */}
           <div>
             <RoundBtn text="Read More" link="/about" />
           </div>
         </div>
-        {/* images content */}
-        <div className="flex flex-col space-y-5">
-          <Image className="col-span-2" src={img1} alt="Food img 1"/>
-        <div className="flex flex-row ">
-        <Image className="mr-3 w-[49%]" src={img2} alt="Food img 2"/>
-        <Image className="mr-3 w-[49%]" src={img3} alt="Food img 3"/>
-        </div>
+        {/* Images Content */}
+        <div className="flex flex-col gap-5 lg:gap-10">
+          <Image className="w-full object-cover" src={img1} alt="Food img 1" />
+          <div className="flex flex-col sm:flex-row gap-5">
+            <Image
+              className="w-full sm:w-[49%] object-cover"
+              src={img2}
+              alt="Food img 2"
+            />
+            <Image
+              className="w-full sm:w-[49%] object-cover"
+              src={img3}
+              alt="Food img 3"
+            />
+          </div>
         </div>
       </div>
     </div>
