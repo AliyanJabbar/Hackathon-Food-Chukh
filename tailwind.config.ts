@@ -72,9 +72,14 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      corePlugins: {
+        preflight: false,
+      },
     },
   },
-  plugins: [require("daisyui"), require("tailwindcss-animate")],
+  plugins: [ require("daisyui"), 
+    require("tailwindcss-animate"),
+    require('tailwind-scrollbar'),],
 };
 
 export default config;

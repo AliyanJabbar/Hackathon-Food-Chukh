@@ -17,7 +17,7 @@ const Home1 = () => {
         {/* Background with image */}
         <div className="absolute inset-0 bg-home1-back bg-[length:screen_950px] bg-no-repeat bg-center" />
 
-        {/* Blackish overlay */}
+        {/* blackish overlay */}
         <div className="absolute inset-0 bg-blackish opacity-90" />
 
         {/* Content container */}

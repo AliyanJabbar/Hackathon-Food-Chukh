@@ -9,7 +9,7 @@ const ItemPagination = (props:{ prevLink:string, nextLink:string }) => {
       {/* Previous Button */}
       {props.prevLink ? (
         <Link href={props.prevLink}>
-          <Button className="flex items-center bg-transparent text-txtlight hover:text-white">
+          <Button className="flex items-center bg-transparent text-txtlight hover:text-black">
           <GrLinkPrevious />
             Prev
           </Button>
@@ -21,7 +21,7 @@ const ItemPagination = (props:{ prevLink:string, nextLink:string }) => {
       {/* Next Button */}
       {props.nextLink ? (
         <Link href={props.nextLink}>
-          <Button variant="default" className="flex items-center bg-transparent text-txtlight hover:text-white">
+          <Button variant="default" className="flex items-center bg-transparent text-txtlight hover:text-black">
             Next
             <GrLinkNext />
           </Button>

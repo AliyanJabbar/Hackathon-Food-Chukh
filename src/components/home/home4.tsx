@@ -11,7 +11,7 @@
 //       <div className="relative p-[25px]">
 //         {/* bg with image */}
 //         <div className="absolute inset-0 bg-home4-bg bg-[length:screen_468px] bg-center bg-no-repeat" />
-//         {/* Blackish overlay */}
+//         {/* blackish overlay */}
 //         <div className="absolute inset-0 bg-blackish opacity-90" />
 
 //         {/* Content container */}
@@ -63,12 +63,12 @@ const Home4 = () => {
       <div className="relative p-6 lg:p-[25px]">
         {/* Background Image */}
         <div className="absolute inset-0 bg-home4-bg bg-[length:100%_468px] lg:bg-[length:screen_468px] bg-center bg-no-repeat" />
-        {/* Blackish Overlay */}
+        {/* blackish Overlay */}
         <div className="absolute inset-0 bg-blackish opacity-90" />
 
         {/* Content Container */}
         <div className="relative z-10 h-full py-10 lg:py-[100px] px-4 lg:px-[7%]">
-          <div className="flex flex-wrap justify-center gap-6 lg:gap-[35px]">
+          <div className="flex flex-wrap justify-center gap-6 lg:gap-[35px] min-[1200px]:gap-[100px]">
             <Image
               className="w-[150px] h-auto lg:w-[180px] xl:w-[200px]"
               src={img1}

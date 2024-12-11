@@ -2,11 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "../styles/scrollbar.css";
+
+
+:root {
+  --primary: #ff9f0d;
+  --secondary: #0d0d0d;
+}
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 
 @layer base {
   :root {
@@ -77,7 +87,7 @@
   box-shadow: 0 4px 80px 0 #fff1da;
 }
 
-.testimonialShadow{
+.testimonialShadow {
   box-shadow: 0 0 80px 0 #92929257;
 }
 
