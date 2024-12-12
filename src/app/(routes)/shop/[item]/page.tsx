@@ -59,7 +59,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
   const itemIndex = (params.item || 1) - 1; // Default to 1 if undefined
   const selectedImage = data[itemIndex].src || food1; // Default to food1 if out of range
   const title = data[itemIndex].title || "Fresh Lime"; // for title
-  const price = data[itemIndex].price || "$43.00"; // for title
+  const price = data[itemIndex].price || "$43.00"; // for price
 
   // Handler for quantity change
   const handleQuantityChange = (newQuantity: number) => {
@@ -69,38 +69,55 @@ const EachItem = (props: { params: Promise<Params> }) => {
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <PageHeader heading="Shop Details" title="Shop details" />
-      <div className="py-24 mx-auto px-[7%] ">
-        <div className="flex flex-wrap flex-col lg:flex-row">
-          {/* left images */}
-          <div className="flex flex-row gap-5">
-            <div className="flex flex-col gap-5">
-              <Image src={item1} alt="item1" className="w-[132px] h-[139px]" />
-              <Image src={item2} alt="item2" className="w-[132px] h-[139px]" />
-              <Image src={item3} alt="item3" className="w-[132px] h-[139px]" />
-              <Image src={item4} alt="item4" className="w-[132px] h-[139px]" />
+      <div className="py-10 px-[5%] mx-auto lg:py-24 lg:px-[7%]">
+        <div className="flex flex-wrap justify-center items-center lg:justify-normal lg:items-start flex-col lg:flex-row">
+          {/* Left images */}
+          <div className="flex flex-col lg:flex-row lg:gap-5">
+            <div className="flex flex-row items-center justify-center flex-wrap gap-3 lg:flex-col lg:gap-5">
+              <Image
+                src={item1}
+                alt="item1"
+                className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+              />
+              <Image
+                src={item2}
+                alt="item2"
+                className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+              />
+              <Image
+                src={item3}
+                alt="item3"
+                className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+              />
+              <Image
+                src={item4}
+                alt="item4"
+                className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+              />
             </div>
-            <div>
+            <div className="mt-5 lg:mt-0">
               <Image
                 alt="ecommerce"
-                className="lg:h-[615px] w-[400px] object-cover object-center rounded"
+                className="w-full max-w-[400px] h-auto lg:w-[400px] lg:h-[615px] object-cover object-center rounded"
                 src={selectedImage}
               />
             </div>
           </div>
-          {/* right content */}
-          <div className="mt-6 lg:mt-0 lg:pl-14 lg:w-[50%] lg:max-w-[100%] w-full">
+
+          {/* Right content */}
+          <div className="mt-6 lg:mt-0 lg:pl-14 lg:w-[300px] min-[1100px]:w-[380px] min-[1200px]:w-[480px] min-[1300px]:w-[580px] min-[1400px]:w-[680px] min-[1500px]:w-[780px] min-[1600px]:w-[880px] w-full">
             <div className="flex flex-row justify-between items-center mb-1">
-              <div className="py-[2px] h-fit px-4 bg-orangeLike inline-block rounded-lg text-white text-[14px]">
+              <div className="py-[2px] h-fit px-4 bg-orangeLike inline-block rounded-lg text-white text-[12px] lg:text-[14px] text-nowrap">
                 In stock
               </div>
-              <div>
+              <div className="mt-3 lg:mt-0">
                 <ItemPagination nextLink="/shop" prevLink="/shop" />
               </div>
             </div>
-            <h1 className="text-gray-900 font-bold font-sans text-[48px] mb-2 leading-[60px]">
+            <h1 className="text-gray-900 font-bold font-sans text-[28px] lg:text-[48px] mb-2 leading-[36px] lg:leading-[60px]">
               {title}
             </h1>
-            <p className="text-[18px] font-[300] text-txtGray pb-5 border-b-2 border-gray-100 mb-5">
+            <p className="text-[14px] lg:text-[18px] font-[300] text-txtGray pb-5 border-b-2 border-gray-100 mb-5">
               Fam locavore kickstarter distillery. Mixtape chillwave tumeric
               sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
               juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
@@ -109,128 +126,97 @@ const EachItem = (props: { params: Promise<Params> }) => {
               cardigan.
             </p>
 
-            <span className="font-bold font-sans text-[32px] text-txtBlack">
+            <span className="font-bold font-sans text-[20px] lg:text-[32px] text-txtBlack">
               {price}
             </span>
-            {/* starts / rating / reviews */}
-            <div className="flex my-4">
+            {/* Stars / Rating / Reviews */}
+            <div className="flex flex-col lg:flex-row my-4">
               <span className="flex items-center gap-[8px]">
-                {/* stars */}
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-4 h-4 text-orangeLike"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-4 h-4 text-orangeLike"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-4 h-4 text-orangeLike"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-4 h-4 text-orangeLike"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-4 h-4 text-orangeLike"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                {/* Rating */}
-                <span className="flex items-center text-txtlight text-[16px] ml-3 pl-4 h-[15px] border-l-2 border-gray-200 ">
-                  5.0 Rating{" "}
+                {/* Stars */}
+                {[...Array(5)].map((_, index) => (
+                  <svg
+                    key={index}
+                    fill="currentColor"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    className="w-4 h-4 text-orangeLike"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                ))}
+                <span className="flex items-center text-txtlight text-[14px] lg:text-[16px] ml-3 pl-4 h-[15px] border-l-2 border-gray-200 min-[1100px]:text-nowrap">
+                  5.0 Rating
                 </span>
-                {/* Reviews */}
-                <span className="flex items-center text-txtlight text-[16px] ml-3 pl-4 h-[15px] border-l-2 border-gray-200 ">
-                  22 Review
+                <span className="flex items-center text-txtlight text-[14px] lg:text-[16px] ml-3 pl-4 h-[15px] border-l-2 border-gray-200 min-[1100px]:text-nowrap">
+                  22 Reviews
                 </span>
               </span>
             </div>
-            <p className="text-[18px] font-normal pt-2 text-txtBlack">
+            <p className="text-[14px] lg:text-[18px] font-normal pt-2 text-txtBlack">
               Dictum/cursus/Risus
             </p>
-            <div className="flex mt-6 items-center pb-7 gap-5 border-b-2 border-gray-100 mb-5">
-              {/* quantity */}
+            <div className="flex flex-col min-[1100px]:flex-row mt-6 items-start lg:items-center pb-7 gap-5 border-b-2 border-gray-100 mb-5">
+              {/* Quantity */}
               <div className="flex items-center">
                 <QuantitySelector
                   initialQuantity={quantity}
                   onQuantityChange={handleQuantityChange}
                 />
               </div>
-              {/* add to cart btn */}
-              <div className="bg-orangeLike h-[50px]">
-                <button className="text-white flex flex-row gap-2 justify-start items-center h-[50px] w-[191px] px-5">
+              {/* Add to cart button */}
+              <div className="bg-orangeLike h-[40px] lg:h-[50px]">
+                <button className="text-white flex gap-2 items-center h-full w-full lg:w-[191px] px-4 lg:px-5">
                   <Image src={bagIcon} alt="bag icon" />
-                  <p className="text-[18px] font-[300]">Add to cart</p>
+                  <p className="text-[14px] lg:text-[18px] font-[300]">
+                    Add to cart
+                  </p>
                 </button>
               </div>
             </div>
             <div className="flex flex-col space-y-2">
               <Image src={addTowish} alt="addTowish" />
               <p className="text-txtBlack">
-                Category:<span className="text-txtGray"> Pizza</span>
+                Category: <span className="text-txtGray">Pizza</span>
               </p>
               <p className="text-txtBlack">
-                Tag:<span className="text-txtGray"> Our Shop</span>
+                Tag: <span className="text-txtGray">Our Shop</span>
               </p>
-              <div className="flex flex-row gap-2 pt-3">
-                <span className="text-txtBlack">Share :</span>
-                {/* icons */}
-                <div className="flex flex-row gap-4">
+              <div className="flex flex-col lg:flex-row gap-2 pt-3">
+                <span className="text-txtBlack">Share:</span>
+                <div className="flex gap-4">
                   <Link href="/shop">
-                    <Image src={yt} alt="yt" className="w-[24px] h-[24px]" />
+                    <Image
+                      src={yt}
+                      alt="yt"
+                      className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px]"
+                    />
                   </Link>
                   <Link href="/shop">
-                    <FaFacebook color="#4F4F4F" className="w-[24px] h-[24px]" />
+                    <FaFacebook
+                      color="#4F4F4F"
+                      className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px]"
+                    />
                   </Link>
                   <Link href="/shop">
                     <AiFillTwitterCircle
                       color="#4F4F4F"
-                      className="w-[24px] h-[24px]"
+                      className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px]"
                     />
                   </Link>
                   <Link href="/shop">
-                    <Image src={vk} alt="vk" className="w-[24px] h-[24px]" />
+                    <Image
+                      src={vk}
+                      alt="vk"
+                      className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px]"
+                    />
                   </Link>
                   <Link href="/shop">
                     <RiInstagramFill
                       color="#4F4F4F"
-                      className="w-[24px] h-[24px]"
+                      className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px]"
                     />
                   </Link>
                 </div>

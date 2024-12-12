@@ -14,39 +14,47 @@ const miniver = Miniver({
 
 const About1 = () => {
   return (
-    <div className="px-[7%] pt-[100px] flex flex-row gap-28">
-      {/* left Image */}
-      <div>
-        <Image src={img} alt="Food img" className="w-[569px] h-[634px]" />
+    <div className="px-4 pt-10 flex flex-col gap-8 md:flex-row md:gap-12 lg:px-[7%] lg:pt-[100px] lg:gap-28">
+      {/* Left Image */}
+      <div className="flex justify-center md:justify-start">
+        <Image 
+          src={img} 
+          alt="Food img" 
+          className="w-full max-w-[300px] md:max-w-[400px] lg:max-w-[569px] h-auto"
+        />
       </div>
       {/* Right Text */}
-      <div className="flex flex-col items-start justify-start text-left pt-[160px]">
+      <div className="flex flex-col items-center md:items-start text-center md:text-left pt-0 md:pt-[100px] lg:pt-[160px]">
         {/* About us Heading */}
-        <div className="flex flex-row items-center justify-start w-full">
+        <div className="flex items-center justify-center md:justify-start w-full">
           <h2
-            className={`${miniver.className} text-[18px] font-normal text-orangeLike`}
+            className={`${miniver.className} text-[16px] md:text-[18px] font-normal text-orangeLike`}
           >
             About us
           </h2>
-          <div className="w-[34px] bg-orangeLike h-[1.5px] mt-2 ml-2 shadow-2xl" />
+          <div className="w-[20px] md:w-[34px] bg-orangeLike h-[1.5px] mt-2 ml-2 shadow-2xl" />
         </div>
         {/* Main Heading */}
-        <h1 className="text-txtBlack text-[48px] font-bold w-[550px] leading-[56px]">
+        <h1 className="text-txtBlack text-[24px] md:text-[36px] lg:text-[48px] font-bold leading-[32px] md:leading-[44px] lg:leading-[56px] w-full max-w-[350px] md:max-w-[500px] lg:max-w-[550px]">
           Food is an important part Of a balanced Diet
         </h1>
         {/* Paragraph */}
-        <p className="text-txtGray text-[16px] w-[550px] my-7">
+        <p className="text-txtGray text-[14px] md:text-[16px] w-full max-w-[350px] md:max-w-[500px] lg:max-w-[550px] my-4 md:my-6">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam
           pellentesque bibendum non dui volutpat fringilla bibendum. Urna, elit
           augue urna, vitae feugiat pretium donec id elementum. Ultrices mattis
           vitae mus risus. Lacus nisi, et ac dapibus sit eu velit in consequat.
         </p>
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-4">
           {/* Button */}
           <Button text="Show more" link="/about" />
-          {/* video  */}
+          {/* Video */}
           <Link href="/about">
-            <Image className="w-[168px] h-[60px]" src={video} alt="video" />
+            <Image 
+              className="w-[120px] h-[40px] md:w-[168px] md:h-[60px]" 
+              src={video} 
+              alt="video" 
+            />
           </Link>
         </div>
       </div>

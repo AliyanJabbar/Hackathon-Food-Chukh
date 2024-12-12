@@ -60,10 +60,10 @@ const TopHeader = () => {
               { label: "Home", path: "/" },
               { label: "Menu", path: "/menu" },
               { label: "Blog", path: "/blog" },
-              { label: "Pages", path: "/parts" },
+              { label: "Pages", path: "/pages" },
               { label: "About", path: "/about" },
               { label: "Shop", path: "/shop" },
-              { label: "Contact", path: "/contact" },
+              { label: "Contact", path: "/signUp" },
             ].map((link) => (
               <Link
                 key={link.path}

@@ -15,21 +15,44 @@ import { PaginationDemo } from "../microComponents/pagination";
 const ItemList = () => {
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-[7%] py-24 mx-auto">
-        <div className="flex flex-row gap-7">
+      <div className="container px-[2%] md:px-[7%] py-24 mx-auto">
+        <div className="flex flex-col justify-center items-center md:justify-start md:items-start gap-7 md:flex-row">
           <DropDown text="Sort By :" />
           <DropDown text="Show :" />
         </div>
-        <div className="flex flex-wrap">
-          <ShopItem title="Fresh Lime" price="$38.00" src={img1} link={1} RP="$45.00" />
+        <div className="flex flex-wrap justify-center">
+          <ShopItem
+            title="Fresh Lime"
+            price="$38.00"
+            src={img1}
+            link={1}
+            RP="$45.00"
+          />
 
-          <ShopItem title="Chocolate Muffin" price="$28.00" link={2} src={img2} />
+          <ShopItem
+            title="Chocolate Muffin"
+            price="$28.00"
+            link={2}
+            src={img2}
+          />
 
-          <ShopItem title="Burger" price="$21.00" src={img3} link={3} RP="$45.00" />
+          <ShopItem
+            title="Burger"
+            price="$21.00"
+            src={img3}
+            link={3}
+            RP="$45.00"
+          />
 
           <ShopItem title="Country Burger" price="$45.00" src={img4} link={4} />
 
-          <ShopItem title="Drink" price="$23.00" src={img5} link={5} RP="$45.00" />
+          <ShopItem
+            title="Drink"
+            price="$23.00"
+            src={img5}
+            link={5}
+            RP="$45.00"
+          />
 
           <ShopItem title="Pizza" price="$43.00" src={img6} link={6} />
 
