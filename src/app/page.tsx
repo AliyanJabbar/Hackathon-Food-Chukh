@@ -3,6 +3,7 @@ import Home2 from "@/components/home/home2";
 import Home3 from "@/components/home/home3";
 import Home4 from "@/components/home/home4";
 import Home5 from "@/components/home/home5";
+import Home6 from "@/components/home/home6";
 export default function Home() {
   return (
     <div className="bg-blackish">
@@ -11,6 +12,7 @@ export default function Home() {
       <Home3 />
       <Home4 />
       <Home5 />
+      <Home6 />
     </div>
   );
 }

@@ -65,7 +65,7 @@ const config: Config = {
         "page-header": "url('/assets/page-header-img.png')",
         "home1-back": " url('/assets/home1-back.png')",
         "grassy-bg": " url('/assets/home3-grassy bg.png')",
-        "home4-bg": "url('/assets/home4-bg.png')",
+        "home5-bg": "url('/assets/home5-bg.png')",
       },
       borderRadius: {
         lg: "var(--radius)",

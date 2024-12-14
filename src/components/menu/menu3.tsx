@@ -1,10 +1,9 @@
 import Image from "next/image";
 import React from "react";
-import img1 from "../../../public/assets/menu/menu3-img1.png";
-import img2 from "../../../public/assets/menu/menu3-img2.png";
-import img3 from "../../../public/assets/menu/menu3-img3.png";
-import img4 from "../../../public/assets/menu/menu3-img4.png";
-
+import chef from "../../../public/assets/icons/chef icon.png";
+import food from "../../../public/assets/icons/food icon.png";
+import spoons from "../../../public/assets/icons/spoon icon.png";
+import pizza from "../../../public/assets/icons/pizza icon.png";
 
 const Menu3 = () => {
   return (
@@ -16,28 +15,60 @@ const Menu3 = () => {
         <div className="absolute inset-0 bg-blackish opacity-90" />
 
         {/* Content Container */}
-        <div className="relative z-10 h-full py-10 lg:py-[100px] px-4 lg:px-[7%]">
-          <div className="flex flex-wrap justify-center gap-6 lg:gap-[35px] min-[1200px]:gap-[100px]">
-            <Image
-              className="w-[150px] h-auto lg:w-[180px] xl:w-[200px]"
-              src={img1}
-              alt="client 1"
-            />
-            <Image
-              className="w-[150px] h-auto lg:w-[180px] xl:w-[200px]"
-              src={img2}
-              alt="client 2"
-            />
-            <Image
-              className="w-[150px] h-auto lg:w-[180px] xl:w-[200px]"
-              src={img3}
-              alt="client 3"
-            />
-            <Image
-              className="w-[150px] h-auto lg:w-[180px] xl:w-[200px]"
-              src={img4}
-              alt="client 4"
-            />
+        <div className="relative z-10 h-full py-10 lg:py-[100px] px-4 ">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-[35px] min-[1100px]:gap-[50px] xl:gap-[100px]">
+            <div className="flex flex-col space-y-2 sm:space-y-3 items-center justify-center">
+              <Image
+                className="w-[90px] sm:w-[110px] md:w-[130px] xl:w-[140px] h-auto"
+                src={chef}
+                alt="Professional Chefs"
+              />
+              <h1 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-sans font-bold">
+                420
+              </h1>
+              <h2 className="text-white text-[16px] sm:text-[20px] md:text-[24px] font-sans font-bold text-center">
+                Professional Chefs
+              </h2>
+            </div>
+            <div className="flex flex-col space-y-2 sm:space-y-3 items-center justify-center">
+              <Image
+                className="w-[90px] sm:w-[110px] md:w-[130px] xl:w-[140px] h-auto"
+                src={food}
+                alt="Items Of Food"
+              />
+              <h1 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-sans font-bold">
+                320
+              </h1>
+              <h2 className="text-white text-[16px] sm:text-[20px] md:text-[24px] font-sans font-bold text-center">
+                Items Of Food
+              </h2>
+            </div>
+            <div className="flex flex-col space-y-2 sm:space-y-3 items-center justify-center">
+              <Image
+                className="w-[90px] sm:w-[110px] md:w-[130px] xl:w-[140px] h-auto"
+                src={spoons}
+                alt="Years Of Experienced"
+              />
+              <h1 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-sans font-bold">
+                30+
+              </h1>
+              <h2 className="text-white text-[16px] sm:text-[20px] md:text-[24px] font-sans font-bold text-center">
+                Years Of Experienced
+              </h2>
+            </div>
+            <div className="flex flex-col space-y-2 sm:space-y-3 items-center justify-center">
+              <Image
+                className="w-[90px] sm:w-[110px] md:w-[130px] xl:w-[140px] h-auto"
+                src={pizza}
+                alt="Happy Customers"
+              />
+              <h1 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-sans font-bold">
+                220
+              </h1>
+              <h2 className="text-white text-[16px] sm:text-[20px] md:text-[24px] font-sans font-bold text-center">
+                Happy Customers
+              </h2>
+            </div>
           </div>
         </div>
       </div>
