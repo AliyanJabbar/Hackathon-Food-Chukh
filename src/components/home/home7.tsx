@@ -11,7 +11,7 @@ const greatVibes = Great_Vibes({
 
 const Home7 = () => {
   return (
-    <section className="pt-10 lg:pt-[100px]">
+    <section className="pt-[100px]">
       {/* Top Headings */}
       <div className="text-white px-6 md:px-[7%] sm:text-center md:text-left">
         <h2
