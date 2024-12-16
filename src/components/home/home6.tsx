@@ -15,7 +15,7 @@ const greatVibes = Great_Vibes({
 
 const Home6 = () => {
   return (
-    <section className="px-[7%] py-[100px]">
+    <section className="px-[7%] pt-[100px]">
       {/* text portion */}
       <div className="flex flex-col justify-center items-center">
         <h2
