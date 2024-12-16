@@ -65,7 +65,8 @@ const config: Config = {
         "page-header": "url('/assets/page-header-img.png')",
         "home1-back": " url('/assets/home1-back.png')",
         "grassy-bg": " url('/assets/home3-grassy bg.png')",
-        "home5-bg": "url('/assets/home5-bg.png')",
+        "clients-bg": "url('/assets/home5-bg.png')",
+        "home7-bg": "url('/assets/home7-bg.png')",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -77,9 +78,11 @@ const config: Config = {
       },
     },
   },
-  plugins: [ require("daisyui"), 
+  plugins: [
+    require("daisyui"),
     require("tailwindcss-animate"),
-    require('tailwind-scrollbar'),],
+    require("tailwind-scrollbar"),
+  ],
 };
 
 export default config;

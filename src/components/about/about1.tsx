@@ -1,7 +1,7 @@
 import React from "react";
 import img from "../../../public/assets/about/about1.png";
 import Image from "next/image";
-import video from "../../../public/assets/about/Video Button.png";
+import play from "../../../public/assets/icons/play.png"
 
 import { Miniver } from "next/font/google";
 import Button from "../microComponents/button";
@@ -45,17 +45,21 @@ const About1 = () => {
           augue urna, vitae feugiat pretium donec id elementum. Ultrices mattis
           vitae mus risus. Lacus nisi, et ac dapibus sit eu velit in consequat.
         </p>
-        <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-5">
           {/* Button */}
           <Button text="Show more" link="/about" />
-          {/* Video */}
-          <Link href="/about">
-            <Image 
-              className="w-[120px] h-[40px] md:w-[168px] md:h-[60px]" 
-              src={video} 
-              alt="video" 
-            />
-          </Link>
+          
+          {/* watch video btn */}
+          <Link href="/">
+                <div className="flex items-center justify-center gap-3 md:gap-4 group">
+                  <div className="p-4 md:p-5 bg-orangeLike rounded-full">
+                    <Image src={play} alt="play" />
+                  </div>
+                  <h2 className="text-[14px] md:text-[16px] font-bold group-hover:text-orangeLike transition-colors duration-200">
+                    Watch Video
+                  </h2>
+                </div>
+              </Link>
         </div>
       </div>
     </div>

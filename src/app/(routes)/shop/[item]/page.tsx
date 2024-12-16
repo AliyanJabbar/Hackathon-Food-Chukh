@@ -25,6 +25,7 @@ import addTowish from "../../../../../public/assets/shop/Add to wishlist.png";
 import ItemPagination from "@/components/microComponents/itemPagination";
 import QuantitySelector from "@/components/microComponents/counter";
 import Link from "next/link";
+import EachItemDet from "@/components/shop/eachItem/eachItemDet";
 
 interface Params {
   item?: number;
@@ -184,9 +185,9 @@ const EachItem = (props: { params: Promise<Params> }) => {
               <p className="text-txtBlack">
                 Tag: <span className="text-txtGray">Our Shop</span>
               </p>
-              <div className="flex flex-col lg:flex-row gap-2 pt-3">
+              <div className="flex flex-col lg:flex-row gap-2 pt-3 border-b-2 border-gray-100 pb-7 w-full">
                 <span className="text-txtBlack">Share:</span>
-                <div className="flex gap-4">
+                <div className="flex gap-4 ">
                   <Link href="/shop">
                     <Image
                       src={yt}
@@ -225,6 +226,8 @@ const EachItem = (props: { params: Promise<Params> }) => {
           </div>
         </div>
       </div>
+      {/* description */}
+      <EachItemDet/>
     </section>
   );
 };

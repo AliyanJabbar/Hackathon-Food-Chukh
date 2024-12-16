@@ -10,7 +10,7 @@ const Menu3 = () => {
     <div className="bg-blackish pt-10 lg:pt-[100px]">
       <div className="relative p-6 lg:p-[25px]">
         {/* Background Image */}
-        <div className="absolute inset-0 bg-home5-bg bg-[length:100%_468px] lg:bg-[length:screen_468px] bg-center bg-no-repeat" />
+        <div className="absolute inset-0 bg-clients-bg bg-[length:100%_468px] lg:bg-[length:screen_468px] bg-center bg-no-repeat" />
         {/* blackish Overlay */}
         <div className="absolute inset-0 bg-blackish opacity-90" />
 
