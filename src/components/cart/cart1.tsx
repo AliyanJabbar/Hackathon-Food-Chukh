@@ -3,6 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { GrSubtract } from "react-icons/gr";
+import { PiCheckSquareOffset } from "react-icons/pi";
 
 type Product = {
   id: number;
@@ -44,7 +45,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
 
   return (
     // main div
-    <div>
+    <div className="py-[100px]">
       {/* items in cart */}
       <div className="overflow-x-auto px-[7%]">
         {/* Desktop View Table */}
@@ -255,8 +256,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
           </div>
           {/* Checkout Button */}
           <div className="w-full flex justify-center">
-            <button className="bg-orangeLike hover:bg-orange-500 text-white font-bold py-2 md:py-[14px] px-6 md:px-8 transition-all duration-300 w-full md:w-auto mt-4">
-              Proceed to Checkout ↗
+            <button className="inline-flex items-center gap-2 bg-orangeLike hover:bg-orange-500 text-white text-[18px] py-2 md:py-[14px] px-6 md:px-8 transition-all duration-300 w-full md:w-auto mt-4">
+              Proceed to Checkout <PiCheckSquareOffset />
             </button>
           </div>
         </div>
