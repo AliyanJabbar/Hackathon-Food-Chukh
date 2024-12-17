@@ -83,13 +83,13 @@ const TopHeader = () => {
         {/* Icons */}
         <div className="flex gap-3 sm:gap-5 mt-4 md:mt-0">
           <Link href="/">
-            <Image src={searchIcon} alt="search-icon" width={24} height={24} />
+            <Image src={searchIcon} alt="search-icon" width={24} height={24} className="hover:-translate-y-1 transtion-all duration-200"/>
           </Link>
           <Link href="/signUp">
-            <Image src={userIcon} alt="user-icon" width={24} height={24} />
+            <Image src={userIcon} alt="user-icon" width={24} height={24} className="hover:-translate-y-1 transtion-all duration-200"/>
           </Link>
-          <Link href="/">
-            <Image src={bagIcon} alt="bag-icon" width={24} height={24} />
+          <Link href="/shoppingCart">
+            <Image src={bagIcon} alt="bag-icon" width={24} height={24} className="hover:-translate-y-1 transtion-all duration-200"/>
           </Link>
         </div>
       </div>

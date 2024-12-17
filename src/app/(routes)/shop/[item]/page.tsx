@@ -168,14 +168,14 @@ const EachItem = (props: { params: Promise<Params> }) => {
                 />
               </div>
               {/* Add to cart button */}
-              <div className="bg-orangeLike h-[40px] lg:h-[50px]">
+              <Link href="/shoppingCart" className="bg-orangeLike h-[40px] lg:h-[50px]">
                 <button className="text-white flex gap-2 items-center h-full w-full lg:w-[191px] px-4 lg:px-5">
                   <Image src={bagIcon} alt="bag icon" />
                   <p className="text-[14px] lg:text-[18px] font-[300]">
                     Add to cart
                   </p>
                 </button>
-              </div>
+              </Link>
             </div>
             <div className="flex flex-col space-y-2">
               <Image src={addTowish} alt="addTowish" />

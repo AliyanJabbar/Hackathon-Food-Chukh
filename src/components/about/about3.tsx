@@ -57,27 +57,32 @@ const About3 = () => {
                   type="radio"
                   name="rating-7"
                   className="mask mask-star-2 bg-orangeLike"
+                  disabled
                 />
                 <input
                   type="radio"
                   name="rating-7"
                   className="mask mask-star-2 bg-orangeLike"
+                  disabled
                 />
                 <input
                   type="radio"
                   name="rating-7"
                   className="mask mask-star-2 bg-orangeLike"
+                  disabled
                 />
                 <input
                   type="radio"
                   name="rating-7"
                   className="mask mask-star-2 bg-orangeLike"
-                />
-                <input
-                  type="radio"
-                  name="rating-7"
-                  className="mask mask-star-2 bg-outline"
+                  disabled
                   defaultChecked
+                />
+                <input
+                  type="radio"
+                  name="rating-7"
+                  className="mask mask-star-2 bg-txtGray"
+                  disabled
                 />
               </div>
               {/* Name and Title */}
