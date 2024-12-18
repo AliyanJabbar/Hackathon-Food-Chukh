@@ -6,8 +6,10 @@ import searchIcon from "../../public/assets/icons/MagnifyingGlass-icon.png";
 import userIcon from "../../public/assets/icons/User-icon.png";
 import bagIcon from "../../public/assets/icons/Bag-icon.png";
 import { usePathname } from "next/navigation";
+import { useCart } from "@/context/CartContext";
 
 const TopHeader = () => {
+  const { cartCount } = useCart();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -83,13 +85,33 @@ const TopHeader = () => {
         {/* Icons */}
         <div className="flex gap-3 sm:gap-5 mt-4 md:mt-0">
           <Link href="/">
-            <Image src={searchIcon} alt="search-icon" width={24} height={24} className="hover:-translate-y-1 transtion-all duration-200"/>
+            <Image
+              src={searchIcon}
+              alt="search-icon"
+              width={24}
+              height={24}
+              className="hover:-translate-y-1 transtion-all duration-200"
+            />
           </Link>
           <Link href="/signUp">
-            <Image src={userIcon} alt="user-icon" width={24} height={24} className="hover:-translate-y-1 transtion-all duration-200"/>
+            <Image
+              src={userIcon}
+              alt="user-icon"
+              width={24}
+              height={24}
+              className="hover:-translate-y-1 transtion-all duration-200"
+            />
           </Link>
           <Link href="/shoppingCart">
-            <Image src={bagIcon} alt="bag-icon" width={24} height={24} className="hover:-translate-y-1 transtion-all duration-200"/>
+            <div className="relative hover:-translate-y-1 transtion-all duration-200">
+              <Image src={bagIcon} alt="bag-icon" width={24} height={24} />
+
+              {cartCount > 0 && (
+                <span className="absolute -top-[9px] -right-[9px] bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </div>
           </Link>
         </div>
       </div>

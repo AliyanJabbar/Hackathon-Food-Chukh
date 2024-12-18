@@ -14,17 +14,17 @@ export const metadata: Metadata = {
   description: "Created by Aliyan Jabbar",
 };
 
-export default function RootLayout({
-  children,
-}: React.PropsWithChildren<{}>) {
+export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
   return (
     <html lang="en">
       <body className={`${inter.className} h-full bg-white`}>
-        <TopHeader />
         <Suspense fallback={<Loading />}>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            <TopHeader />
+            {children}
+            <Footer />
+          </CartProvider>
         </Suspense>
-        <Footer />
       </body>
     </html>
   );

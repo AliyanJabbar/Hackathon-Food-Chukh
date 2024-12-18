@@ -185,7 +185,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
           </div>
 
           {/* Right content */}
-          <div className="mt-6 lg:mt-0 lg:pl-14 lg:w-[300px] min-[1100px]:w-[380px] min-[1200px]:w-[480px] min-[1300px]:w-[580px] min-[1400px]:w-[680px] min-[1500px]:w-[780px] min-[1600px]:w-[880px] w-full">
+          <div className="mt-6 lg:mt-0 lg:pl-14 lg:w-[300px] min-[1100px]:w-[380px] min-[1200px]:w-[480px] min-[1300px]:w-[550px] min-[1400px]:w-[650px] min-[1500px]:w-[730px] min-[1600px]:w-[830px] w-full">
             <div className="flex flex-row justify-between items-center mb-1">
               <div className="py-[2px] h-fit px-4 bg-orangeLike inline-block rounded-lg text-white text-[12px] lg:text-[14px] text-nowrap">
                 In stock
@@ -237,7 +237,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
             <p className="text-[14px] lg:text-[18px] font-normal pt-2 text-txtBlack">
               Dictum/cursus/Risus
             </p>
-            <div className="flex flex-col min-[1100px]:flex-row mt-6 items-start lg:items-center pb-7 gap-5 border-b-2 border-gray-100 mb-5">
+            <div className="flex flex-col min-[1200px]:flex-row mt-6 items-start lg:items-center pb-7 gap-5 border-b-2 border-gray-100 mb-5">
               {/* Quantity */}
               <div className="flex items-center">
                 <QuantitySelector
@@ -246,17 +246,15 @@ const EachItem = (props: { params: Promise<Params> }) => {
                 />
               </div>
               {/* Add to cart button */}
-              {/* <Link href="/shoppingCart" className="bg-orangeLike h-[40px] lg:h-[50px]"> */}
               <button
                 onClick={handleAddToCart}
                 className="text-white bg-orangeLike h-[40px] lg:h-[50px] flex gap-2 items-center w-full lg:w-[191px] px-4 lg:px-5"
               >
                 <Image src={bagIcon} alt="bag icon" />
-                <p className="text-[14px] lg:text-[18px] font-[300]">
+                <p className="text-[14px] lg:text-[18px] font-[300] text-nowrap">
                   Add to cart
                 </p>
               </button>
-              {/* </Link> */}
             </div>
             <div className="flex flex-col space-y-2">
               <Image src={addTowish} alt="addTowish" />

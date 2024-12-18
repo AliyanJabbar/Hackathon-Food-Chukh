@@ -4,7 +4,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { GrSubtract } from "react-icons/gr";
 import { PiCheckSquareOffset } from "react-icons/pi";
 import { useCart } from "@/context/CartContext";
-import Btn from "../microComponents/button"
+import Btn from "../microComponents/button";
 const ProductTable: React.FC = () => {
   const { cart, updateQuantity, removeProduct } = useCart();
 
@@ -101,7 +101,7 @@ const ProductTable: React.FC = () => {
                           onClick={() => handleRemoveProduct(product.id)}
                           className="text-txtBlack group"
                         >
-                          <IoCloseOutline className="group-hover:text-orangeLike w-[25px] h-[25px] translate-x-5" />
+                          <IoCloseOutline className="group-hover:text-orangeLike w-[25px] h-[25px] transition-color duration-100 translate-x-5" />
                         </button>
                       </td>
                     </tr>
@@ -247,7 +247,7 @@ const ProductTable: React.FC = () => {
           <h2 className="text-3xl font-bold text-orangeLike">
             Your cart is empty
           </h2>
-          <Btn text="Go To Shop" link="/shop"/>
+          <Btn text="Go To Shop" link="/shop" />
         </div>
       )}
     </div>
