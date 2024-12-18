@@ -5,24 +5,25 @@ import TopHeader from "@/components/topHeader";
 import Footer from "@/components/footer";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { CartProvider } from "@/context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "foodtuck",
+  title: "Foodtuck",
   description: "Created by Aliyan Jabbar",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: React.PropsWithChildren<{}>) {
   return (
     <html lang="en">
       <body className={`${inter.className} h-full bg-white`}>
         <TopHeader />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Suspense fallback={<Loading />}>
+          <CartProvider>{children}</CartProvider>
+        </Suspense>
         <Footer />
       </body>
     </html>
