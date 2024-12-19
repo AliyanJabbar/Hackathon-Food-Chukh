@@ -57,7 +57,7 @@ const TopHeader = () => {
             isMenuOpen ? "block" : "hidden"
           } md:flex w-full overflow-x-auto md:overflow-visible md:mx-auto md:w-auto justify-center items-center text-base text-[14px] md:text-[16px] font-normal gap-2`}
         >
-          <div className="flex gap-4 w-full flex-nowrap md:flex-wrap">
+          <div className="flex flex-col items-center justify-center md:flex-row gap-2 md:gap-[2px] min-[780px]:gap-1 min-[820px]:gap-2 min-[900px]:gap-3 lg:gap-4 md:w-full flex-nowrap md:flex-wrap">
             {[
               { label: "Home", path: "/" },
               { label: "Menu", path: "/menu" },
@@ -65,7 +65,7 @@ const TopHeader = () => {
               { label: "Pages", path: "/pages" },
               { label: "About", path: "/about" },
               { label: "Shop", path: "/shop" },
-              { label: "Contact", path: "/signUp" },
+              { label: "Contact", path: "/contact" },
             ].map((link) => (
               <Link
                 key={link.path}

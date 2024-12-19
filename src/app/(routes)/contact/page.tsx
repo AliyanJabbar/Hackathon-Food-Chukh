@@ -1,11 +1,14 @@
-import React from 'react'
+import ContactPage from "@/components/contact/contact";
+import PageHeader from "@/components/page-header";
+import React from "react";
 
-const ContactPage = () => {
+const ContactUs = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-4xl font-bold">Contact Us</h1>
-    </main>
-  )
-}
+    <div>
+      <PageHeader heading="Contact Us" title="Contact us" />
+      <ContactPage />
+    </div>
+  );
+};
 
-export default ContactPage
+export default ContactUs;

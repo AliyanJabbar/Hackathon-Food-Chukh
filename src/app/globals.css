@@ -91,6 +91,10 @@
   box-shadow: 0 0 80px 0 #92929257;
 }
 
+.contactIconsShadow{
+  box-shadow: -3px 3px 4px #92929257;
+}
+
 .loading-animation {
   animation: fadeIn 0.3s ease-in-out;
 }
