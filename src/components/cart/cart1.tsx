@@ -5,6 +5,7 @@ import { GrSubtract } from "react-icons/gr";
 import { PiCheckSquareOffset } from "react-icons/pi";
 import { useCart } from "@/context/CartContext";
 import Btn from "../microComponents/button";
+import Link from "next/link";
 const ProductTable: React.FC = () => {
   const { cart, updateQuantity, removeProduct } = useCart();
 
@@ -235,9 +236,11 @@ const ProductTable: React.FC = () => {
                 </div>
               </div>
               <div className="w-full flex justify-center">
-                <button className="inline-flex items-center gap-2 bg-orangeLike hover:bg-orange-500 text-white text-[18px] py-2 md:py-[14px] px-6 md:px-8 transition-all duration-300 w-full md:w-auto mt-4">
-                  Proceed to Checkout <PiCheckSquareOffset />
-                </button>
+                <Link href="/checkout">
+                  <button className="inline-flex items-center gap-2 bg-orangeLike hover:bg-orange-500 text-white text-[18px] py-2 md:py-[14px] px-6 md:px-8 transition-all duration-300 w-full md:w-auto mt-4">
+                    Proceed to Checkout <PiCheckSquareOffset />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

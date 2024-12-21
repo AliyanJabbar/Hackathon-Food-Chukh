@@ -80,7 +80,7 @@ const SignUpPage = () => {
                   onChange={handleCheckboxChange}
                   defaultChecked
                 />
-                <span className="w-[20px] h-[20px] border-2 border-gray-300 rounded-none flex justify-center items-center peer-checked:bg-orangeLike peer-checked:border-orangeLike peer-checked:ring-2 peer-checked:ring-orangeLike">
+                <span className="w-[20px] h-[20px] border-2 border-gray-300 rounded-none flex justify-center items-center peer-checked:bg-orangeLike peer-checked:border-none">
                   <svg
                     className="w-4 h-4 text-white peer-checked:block"
                     fill="none"

@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 
 const TopHeader = () => {
-  const { cartCount } = useCart();
+  const { cart } = useCart();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -68,6 +68,7 @@ const TopHeader = () => {
               { label: "Contact", path: "/contact" },
             ].map((link) => (
               <Link
+              onClick={toggleMenu}
                 key={link.path}
                 href={link.path}
                 className={`px-2 py-1 cursor-pointer transition-all duration-150 whitespace-nowrap ${
@@ -106,9 +107,9 @@ const TopHeader = () => {
             <div className="relative hover:-translate-y-1 transtion-all duration-200">
               <Image src={bagIcon} alt="bag-icon" width={24} height={24} />
 
-              {cartCount > 0 && (
+              {cart.length > 0 && (
                 <span className="absolute -top-[9px] -right-[9px] bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount}
+                  {cart.length}
                 </span>
               )}
             </div>

@@ -43,7 +43,7 @@ const Footer = () => {
             </h2>
             <nav className="list-none mb-5 space-y-4 text-[16px]">
               <li>
-                <Link href="/">About</Link>
+                <Link href="/about">About</Link>
               </li>
               <li>
                 <Link href="/">News</Link>
@@ -55,10 +55,10 @@ const Footer = () => {
                 <Link href="/">Team</Link>
               </li>
               <li>
-                <Link href="/">Menu</Link>
+                <Link href="/menu">Menu</Link>
               </li>
               <li>
-                <Link href="/">Contact</Link>
+                <Link href="/contact">Contact</Link>
               </li>
             </nav>
           </div>
@@ -70,7 +70,7 @@ const Footer = () => {
             </h2>
             <nav className="list-none mb-5 space-y-4 text-[16px]">
               <li>
-                <Link href="/">FAQ</Link>
+                <Link href="/faq">FAQ</Link>
               </li>
               <li>
                 <Link href="/">Term & Condition</Link>

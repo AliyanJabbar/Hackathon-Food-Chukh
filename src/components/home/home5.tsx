@@ -16,7 +16,7 @@ const Menu3 = () => {
 
         {/* Content Container */}
         <div className="relative z-10 h-full py-10 lg:py-[100px] px-4">
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-[35px] min-[1100px]:gap-[50px] xl:gap-[100px]">
+          <div className="flex flex-wrap justify-center gap-5 sm:gap-6 md:gap-8 lg:gap-[35px] min-[1100px]:gap-[50px] xl:gap-[100px]">
             <div className="flex flex-col space-y-2 sm:space-y-3 items-center justify-center">
               <Image
                 className="w-[90px] sm:w-[110px] md:w-[130px] xl:w-[140px] h-auto"

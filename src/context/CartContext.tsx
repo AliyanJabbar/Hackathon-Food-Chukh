@@ -14,7 +14,6 @@ type Product = {
 
 type CartContextType = {
   cart: Product[];
-  cartCount: number;
   setCart: React.Dispatch<React.SetStateAction<Product[]>>;
   addToCart: (item: Product) => void;
   updateQuantity: (id: number, quantityChange: number) => void;
@@ -28,9 +27,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [cart, setCart] = useState<Product[]>([]);
   
-  // cart Count
-  const cartCount = cart.length
-
   // add to cart
   const addToCart = (item: Product) => {
     setCart((prevCart) => {
@@ -65,7 +61,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <CartContext.Provider
-      value={{ cart,cartCount, setCart, addToCart, updateQuantity, removeProduct }}
+      value={{ cart, setCart, addToCart, updateQuantity, removeProduct }}
     >
       {children}
     </CartContext.Provider>

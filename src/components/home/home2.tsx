@@ -15,9 +15,9 @@ const greatVibes = Great_Vibes({
 const Home2 = () => {
   return (
     <div className="bg-blackish">
-      <div className="pt-10 px-6 lg:pt-[100px] lg:px-[7%] flex flex-col lg:flex-row gap-10">
+      <div className="pt-10 px-6 lg:pt-[100px] lg:px-[7%] flex flex-col lg:flex-row gap-10 min-[1500px]:justify-between">
         {/* Text Content */}
-        <div className="flex flex-col text-white lg:w-[570px]">
+        <div className="flex flex-col text-white lg:w-[570px] min-[1500px]:w-[800px]">
           {/* Head Section */}
           <div>
             <h2

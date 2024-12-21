@@ -16,11 +16,11 @@ const MenuPart = (props: {
         <p className="text-[16px] font-[300] text-txtGray ">{props.recipe}</p>
         <p className="text-[16px] font-[300] text-txtlight ">{props.cal}</p>
         {/* ending line */}
-        <hr className="hidden md:block w-[760px] my-7" />
+        <hr className="hidden md:block w-full md:w-[650px] min-[1200px]:w-[760px] my-7" />
       </div>
       {/* right (price) */}
       <div className="text-orangeLike text-[24px] font-bold">{props.price}</div>
-      <hr className="block md:hidden w-[760px] my-7" />
+      <hr className="block md:hidden w-full my-7" />
     </div>
   );
 };
