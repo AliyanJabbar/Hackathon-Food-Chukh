@@ -17,6 +17,7 @@ const config: Config = {
         txtGray: "#4F4F4F",
         icons: "#1E1E1E",
         outline: "#E0E0E0",
+        faqEntry: "#FAF7F2",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

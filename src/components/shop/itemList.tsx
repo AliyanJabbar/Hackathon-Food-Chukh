@@ -13,6 +13,12 @@ import DropDown from "../microComponents/dropDown";
 import { PaginationDemo } from "../microComponents/pagination";
 
 const ItemList = () => {
+  // for generating id
+  let id = 0;
+  function idGenerator() {
+    return id++;
+  }
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-[2%] md:px-[7%] py-24 mx-auto">
@@ -25,14 +31,14 @@ const ItemList = () => {
             title="Fresh Lime"
             price="$38.00"
             src={img1}
-            link={1}
+            link={idGenerator()}
             RP="$45.00"
           />
 
           <ShopItem
             title="Chocolate Muffin"
             price="$28.00"
-            link={2}
+            link={idGenerator()}
             src={img2}
           />
 
@@ -40,27 +46,52 @@ const ItemList = () => {
             title="Burger"
             price="$21.00"
             src={img3}
-            link={3}
+            link={idGenerator()}
             RP="$45.00"
           />
 
-          <ShopItem title="Country Burger" price="$45.00" src={img4} link={4} />
+          <ShopItem
+            title="Country Burger"
+            price="$45.00"
+            src={img4}
+            link={idGenerator()}
+          />
 
           <ShopItem
             title="Drink"
             price="$23.00"
             src={img5}
-            link={5}
+            link={idGenerator()}
             RP="$45.00"
           />
 
-          <ShopItem title="Pizza" price="$43.00" src={img6} link={6} />
+          <ShopItem
+            title="Pizza"
+            price="$43.00"
+            src={img6}
+            link={idGenerator()}
+          />
 
-          <ShopItem title="Cheese Butter" price="$10.00" src={img7} link={7} />
+          <ShopItem
+            title="Cheese Butter"
+            price="$10.00"
+            src={img7}
+            link={idGenerator()}
+          />
 
-          <ShopItem title="Sandwiches" price="$25.00" src={img8} link={8} />
+          <ShopItem
+            title="Sandwiches"
+            price="$25.00"
+            src={img8}
+            link={idGenerator()}
+          />
 
-          <ShopItem title="Chicken Chup" price="$12.00" src={img9} link={9} />
+          <ShopItem
+            title="Chicken Chup"
+            price="$12.00"
+            src={img9}
+            link={idGenerator()}
+          />
         </div>
         <PaginationDemo />
       </div>

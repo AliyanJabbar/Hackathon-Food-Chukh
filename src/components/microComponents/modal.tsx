@@ -14,9 +14,12 @@ const Modal = () => {
       <div className="modal" role="dialog">
         <div className="modal-box">
           <h3 className="text-lg font-bold">Pages:</h3>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center -space-y-2 justify-center">
             <Button text="Not Found Page" link="/notFound" />
             <Button text="Sign Up" link="/signUp" />
+            <Button text="FAQ" link="/faq" />
+            <Button text="Checkout" link="/checkout" />
+            <Button text="Cart" link="/shoppingCart" />
           </div>
           <div className="modal-action">
             <label htmlFor="my_modal_6" className="btn">

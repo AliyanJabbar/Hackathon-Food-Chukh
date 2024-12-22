@@ -43,10 +43,16 @@ const EachItem = (props: { params: Promise<Params> }) => {
     quantity: number;
   };
 
-  // storing data
+  // for generating id
+  let id = 0;
+  function idGenerator() {
+    return id++;
+  }
+
+  // storing data 
   const data: Data[] = [
     {
-      id: 1,
+      id: idGenerator(),
       name: "Fresh Lime",
       image: food1,
       price: 38,
@@ -54,7 +60,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
       quantity: 0,
     },
     {
-      id: 2,
+      id: idGenerator(),
       name: "Chocolate Muffin",
       image: food2,
       price: 28,
@@ -62,7 +68,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
       quantity: 0,
     },
     {
-      id: 3,
+      id: idGenerator(),
       name: "Burger",
       image: food3,
       price: 21,
@@ -70,17 +76,31 @@ const EachItem = (props: { params: Promise<Params> }) => {
       quantity: 0,
     },
     {
-      id: 4,
+      id: idGenerator(),
       name: "Country Burger",
       image: food4,
       price: 45,
       rating: 4,
       quantity: 0,
     },
-    { id: 5, name: "Drink", image: food5, price: 23, rating: 5, quantity: 0 },
-    { id: 6, name: "Pizza", image: food6, price: 43, rating: 2, quantity: 0 },
     {
-      id: 7,
+      id: idGenerator(),
+      name: "Drink",
+      image: food5,
+      price: 23,
+      rating: 5,
+      quantity: 0,
+    },
+    {
+      id: idGenerator(),
+      name: "Pizza",
+      image: food6,
+      price: 43,
+      rating: 2,
+      quantity: 0,
+    },
+    {
+      id: idGenerator(),
       name: "Cheese Butter",
       image: food7,
       price: 10,
@@ -88,7 +108,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
       quantity: 0,
     },
     {
-      id: 8,
+      id: idGenerator(),
       name: "Sandwiches",
       image: food8,
       price: 25,
@@ -96,7 +116,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
       quantity: 0,
     },
     {
-      id: 9,
+      id: idGenerator(),
       name: "Chicken Chup",
       image: food9,
       price: 12,
@@ -104,7 +124,6 @@ const EachItem = (props: { params: Promise<Params> }) => {
       quantity: 0,
     },
   ];
-
   // State to store resolved params
   const [params, setParams] = useState<Params>({});
   const [quantity, setQuantity] = useState<number>(1);
@@ -119,7 +138,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
   }, [props.params]);
 
   // Safely calculating the item index
-  const itemIndex = (params.item || 1) - 1; // Default to 1 if undefined
+  const itemIndex = params.item || 0; // Default to 0 if undefined
   const selectedItem = data[itemIndex] || data[0];
   const selectedImage = selectedItem.image || food1; // Default to food1 if out of range
   const title = selectedItem.name || "Fresh Lime"; // for title
