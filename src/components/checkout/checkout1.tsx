@@ -360,6 +360,8 @@ const CheckoutPage = () => {
                     <div key={ind} className="flex items-center gap-1">
                       <Image
                         src={item.image}
+                        width={100}
+                        height={100}
                         alt={item.name}
                         className="w-20 h-20"
                       />

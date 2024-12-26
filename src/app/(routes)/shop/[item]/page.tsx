@@ -1,16 +1,7 @@
 "use client";
 import PageHeader from "@/components/page-header";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import food1 from "../../../../../public/assets/shop/item1.png";
-import food2 from "../../../../../public/assets/shop/item2.png";
-import food3 from "../../../../../public/assets/shop/item3.png";
-import food4 from "../../../../../public/assets/shop/item4.png";
-import food5 from "../../../../../public/assets/shop/item5.png";
-import food6 from "../../../../../public/assets/shop/item6.png";
-import food7 from "../../../../../public/assets/shop/item7.png";
-import food8 from "../../../../../public/assets/shop/item8.png";
-import food9 from "../../../../../public/assets/shop/item9.png";
 import item1 from "../../../../../public/assets/shop/shop-item-img1.png";
 import item2 from "../../../../../public/assets/shop/shop-item-img2.png";
 import item3 from "../../../../../public/assets/shop/shop-item-img3.png";
@@ -27,6 +18,7 @@ import QuantitySelector from "@/components/microComponents/counter";
 import Link from "next/link";
 import EachItemDet from "@/components/shop/eachItem/eachItemDet";
 import { useCart } from "@/context/CartContext";
+import { fetchInternalImage } from "next/dist/server/image-optimizer";
 
 interface Params {
   item?: number;
@@ -37,113 +29,138 @@ const EachItem = (props: { params: Promise<Params> }) => {
   type Data = {
     id: number;
     name: string;
-    image: StaticImageData;
+    image: string;
     price: number;
     rating: number;
     quantity: number;
   };
 
   // for generating id
-  let id = 0;
-  function idGenerator() {
-    return id++;
-  }
+  // let id = 0;
+  // function idGenerator() {
+  //   return id++;
+  // }
 
-  // storing data 
-  const data: Data[] = [
-    {
-      id: idGenerator(),
-      name: "Fresh Lime",
-      image: food1,
-      price: 38,
-      rating: 1,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Chocolate Muffin",
-      image: food2,
-      price: 28,
-      rating: 2,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Burger",
-      image: food3,
-      price: 21,
-      rating: 3,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Country Burger",
-      image: food4,
-      price: 45,
-      rating: 4,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Drink",
-      image: food5,
-      price: 23,
-      rating: 5,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Pizza",
-      image: food6,
-      price: 43,
-      rating: 2,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Cheese Butter",
-      image: food7,
-      price: 10,
-      rating: 5,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Sandwiches",
-      image: food8,
-      price: 25,
-      rating: 3,
-      quantity: 0,
-    },
-    {
-      id: idGenerator(),
-      name: "Chicken Chup",
-      image: food9,
-      price: 12,
-      rating: 4,
-      quantity: 0,
-    },
-  ];
+  // storing data
+  // const data: Data[] = [
+  //   {
+  //     id: idGenerator(),
+  //     name: "Fresh Lime",
+  //     image: food1,
+  //     price: 38,
+  //     rating: 1,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Chocolate Muffin",
+  //     image: food2,
+  //     price: 28,
+  //     rating: 2,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Burger",
+  //     image: food3,
+  //     price: 21,
+  //     rating: 3,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Country Burger",
+  //     image: food4,
+  //     price: 45,
+  //     rating: 4,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Drink",
+  //     image: food5,
+  //     price: 23,
+  //     rating: 5,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Pizza",
+  //     image: food6,
+  //     price: 43,
+  //     rating: 2,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Cheese Butter",
+  //     image: food7,
+  //     price: 10,
+  //     rating: 5,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Sandwiches",
+  //     image: food8,
+  //     price: 25,
+  //     rating: 3,
+  //     quantity: 0,
+  //   },
+  //   {
+  //     id: idGenerator(),
+  //     name: "Chicken Chup",
+  //     image: food9,
+  //     price: 12,
+  //     rating: 4,
+  //     quantity: 0,
+  //   },
+  // ];
   // State to store resolved params
   const [params, setParams] = useState<Params>({});
   const [quantity, setQuantity] = useState<number>(1);
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [data, setData] = useState<Data[]>([]);
 
+  
+  // fetching products from our api and Params from props
   useEffect(() => {
     async function resolveParams() {
       const resolvedParams = await props.params;
       setParams(resolvedParams);
     }
+    async function fetchingProducts() {
+      try {
+        const fetchedProducts = await fetch(
+          "http://localhost:3000/api/products"
+        );
+        if (!fetchedProducts.ok) {
+          console.error("Fetch failed with status:", fetchedProducts.status);
+          throw new Error(`HTTP error! Status: ${fetchedProducts.status}`);
+        }
+
+        const response = await fetchedProducts.json();
+        setData(response.data);
+      } catch (error) {
+        console.error("Error during fetch:", error);
+      }
+
+      const fetchedProducts = await fetch("http://localhost:3000/api/products");
+
+      const response = await fetchedProducts.json();
+      setData(response.data);
+    }
     resolveParams();
+    fetchingProducts();
   }, [props.params]);
 
   // Safely calculating the item index
   const itemIndex = params.item || 0; // Default to 0 if undefined
   const selectedItem = data[itemIndex] || data[0];
-  const selectedImage = selectedItem.image || food1; // Default to food1 if out of range
-  const title = selectedItem.name || "Fresh Lime"; // for title
-  const price = selectedItem.price || "$43.00"; // for price
-  const rating = selectedItem.rating; //for rating
+  const selectedImage = selectedItem?.image || "/assets/shop/item1.png"; // Default to item1 or food1 if out of range
+  const title = selectedItem?.name || "Fresh Lime"; // for title
+  const price = selectedItem?.price || "$43.00"; // for price
+  const rating = selectedItem?.rating; //for rating
 
   // Handler for quantity change
   const handleQuantityChange = (newQuantity: number) => {
@@ -199,6 +216,8 @@ const EachItem = (props: { params: Promise<Params> }) => {
                 alt="ecommerce"
                 className="w-full max-w-[400px] h-auto lg:w-[400px] lg:h-[615px] object-cover object-center rounded"
                 src={selectedImage}
+                width={400}
+                height={600}
               />
             </div>
           </div>

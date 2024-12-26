@@ -1,12 +1,10 @@
 "use client";
-
-import { StaticImageData } from "next/image";
 import React, { createContext, useContext, useState } from "react";
 
 type Product = {
   id: number;
   name: string;
-  image: StaticImageData;
+  image: string;
   price: number;
   rating: number;
   quantity: number;

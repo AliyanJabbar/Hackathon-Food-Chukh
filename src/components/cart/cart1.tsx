@@ -48,6 +48,8 @@ const ProductTable: React.FC = () => {
                       <td className="px-6 py-4 flex items-center space-x-4">
                         <Image
                           src={product.image}
+                          width={50}
+                          height={50}
                           alt={product.name}
                           className="w-16 h-16 rounded"
                         />
@@ -122,6 +124,8 @@ const ProductTable: React.FC = () => {
                   <div className="flex items-center space-x-4 mb-4">
                     <Image
                       src={product.image}
+                      width={50}
+                      height={50}
                       alt={product.name}
                       className="w-16 h-16 rounded"
                     />
