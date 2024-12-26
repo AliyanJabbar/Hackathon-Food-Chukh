@@ -35,104 +35,24 @@ const EachItem = (props: { params: Promise<Params> }) => {
     quantity: number;
   };
 
-  // for generating id
-  // let id = 0;
-  // function idGenerator() {
-  //   return id++;
-  // }
-
-  // storing data
-  // const data: Data[] = [
-  //   {
-  //     id: idGenerator(),
-  //     name: "Fresh Lime",
-  //     image: food1,
-  //     price: 38,
-  //     rating: 1,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Chocolate Muffin",
-  //     image: food2,
-  //     price: 28,
-  //     rating: 2,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Burger",
-  //     image: food3,
-  //     price: 21,
-  //     rating: 3,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Country Burger",
-  //     image: food4,
-  //     price: 45,
-  //     rating: 4,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Drink",
-  //     image: food5,
-  //     price: 23,
-  //     rating: 5,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Pizza",
-  //     image: food6,
-  //     price: 43,
-  //     rating: 2,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Cheese Butter",
-  //     image: food7,
-  //     price: 10,
-  //     rating: 5,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Sandwiches",
-  //     image: food8,
-  //     price: 25,
-  //     rating: 3,
-  //     quantity: 0,
-  //   },
-  //   {
-  //     id: idGenerator(),
-  //     name: "Chicken Chup",
-  //     image: food9,
-  //     price: 12,
-  //     rating: 4,
-  //     quantity: 0,
-  //   },
-  // ];
   // State to store resolved params
   const [params, setParams] = useState<Params>({});
   const [quantity, setQuantity] = useState<number>(1);
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const [data, setData] = useState<Data[]>([]);
+  const [data, setData] = useState<Data[]>([]); //state for storing data from api
 
-  
   // fetching products from our api and Params from props
   useEffect(() => {
+    //for props
     async function resolveParams() {
       const resolvedParams = await props.params;
       setParams(resolvedParams);
     }
+    //for data of products
     async function fetchingProducts() {
       try {
         const fetchedProducts = await fetch(
-          "http://localhost:3000/api/products"
+          "/api/products"
         );
         if (!fetchedProducts.ok) {
           console.error("Fetch failed with status:", fetchedProducts.status);
@@ -145,7 +65,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
         console.error("Error during fetch:", error);
       }
 
-      const fetchedProducts = await fetch("http://localhost:3000/api/products");
+      const fetchedProducts = await fetch("/api/products");
 
       const response = await fetchedProducts.json();
       setData(response.data);
@@ -159,8 +79,8 @@ const EachItem = (props: { params: Promise<Params> }) => {
   const selectedItem = data[itemIndex] || data[0];
   const selectedImage = selectedItem?.image || "/assets/shop/item1.png"; // Default to item1 or food1 if out of range
   const title = selectedItem?.name || "Fresh Lime"; // for title
-  const price = selectedItem?.price || "$43.00"; // for price
-  const rating = selectedItem?.rating; //for rating
+  const price = selectedItem?.price || 43; // for price
+  const rating = selectedItem?.rating || 4; //for rating
 
   // Handler for quantity change
   const handleQuantityChange = (newQuantity: number) => {
