@@ -1,19 +1,22 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { RiArrowLeftDoubleFill } from "react-icons/ri";
 import { RiArrowRightDoubleFill } from "react-icons/ri";
 
-export function PaginationDemo() {
+export function PaginationDemo(props: { width?: number }) {
   return (
-    <Pagination>
-      <PaginationContent className="gap-3">
+    <Pagination
+      className={
+        props.width
+          ? `w-[${props.width}px] flex items-center justify-start`
+          : ""
+      }
+    >
+      <PaginationContent className="gap-3 mt-8">
         <PaginationItem>
           <PaginationLink
             className="text-orangeLike hover:text-white hover:bg-orangeLike outline outline-[1px] outline-gray-100 rounded-none"

@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        repeatMot: {
+          from: { transform: 'translate(0rem, 0rem)' },
+          to: { transform: 'translate(0.25rem, -0.15rem)' },
+        },
+      },
+      animation: {
+        repeatMotion: "repeatMot 0.2s ease-in-out infinite alternate",
+      },
       colors: {
         orangeLike: "#FF9F0D",
         blackish: "#0D0D0D",

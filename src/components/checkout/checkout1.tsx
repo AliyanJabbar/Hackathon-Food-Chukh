@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import arrow from "../../../public/assets/icons/ArrowRight.png";
@@ -103,8 +103,22 @@ const CheckoutPage = () => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
       errors.email = "Invalid email address.";
     }
-    if (!formValues.phone.trim()) errors.phone = "Phone number is required.";
-    if (!formValues.zipCode.trim()) errors.zipCode = "Zip code is required.";
+
+    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    if (!formValues.phone.trim()) {
+      errors.phone = "Phone number is required.";
+    } else if (!phoneRegex.test(formValues.phone)) {
+      errors.phone = "Please enter a valid phone number";
+    }
+
+    const zipRegex = /^\d{5}(-\d{4})?$/;
+    if (!formValues.zipCode.trim()) {
+      errors.zipCode = "Zip code is required.";
+    } else if (!zipRegex.test(formValues.zipCode)) {
+      errors.zipCode =
+        "Please enter a valid zip code (e.g., 12345 or 12345-6789)";
+    }
+    
     if (!formValues.address1.trim()) errors.address1 = "Address 1 is required.";
 
     setFormErrors(errors);

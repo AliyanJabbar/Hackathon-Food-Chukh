@@ -4,19 +4,16 @@
 
 @import "../styles/scrollbar.css";
 
-
 :root {
   --primary: #ff9f0d;
   --secondary: #0d0d0d;
 }
-
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 
 @layer base {
   :root {
@@ -91,7 +88,7 @@
   box-shadow: 0 0 80px 0 #92929257;
 }
 
-.contactIconsShadow{
+.contactIconsShadow {
   box-shadow: -3px 3px 4px #92929257;
 }
 
