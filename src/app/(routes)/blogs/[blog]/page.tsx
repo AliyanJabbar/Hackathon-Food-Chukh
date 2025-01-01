@@ -11,29 +11,67 @@ type Props = {
 
 async function getBlog(id: string) {
   const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    ? process.env.VERCEL_URL
     : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-  const response = await fetch(`${baseUrl}/api/blogs`, {
-    next: { revalidate: 60 },
-  });
-  const data = await response.json();
-  return data.Blogs.find((b: any) => b.id === parseInt(id, 10));
+  try {
+    const response = await fetch(`${baseUrl}/api/blogs`, {
+      next: { revalidate: 60 },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch blog data: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data.Blogs.find((b: any) => b.id === parseInt(id, 10));
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    return null;
+  }
 }
 
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const param = await params;
-  const blog = await getBlog(param.blog);
-  return {
-    title: blog?.title || "Blog Post",
-    description: blog?.description || "Blog post description",
-    openGraph: {
-      title: blog?.title,
-      description: blog?.description,
-      images: [blog?.image],
-    },
-  };
+  try {
+    const param = await params;
+    const blog = await getBlog(param.blog);
+
+    if (!blog) {
+      return {
+        title: "Blog Post Not Found",
+        description: "Sorry, this blog post does not exist.",
+        openGraph: {
+          title: "Blog Not Found",
+          description: "The blog you're looking for does not exist.",
+          images: [],
+        },
+      };
+    }
+
+    return {
+      title: blog?.title || "Blog Post",
+      description: blog?.description || "Blog post description",
+      openGraph: {
+        title: blog?.title,
+        description: blog?.description,
+        images: [blog?.image],
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Blog Post Not Found",
+      description: "Sorry, there was an error fetching the metadata.",
+      openGraph: {
+        title: "Blog Not Found",
+        description: "The blog you're looking for does not exist.",
+        images: [],
+      },
+    };
+  }
 }
+
 
 const BlogPage = async ({ params }: Props) => {
   const param = await params;
@@ -159,6 +197,4 @@ const BlogPage = async ({ params }: Props) => {
     </section>
   );
 };
-
-export const dynamic = "force-dynamic";
 export default BlogPage;
