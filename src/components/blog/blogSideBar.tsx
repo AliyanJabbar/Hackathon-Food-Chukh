@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import se from "../../../public/assets/icons/MagnifyingGlass-icon.png";
 import {
   FaFacebookF,
   FaTwitter,
@@ -222,14 +221,12 @@ const BlogSidebar = () => {
         <div className="grid grid-cols-3 gap-3">
           {[8, 6, 7, 18, 5, 8].map((image, index) => (
             <Link
+              key={index}
               target="_blank"
               rel="noopener noreferrer"
               href={`/assets/blog/blog${image}.png`}
             >
-              <div
-                key={index}
-                className="relative group"
-              >
+              <div className="relative group">
                 <Image
                   src={`/assets/blog/blog${image}.png`}
                   alt={`Gallery Image ${image}`}

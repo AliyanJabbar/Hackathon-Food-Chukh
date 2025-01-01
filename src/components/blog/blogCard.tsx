@@ -1,16 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type BlogCardProps = {
+interface BlogCardProps {
   date: string;
   month: string;
   year: number;
   title: string;
   description: string;
   image: string;
+  content: string[];
+  tags: string[];
   author: string;
-  comments: number;
-};
+  comments: { name: string; date: string; message: string }[];
+  id: number;
+}
 
 const BlogCard: React.FC<BlogCardProps> = ({
   date,
@@ -21,9 +24,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
   image,
   author,
   comments,
+  id,
 }) => {
   return (
-    <div className="text-txtBlack my-10 max-[767px]:flex max-[767px]:flex-col max-[767px]:items-center max-[767px]:justify-center">
+    <div className="text-txtBlack max-[767px]:flex max-[767px]:flex-col max-[767px]:items-center max-[767px]:justify-center">
       {/* Image Section */}
       <div className="relative">
         <Image
@@ -59,7 +63,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
               src="/assets/icons/comment.png"
               alt="comment"
             />
-            {`${comments} /`}
+            {`${comments.length+1} /`}
           </p>
           <p className="flex items-center gap-[4px]">
             <Image
@@ -86,7 +90,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
         {/* Read More Button */}
         <Link
-          href="#"
+          href={`blogs/${id}`}
           className="text-orangeLike w-fit font-semibold py-2 px-5 rounded-md border border-orangeLike flex items-center gap-[6px] group"
         >
           <span>Read More</span>

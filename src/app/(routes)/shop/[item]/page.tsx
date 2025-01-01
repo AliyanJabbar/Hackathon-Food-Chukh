@@ -2,10 +2,6 @@
 import PageHeader from "@/components/page-header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import item1 from "../../../../../public/assets/shop/shop-item-img1.png";
-import item2 from "../../../../../public/assets/shop/shop-item-img2.png";
-import item3 from "../../../../../public/assets/shop/shop-item-img3.png";
-import item4 from "../../../../../public/assets/shop/shop-item-img4.png";
 import bagIcon from "../../../../../public/assets/icons/Bag-icon.png";
 import yt from "../../../../../public/assets/shop/youtube.png";
 import { FaFacebook } from "react-icons/fa";
@@ -18,7 +14,6 @@ import QuantitySelector from "@/components/microComponents/counter";
 import Link from "next/link";
 import EachItemDet from "@/components/shop/eachItem/eachItemDet";
 import { useCart } from "@/context/CartContext";
-import { fetchInternalImage } from "next/dist/server/image-optimizer";
 
 interface Params {
   item?: number;
@@ -51,9 +46,9 @@ const EachItem = (props: { params: Promise<Params> }) => {
     //for data of products
     async function fetchingProducts() {
       try {
-        const fetchedProducts = await fetch(
-          "/api/products"
-        );
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+        const fetchedProducts = await fetch(`${baseUrl}/api/products`);
+
         if (!fetchedProducts.ok) {
           console.error("Fetch failed with status:", fetchedProducts.status);
           throw new Error(`HTTP error! Status: ${fetchedProducts.status}`);
@@ -111,24 +106,32 @@ const EachItem = (props: { params: Promise<Params> }) => {
           <div className="flex flex-col lg:flex-row lg:gap-5">
             <div className="flex flex-row items-center justify-center flex-wrap gap-3 lg:flex-col lg:gap-5">
               <Image
-                src={item1}
+                src="/assets/shop/shop-item-img1.png"
                 alt="item1"
                 className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+                width={90}
+                height={90}
               />
               <Image
-                src={item2}
+                src="/assets/shop/shop-item-img2.png"
                 alt="item2"
                 className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+                width={90}
+                height={90}
               />
               <Image
-                src={item3}
+                src="/assets/shop/shop-item-img3.png"
                 alt="item3"
                 className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+                width={90}
+                height={90}
               />
               <Image
-                src={item4}
+                src="/assets/shop/shop-item-img4.png"
                 alt="item4"
                 className="w-[90px] h-[90px] lg:w-[132px] lg:h-[139px]"
+                width={90}
+                height={90}
               />
             </div>
             <div className="mt-5 lg:mt-0">

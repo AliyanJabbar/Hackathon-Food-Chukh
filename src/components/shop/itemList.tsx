@@ -1,14 +1,5 @@
 import React from "react";
 import ShopItem from "../microComponents/ShopItem";
-import img1 from "../../../public/assets/shop/item1.png";
-import img2 from "../../../public/assets/shop/item2.png";
-import img3 from "../../../public/assets/shop/item3.png";
-import img4 from "../../../public/assets/shop/item4.png";
-import img5 from "../../../public/assets/shop/item5.png";
-import img6 from "../../../public/assets/shop/item6.png";
-import img7 from "../../../public/assets/shop/item7.png";
-import img8 from "../../../public/assets/shop/item8.png";
-import img9 from "../../../public/assets/shop/item9.png";
 import DropDown from "../microComponents/dropDown";
 import { PaginationDemo } from "../microComponents/pagination";
 
@@ -30,7 +21,7 @@ const ItemList = () => {
           <ShopItem
             title="Fresh Lime"
             price="$38.00"
-            src={img1}
+            src="/assets/shop/item1.png"
             link={idGenerator()}
             RP="$45.00"
           />
@@ -39,13 +30,13 @@ const ItemList = () => {
             title="Chocolate Muffin"
             price="$28.00"
             link={idGenerator()}
-            src={img2}
+            src="/assets/shop/item2.png"
           />
 
           <ShopItem
             title="Burger"
             price="$21.00"
-            src={img3}
+            src="/assets/shop/item3.png"
             link={idGenerator()}
             RP="$45.00"
           />
@@ -53,14 +44,14 @@ const ItemList = () => {
           <ShopItem
             title="Country Burger"
             price="$45.00"
-            src={img4}
+            src="/assets/shop/item4.png"
             link={idGenerator()}
           />
 
           <ShopItem
             title="Drink"
             price="$23.00"
-            src={img5}
+            src="/assets/shop/item5.png"
             link={idGenerator()}
             RP="$45.00"
           />
@@ -68,28 +59,28 @@ const ItemList = () => {
           <ShopItem
             title="Pizza"
             price="$43.00"
-            src={img6}
+            src="/assets/shop/item6.png"
             link={idGenerator()}
           />
 
           <ShopItem
             title="Cheese Butter"
             price="$10.00"
-            src={img7}
+            src="/assets/shop/item7.png"
             link={idGenerator()}
           />
 
           <ShopItem
             title="Sandwiches"
             price="$25.00"
-            src={img8}
+            src="/assets/shop/item8.png"
             link={idGenerator()}
           />
 
           <ShopItem
             title="Chicken Chup"
             price="$12.00"
-            src={img9}
+            src="/assets/shop/item9.png"
             link={idGenerator()}
           />
         </div>

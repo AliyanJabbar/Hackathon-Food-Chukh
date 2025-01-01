@@ -4,7 +4,7 @@ import React from "react";
 
 const ShopPage = () => {
   return (
-    <main className="">
+    <main>
       <PageHeader heading='Our Shop' title='Shop'/>
       <ItemList/>
     </main>

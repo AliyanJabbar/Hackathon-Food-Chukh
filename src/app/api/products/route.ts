@@ -92,6 +92,6 @@ const data: Data[] = [
   },
 ];
 
-export function GET(req: NextRequest) {
+export function GET(req:NextRequest) {
   return NextResponse.json({ data });
 }

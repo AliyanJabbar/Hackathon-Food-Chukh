@@ -1,10 +1,10 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 const ShopItem = (props: {
   title: string;
   price: string;
-  src: StaticImageData;
+  src: string;
   link: number;
   RP?: string;
 }) => {
@@ -18,6 +18,8 @@ const ShopItem = (props: {
             alt={props.title}
             className="object-cover object-center w-full h-full block group-hover:scale-110 transition-all duration-300"
             src={props.src}
+            width={200}
+            height={200}
           />
         </Link>
         <div className="mt-4">
