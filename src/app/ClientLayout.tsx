@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import TopHeader from "@/components/topHeader";
 import Footer from "@/components/footer";
@@ -20,8 +20,14 @@ export default function ClientLayout({
   const pathname = usePathname();
   const router = useRouter();
   const tileCount = 5;
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // Mark the first render as complete
+      return;
+    }
+
     const handleRouteChange = () => {
       setContentVisible(false);
       setAnimationClass("exit");
