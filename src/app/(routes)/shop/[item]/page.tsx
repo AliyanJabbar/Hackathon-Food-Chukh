@@ -46,7 +46,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
     //for data of products
     async function fetchingProducts() {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.VERCEL_URL;
         const fetchedProducts = await fetch(`${baseUrl}/api/products`);
 
         if (!fetchedProducts.ok) {
@@ -96,7 +96,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
     <section className="text-gray-600 body-font overflow-hidden">
       <PageHeader heading="Shop Details" title="Shop details" />
       {successMessage && (
-        <div className="fixed bottom-5 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
+        <div className="fixed bottom-28 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
           {successMessage}
         </div>
       )}

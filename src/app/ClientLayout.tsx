@@ -47,7 +47,11 @@ export default function ClientLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} ${animationClass} h-full bg-white`}>
+      <body
+        className={`${inter.className} ${animationClass} h-full ${
+          isContentVisible ? "bg-white" : "bg-blackish"
+        }`}
+      >
         <Suspense fallback={<Loading />}>
           <CartProvider>
             {/* Tiles container */}
@@ -60,7 +64,7 @@ export default function ClientLayout({
             {/* Content with conditional blur */}
             <div className={isContentVisible ? "" : "blurred"}>
               <TopHeader />
-              {isContentVisible && children}
+              {children}
               <Footer />
             </div>
 

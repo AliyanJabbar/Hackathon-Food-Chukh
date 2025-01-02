@@ -18,7 +18,7 @@ const TopHeader = () => {
       setIsMenuOpen(false);
       setTimeout(() => {
         router.push(path);
-      }, 750);
+      }, 1000);
     }
   };
 

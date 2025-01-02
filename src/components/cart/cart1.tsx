@@ -6,6 +6,7 @@ import { PiCheckSquareOffset } from "react-icons/pi";
 import { useCart } from "@/context/CartContext";
 import Btn from "../microComponents/button";
 import Link from "next/link";
+
 const ProductTable: React.FC = () => {
   const { cart, updateQuantity, removeProduct } = useCart();
 

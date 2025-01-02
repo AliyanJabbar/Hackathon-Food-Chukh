@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaYoutube,
-  FaPinterestP,
+  FaPinterest,
+  FaFacebookF,
 } from "react-icons/fa";
 
 const BlogSidebar = () => {
@@ -88,7 +88,7 @@ const BlogSidebar = () => {
             { platform: "Facebook", icon: <FaFacebookF />, link: "#" },
             { platform: "Twitter", icon: <FaTwitter />, link: "#" },
             { platform: "Instagram", icon: <FaInstagram />, link: "#" },
-            { platform: "Pinterest", icon: <FaPinterestP />, link: "#" },
+            { platform: "Pinterest", icon: <FaPinterest />, link: "#" },
           ].map((social, index) => (
             <Link
               key={index}
@@ -254,7 +254,7 @@ const BlogSidebar = () => {
           {[
             { platform: "Twitter", icon: <FaTwitter />, link: "#" },
             { platform: "YouTube", icon: <FaYoutube />, link: "#" },
-            { platform: "Pinterest", icon: <FaPinterestP />, link: "#" },
+            { platform: "Pinterest", icon: <FaPinterest />, link: "#" },
             { platform: "Instagram", icon: <FaInstagram />, link: "#" },
             { platform: "Facebook", icon: <FaFacebookF />, link: "#" },
           ].map((social, index) => (

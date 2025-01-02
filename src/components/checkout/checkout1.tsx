@@ -8,6 +8,13 @@ import caretLeftBack from "../../../public/assets/icons/CaretLeft checkout.png";
 import Link from "next/link";
 import Button from "../microComponents/button";
 
+// for sanitizing inputs
+const sanitizeInput = (input: string): string => {
+  const div = document.createElement("div");
+  div.textContent = input;
+  return div.innerHTML;
+};
+
 const CheckoutPage = () => {
   interface CountryCityMap {
     [country: string]: string[];
@@ -63,15 +70,17 @@ const CheckoutPage = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+    const sanitizedValue = sanitizeInput(value);
+
     setFormValues((prevValues) => ({
       ...prevValues,
-      [name]: value,
+      [name]: sanitizedValue,
     }));
 
-    value.trim() !== "" &&
+    sanitizedValue.trim() !== "" &&
       setFormErrors((prevErrors) => ({
         ...prevErrors,
-        [name]: "", // Clear the error for the field that was updated
+        [name]: "",
       }));
   };
 
@@ -118,7 +127,7 @@ const CheckoutPage = () => {
       errors.zipCode =
         "Please enter a valid zip code (e.g., 12345 or 12345-6789)";
     }
-    
+
     if (!formValues.address1.trim()) errors.address1 = "Address 1 is required.";
 
     setFormErrors(errors);

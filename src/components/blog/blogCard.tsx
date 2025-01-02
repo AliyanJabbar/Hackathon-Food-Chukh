@@ -1,21 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Blog } from "../../app/blogDb";
 
-interface BlogCardProps {
-  date: string;
-  month: string;
-  year: number;
-  title: string;
-  description: string;
-  image: string;
-  content: string[];
-  tags: string[];
-  author: string;
-  comments: { name: string; date: string; message: string }[];
-  id: number;
-}
-
-const BlogCard: React.FC<BlogCardProps> = ({
+const BlogCard: React.FC<Blog> = ({
   date,
   month,
   year,
@@ -23,7 +10,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
   description,
   image,
   author,
-  comments,
   id,
 }) => {
   return (
@@ -63,7 +49,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
               src="/assets/icons/comment.png"
               alt="comment"
             />
-            {`${comments.length+1} /`}
+            {`${Math.floor(Math.random() * 10) + 5} /`}
           </p>
           <p className="flex items-center gap-[4px]">
             <Image
