@@ -111,6 +111,7 @@ export default function ProfilePage() {
             Sign up
           </RegisterLink>
           <LogoutLink
+            postLogoutRedirectURL="/"
             className={`${
               isAuthenticated ? "block" : "hidden"
             } px-4 py-2 bg-orangeLike text-white rounded hover:bg-orange-500 transition-colors text-center text-nowrap`}

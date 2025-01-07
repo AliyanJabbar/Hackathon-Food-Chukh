@@ -16,7 +16,7 @@ const Modal = () => {
           <h3 className="text-lg font-bold">Pages:</h3>
           <div className="flex flex-col items-center -space-y-3 justify-center">
             <Button text="Not Found Page" link="/notFound" />
-            <Button text="Sign Up" link="/signUp" />
+            <Button text="User Details" link="/userDetails" />
             <Button text="FAQ" link="/faq" />
             <Button text="Checkout" link="/checkout" />
             <Button text="Cart" link="/shoppingCart" />
