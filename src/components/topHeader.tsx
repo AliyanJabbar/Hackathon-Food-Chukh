@@ -89,7 +89,7 @@ const TopHeader = () => {
 
         {/* Icons */}
         <div className="flex gap-3 sm:gap-5 mt-4 md:mt-0">
-          <div onClick={() => handleNavigation("/search")} className="cursor-pointer">
+          <div onClick={() => handleNavigation("/")} className="cursor-pointer">
             <Image
               src={searchIcon}
               alt="search-icon"
@@ -98,7 +98,7 @@ const TopHeader = () => {
               className="hover:-translate-y-1 transition-all duration-200"
             />
           </div>
-          <div onClick={() => handleNavigation("/signUp")} className="cursor-pointer">
+          <div onClick={() => handleNavigation("/userDetails")} className="cursor-pointer">
             <Image
               src={userIcon}
               alt="user-icon"

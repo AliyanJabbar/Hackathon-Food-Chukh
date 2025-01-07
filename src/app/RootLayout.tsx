@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ClientLayout from './ClientLayout'; 
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: "Foodtuck",
