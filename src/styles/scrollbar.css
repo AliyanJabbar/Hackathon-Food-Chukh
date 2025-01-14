@@ -1,4 +1,3 @@
-/* Master scrollbar override */
 html {
     overflow-y: scroll !important;
     scrollbar-width: auto !important;
