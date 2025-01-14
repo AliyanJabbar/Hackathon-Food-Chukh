@@ -89,12 +89,12 @@ const TopHeader = () => {
                     toggleIsPagesOpen();
                   }}
                 >
-                  <div className="flex gap-1 items-center justify-center px-2 py-1 cursor-pointer transition-all duration-150 whitespace-nowrap hover:text-orangeLike text-white lg:hover:fill-orangeLike">
+                  <div className="flex gap-1 items-center justify-center cursor-pointer transition-all duration-150 whitespace-nowrap hover:text-orangeLike text-white lg:hover:fill-orangeLike">
                     Pages
                     <FaAngleDown />
                   </div>
                   <ul
-                    className={`absolute shadow-lg bg-transparent text-white space-y-3 lg:top-10 max-lg:top-12 -left-6 min-w-[250px] z-50 transition-all duration-300 ${
+                    className={`absolute shadow-lg bg-black/10 backdrop-blur-md text-white space-y-3 lg:top-10 max-lg:top-12 -left-6 min-w-[250px] z-50 transition-all duration-300 ${
                       isPagesOpen
                         ? "opacity-100 visible translate-y-0"
                         : "opacity-0 invisible -translate-y-2"
@@ -103,7 +103,7 @@ const TopHeader = () => {
                     <li className="border-b py-2 ">
                       <Link
                         href="/notFound"
-                        className="hover:text-orangeLike transition text-txtBlack text-[15px] font-bold block"
+                        className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
                       >
                         Not Found Page
                       </Link>
@@ -111,7 +111,7 @@ const TopHeader = () => {
                     <li className="border-b py-2 ">
                       <Link
                         href="/userDetails"
-                        className="hover:text-orangeLike transition text-txtBlack text-[15px] font-bold block"
+                        className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
                       >
                         User Details
                       </Link>
@@ -119,7 +119,7 @@ const TopHeader = () => {
                     <li className="border-b py-2 ">
                       <Link
                         href="/faq"
-                        className="hover:text-orangeLike transition text-txtBlack text-[15px] font-bold block"
+                        className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
                       >
                         FAQ
                       </Link>
@@ -127,7 +127,7 @@ const TopHeader = () => {
                     <li className="border-b py-2 ">
                       <Link
                         href="shoppingCart"
-                        className="hover:text-orangeLike transition text-txtBlack text-[15px] font-bold block"
+                        className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
                       >
                         Cart
                       </Link>
@@ -135,7 +135,7 @@ const TopHeader = () => {
                     <li className="border-b py-2 ">
                       <Link
                         href="/checkout"
-                        className="hover:text-orangeLike transition text-txtBlack text-[15px] font-bold block"
+                        className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
                       >
                         Checkout
                       </Link>
