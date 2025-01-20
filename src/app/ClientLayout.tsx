@@ -10,6 +10,7 @@ import { Inter } from "next/font/google";
 import Loading from "./loading";
 import ScrollToTop from "@/components/ScrollToTop";
 import { AuthProvider } from "./AuthProvider";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,12 +49,13 @@ export default function ClientLayout({
 
   return (
     <AuthProvider>
-      <html lang="en">
+      <html lang="en" className="cursor-none">
         <body
-          className={`${inter.className} ${animationClass} h-full ${
+          className={`${inter.className} ${animationClass} cursor-none h-full ${
             isContentVisible ? "bg-white" : "bg-blackish"
           }`}
         >
+          <CustomCursor />
           <Suspense fallback={<Loading />}>
             <CartProvider>
               {/* Tiles container */}

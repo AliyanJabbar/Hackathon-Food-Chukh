@@ -1,8 +1,11 @@
 {
   "name": "my-app",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
+    "import-data": "node src/scripts/import-data.mjs",
+    "delete-data": "node src/scripts/delete-data.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -13,18 +16,20 @@
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@sanity/client": "^6.25.0",
     "@sanity/image-url": "^1.1.0",
-    "@sanity/vision": "^3.69.0",
+    "@sanity/vision": "^3.70.0",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "lucide-react": "^0.468.0",
     "next": "^15.0.4",
-    "next-sanity": "^9.8.35",
+    "next-sanity": "^9.8.38",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.4.0",
-    "sanity": "^3.69.0",
+    "sanity": "^3.70.0",
     "shipengine": "^1.0.7",
     "styled-components": "^6.1.14",
     "tailwind-merge": "^2.5.5",
@@ -32,7 +37,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.17.14",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "@types/tailwindcss": "^3.0.11",
@@ -43,6 +48,7 @@
     "postcss": "^8.4.49",
     "postcss-loader": "^8.1.1",
     "tailwindcss": "^3.4.16",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }

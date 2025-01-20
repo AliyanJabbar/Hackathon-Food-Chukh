@@ -3,35 +3,35 @@ import Link from "next/link";
 import React from "react";
 const ShopItem = (props: {
   title: string;
-  price: string;
+  price: number;
   src: string;
   link: number;
-  RP?: string;
+  originalPrice?: number;
 }) => {
   return (
-      <div className="lg:w-1/4 md:w-1/2 p-3 w-[312px] group">
-        <Link
-          href={`/shop/${props.link}`}
-          className="block relative h-[267px] w-auto rounded overflow-hidden"
-        >
-          <Image
-            alt={props.title}
-            className="object-cover object-center w-full h-full block group-hover:scale-110 transition-all duration-300"
-            src={props.src}
-            width={200}
-            height={200}
-          />
-        </Link>
-        <div className="mt-4">
-          <h2 className="text-txtBlack text-[18px] font-bold">{props.title}</h2>
-          <p className="mt-1 text-orangeLike text-[16px] font-[300]">
-            {props.price}
-            <span className=" text-txtlight line-through mx-3">
-              {props.RP ? props.RP : ""}
-            </span>
-          </p>
-        </div>
+    <div className="lg:w-1/4 md:w-1/2 p-3 w-[312px] group">
+      <Link
+        href={`/shop/${props.link}`}
+        className="block relative h-[267px] w-auto rounded overflow-hidden"
+      >
+        <Image
+          alt={props.title}
+          className="object-cover object-center w-full h-full block group-hover:scale-110 transition-all duration-300"
+          src={props.src}
+          width={200}
+          height={200}
+        />
+      </Link>
+      <div className="mt-4">
+        <h2 className="text-txtBlack text-[18px] font-bold">{props.title}</h2>
+        <p className="mt-1 text-orangeLike text-[16px] font-[300]">
+          ${props.price}.00
+          <span className=" text-txtlight line-through mx-3">
+            {props.originalPrice ? `$${props.originalPrice}.00` : ""}
+          </span>
+        </p>
       </div>
+    </div>
   );
 };
 

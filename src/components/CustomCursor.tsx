@@ -1,0 +1,104 @@
+import React, { useEffect, useState } from "react";
+
+// Cursor images with hotspot coordinates
+const CURSOR_IMAGES = {
+  default: "/assets/cursor/OnlyCursor.png", // Custom default cursor
+  pointer: "/assets/cursor/OnlyCursorPointer.png", // Pointer cursor for clickable elements
+};
+
+const CustomCursor = () => {
+  // State to track cursor position
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  // State to track current cursor image
+  const [cursorImage, setCursorImage] = useState<string>(CURSOR_IMAGES.default);
+
+  // State to track if the mouse is clicked
+  const [clicked, setClicked] = useState(false);
+
+  useEffect(() => {
+    // Event listener for mouse movement
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    // Event listener for mouse click
+    const handleMouseDown = () => {
+      setClicked(true);
+      setTimeout(() => {
+        setClicked(false);
+      }, 800);
+    };
+
+    // Event listener for mouse hover on HTML elements
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+
+      if (target instanceof HTMLElement) {
+        // Apply pointer cursor for clickable elements
+        if (
+          target.tagName.toLowerCase() === "button" ||
+          target.tagName.toLowerCase() === "a" || // Check for <a> tag
+          target.classList.contains("cursor-pointer") || // Check for elements with cursor-pointer class
+          (target.hasAttribute("role") &&
+            target.getAttribute("role") === "button")
+        ) {
+          setCursorImage(CURSOR_IMAGES.pointer); // Pointer cursor for clickable elements
+        } else {
+          setCursorImage(CURSOR_IMAGES.default); // Default cursor for other elements
+        }
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseover", handleMouseOver);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseover", handleMouseOver);
+    };
+  }, []);
+
+  return (
+    <>
+      {/* Custom Cursor */}
+      <div
+        style={{
+          top: position.y,
+          left: position.x,
+          backgroundImage: `url(${cursorImage})`, // Dynamically set background image for cursor
+          backgroundSize: "contain", // Ensure image fits cursor area
+          backgroundRepeat: "no-repeat",
+          width: "32px", // Customize cursor size
+          height: "32px",
+          pointerEvents: "none", // Ensure cursor doesn't block interactions
+          transform: "translate(-25%, -25%)", // Center the cursor
+          zIndex: 9999, // Ensure it's on top
+        }}
+        className="fixed"
+      />
+
+      {/* Click Effect */}
+      <div
+        className={`fixed z-50 pointer-events-none transition-all ${clicked ? "scale-100 opacity-30" : "scale-0 opacity-0"} -translate-x-[1px] -translate-y-[1px] rounded-full w-8 h-8`}
+        style={{
+          top: position.y,
+          left: position.x,
+          backgroundImage: `url(${cursorImage})`, // Optional: Apply the cursor image on click effect
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          transform: "translate(-25%, -25%)", // Center the click effect
+          transition: "all 0.5s ease-in",
+        }}
+      />
+    </>
+  );
+};
+
+export default CustomCursor;

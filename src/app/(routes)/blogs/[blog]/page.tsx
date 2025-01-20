@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import PageHeader from "@/components/page-header";
 import BlogSidebar from "@/components/blog/blogSideBar";
 import Loading from "../../loading";
-import { Blogs } from "@/app/blogDb";
+import { Blogs } from "@/data/blogs";
 import Link from "next/link";
 import {
   FaFacebookF,

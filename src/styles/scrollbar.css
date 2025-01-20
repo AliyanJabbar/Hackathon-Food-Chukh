@@ -1,33 +1,36 @@
 html {
-    overflow-y: scroll !important;
-    scrollbar-width: auto !important;
-    scrollbar-color: var(--primary) var(--secondary) !important;
-  }
-  
-  /* Target both document and all elements */
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar,
-  div::-webkit-scrollbar,
-  *::-webkit-scrollbar {
-    width: 20px !important;
-    background-color: var(--secondary) !important;
-    display: block !important;
-  }
-  
-  html::-webkit-scrollbar-thumb,
-  body::-webkit-scrollbar-thumb,
-  div::-webkit-scrollbar-thumb,
-  *::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--secondary) 10%, var(--primary) 100%) !important;
-    border-radius: 10px !important;
-    border: none !important;
-  }
-  
-  html::-webkit-scrollbar-track,
-  body::-webkit-scrollbar-track,
-  div::-webkit-scrollbar-track,
-  *::-webkit-scrollbar-track {
-    background: var(--secondary) !important;
-    border-radius: 10px !important;
-  }
-  
+  overflow-y: scroll !important;
+  scrollbar-width: auto !important;
+  scrollbar-color: var(--primary) var(--secondary) !important;
+}
+
+/* Target both document and all elements */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+div::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 20px !important;
+  background-color: var(--secondary) !important;
+  display: block !important;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--secondary) 10%,
+    var(--primary) 100%
+  ) !important;
+  border-radius: 10px !important;
+  border: none !important;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: var(--secondary) !important;
+  border-radius: 10px !important;
+}

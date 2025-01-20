@@ -3,7 +3,7 @@ import React from "react";
 import BlogSidebar from "@/components/blog/blogSideBar";
 import BlogCard from "@/components/blog/blogCard";
 import { PaginationDemo } from "@/components/microComponents/pagination";
-import { Blogs } from "@/app/blogDb";
+import { Blogs } from "@/data/blogs";
 
 const BlogsPage = async () => {
   const blogs = Blogs;

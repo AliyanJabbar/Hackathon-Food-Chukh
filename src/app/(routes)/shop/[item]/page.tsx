@@ -8,74 +8,55 @@ import { FaFacebook } from "react-icons/fa";
 import { AiFillTwitterCircle } from "react-icons/ai";
 import { RiInstagramFill } from "react-icons/ri";
 import vk from "../../../../../public/assets/shop/vk.png";
-import addTowish from "../../../../../public/assets/shop/Add to wishlist.png";
 import ItemPagination from "@/components/microComponents/itemPagination";
 import QuantitySelector from "@/components/microComponents/counter";
 import Link from "next/link";
 import EachItemDet from "@/components/shop/eachItem/eachItemDet";
 import { useCart } from "@/context/CartContext";
+import { Data } from "../../../../data/foods";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 interface Params {
   item?: number;
 }
 
 const EachItem = (props: { params: Promise<Params> }) => {
-  // type of data
-  type Data = {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    rating: number;
-    quantity: number;
-  };
-
-  // State to store resolved params
-  const [params, setParams] = useState<Params>({});
+  // States
   const [quantity, setQuantity] = useState<number>(1);
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const [data, setData] = useState<Data[]>([]); //state for storing data from api
+  const [selectedItem, setSelectedItem] = useState<Data | null>(null); //state for storing data from api
 
-  // fetching products from our api and Params from props
+  // fetching Params from props & data from sanity
   useEffect(() => {
-    //for props
-    async function resolveParams() {
+    async function loadData() {
+      //for props
       const resolvedParams = await props.params;
-      setParams(resolvedParams);
-    }
-    //for data of products
-    async function fetchingProducts() {
-      try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.VERCEL_URL;
-        const fetchedProducts = await fetch(`${baseUrl}/api/products`);
 
-        if (!fetchedProducts.ok) {
-          console.error("Fetch failed with status:", fetchedProducts.status);
-          throw new Error(`HTTP error! Status: ${fetchedProducts.status}`);
-        }
-
-        const response = await fetchedProducts.json();
-        setData(response.data);
-      } catch (error) {
-        console.error("Error during fetch:", error);
+      //fetching from sanity
+      if (resolvedParams.item) {
+        console.log("resolvedParams:", resolvedParams.item);
+        const query = `*[_type == "food" && id == ${resolvedParams.item}][0]`;
+        const data = await client.fetch(query);
+        console.log("FetchedData:", data);
+        setSelectedItem(data);
       }
-
-      const fetchedProducts = await fetch("/api/products");
-
-      const response = await fetchedProducts.json();
-      setData(response.data);
     }
-    resolveParams();
-    fetchingProducts();
+    loadData();
   }, [props.params]);
 
-  // Safely calculating the item index
-  const itemIndex = params.item || 0; // Default to 0 if undefined
-  const selectedItem = data[itemIndex] || data[0];
-  const selectedImage = selectedItem?.image || "/assets/shop/item1.png"; // Default to item1 or food1 if out of range
+  // Safely calculating details
+  const selectedImage = selectedItem?.image
+    ? urlFor(selectedItem?.image).url()
+    : "/assets/shop/item1.png"; // Default to item1 or food1 if out of range
   const title = selectedItem?.name || "Fresh Lime"; // for title
   const price = selectedItem?.price || 43; // for price
   const rating = selectedItem?.rating || 4; //for rating
+  const category = selectedItem?.category || "Fast Food"; //for category
+  const description = selectedItem?.description || "Very Yummy Very Delicious"; //for description
+  const tags = selectedItem?.tags || ["Fast Food"]; //for tags
+  const TotalReviews = selectedItem?.TotalReviews || 22; //for totalReviews
+  const Reviews = selectedItem?.reviews || ["Good", "Yummy"]; //for reviews
 
   // Handler for quantity change
   const handleQuantityChange = (newQuantity: number) => {
@@ -85,7 +66,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    addToCart({ ...selectedItem, quantity });
+    addToCart({ ...selectedItem!, quantity, image: selectedImage });
     setSuccessMessage(`${title} has been added to Cart Successfully!`);
     setTimeout(() => {
       setSuccessMessage("");
@@ -159,12 +140,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
               {title}
             </h1>
             <p className="text-[14px] lg:text-[18px] font-[300] text-txtGray pb-5 border-b-2 border-gray-100 mb-5">
-              Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-              sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-              juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-              seitan poutine tumeric. Gastropub blue bottle austin listicle
-              pour-over, neutra jean shorts keytar banjo tattooed umami
-              cardigan.
+              {description}
             </p>
 
             <span className="font-bold font-sans text-[20px] lg:text-[32px] text-txtBlack">
@@ -191,14 +167,11 @@ const EachItem = (props: { params: Promise<Params> }) => {
                   {rating}.0 Rating
                 </span>
                 <span className="flex items-center text-txtlight text-[14px] lg:text-[16px] ml-3 pl-4 h-[15px] border-l-2 border-gray-200 min-[1100px]:text-nowrap">
-                  22 Reviews
+                  {TotalReviews} Reviews
                 </span>
               </span>
             </div>
-            <p className="text-[14px] lg:text-[18px] font-normal pt-2 text-txtBlack">
-              Dictum/cursus/Risus
-            </p>
-            <div className="flex flex-col min-[1200px]:flex-row mt-6 items-start lg:items-center pb-7 gap-5 border-b-2 border-gray-100 mb-5">
+            <div className="flex flex-col min-[1200px]:flex-row mt-8 items-start lg:items-center pb-7 gap-5 border-b-2 border-gray-100 mb-5">
               {/* Quantity */}
               <div className="flex items-center">
                 <QuantitySelector
@@ -218,12 +191,11 @@ const EachItem = (props: { params: Promise<Params> }) => {
               </button>
             </div>
             <div className="flex flex-col space-y-2">
-              <Image src={addTowish} alt="addTowish" />
               <p className="text-txtBlack">
-                Category: <span className="text-txtGray">Pizza</span>
+                Category: <span className="text-txtGray">{category}</span>
               </p>
               <p className="text-txtBlack">
-                Tag: <span className="text-txtGray">Our Shop</span>
+                Tags: <span className="text-txtGray">{tags.join(" | ")}</span>
               </p>
               <div className="flex flex-col lg:flex-row gap-2 pt-3 border-b-2 border-gray-100 pb-7 w-full">
                 <span className="text-txtBlack">Share:</span>
@@ -267,7 +239,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
         </div>
       </div>
       {/* description */}
-      <EachItemDet />
+      <EachItemDet TotalReviews={TotalReviews} reviews={Reviews} />
     </section>
   );
 };

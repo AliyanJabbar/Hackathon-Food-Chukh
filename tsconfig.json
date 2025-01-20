@@ -37,7 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/scripts/delete-data.mjs"  ],
   "exclude": [
     "node_modules"
   ]

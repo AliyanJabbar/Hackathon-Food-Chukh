@@ -8,10 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      cursor: {
+        "custom-cursor": "url(/assets/cursor/OnlyCursor.png), auto",
+        "custom-cursor-pointer":
+          "url(/assets/cursor/OnlyCursorPointer.png), pointer",
+      },
       keyframes: {
         repeatMot: {
-          from: { transform: 'translate(0rem, 0rem)' },
-          to: { transform: 'translate(0.25rem, -0.15rem)' },
+          from: { transform: "translate(0rem, 0rem)" },
+          to: { transform: "translate(0.25rem, -0.15rem)" },
         },
       },
       animation: {

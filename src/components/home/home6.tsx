@@ -56,7 +56,7 @@ const Home6 = () => {
       {/* See More Button */}
       <div className="flex items-center justify-center mt-10 sm:mt-14">
         <Link
-          href="/"
+          href="/chefs"
           className="py-3 px-7 border border-orangeLike bg-transparent text-[14px] sm:text-[16px] hover:text-orangeLike transition-colors duration-300 text-white rounded-full"
         >
           See More

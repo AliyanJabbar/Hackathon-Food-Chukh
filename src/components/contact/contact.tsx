@@ -130,7 +130,7 @@ const ContactPage: React.FC = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full h-[50px] py-2 px-5 rounded-md border-[2px] border-orangeLike outline-none focus:shadow-md transition-all duration-200"
+                  className="w-full bg-white h-[50px] py-2 px-5 rounded-md border-[2px] border-orangeLike outline-none focus:shadow-md transition-all duration-200"
                 />
                 {errors.name && (
                   <span className="text-red-500 text-sm">{errors.name}</span>
@@ -151,7 +151,7 @@ const ContactPage: React.FC = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full h-[50px] py-2 px-5 rounded-md border-[2px] border-orangeLike outline-none focus:shadow-md transition-all duration-200"
+                  className="w-full bg-white h-[50px] py-2 px-5 rounded-md border-[2px] border-orangeLike outline-none focus:shadow-md transition-all duration-200"
                 />
                 {errors.email && (
                   <span className="text-red-500 text-sm">{errors.email}</span>
@@ -171,7 +171,7 @@ const ContactPage: React.FC = () => {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  className="py-2 px-5 rounded-md border-[2px] border-orangeLike outline-none focus:shadow-md transition-all duration-200 resize-none"
+                  className="py-2 px-5 bg-white rounded-md border-[2px] border-orangeLike outline-none focus:shadow-md transition-all duration-200 resize-none"
                   cols={35}
                   rows={5}
                 />

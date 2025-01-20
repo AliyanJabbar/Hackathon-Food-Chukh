@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import searchIcon from "../../public/assets/icons/MagnifyingGlass-icon.png";
 import userIcon from "../../public/assets/icons/User-icon.png";
@@ -8,18 +8,43 @@ import bagIcon from "../../public/assets/icons/Bag-icon.png";
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 import { FaAngleDown } from "react-icons/fa";
+import { urlFor } from "@/sanity/lib/image";
+import { client } from "../sanity/lib/client";
 
 const TopHeader = () => {
   const { cart } = useCart();
   const pathname = usePathname();
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); //for responsiveness of menu(navbar)
+  const [isPagesOpen, setIsPagesOpen] = useState(false); //for dropdown of pages
+  const [isSearchOpen, setIsSearchOpen] = useState(false); //if search is Open
+  const [isClosingSearch, setIsClosingSearch] = useState(false); //if search is Closing for animation
+  const [searchQuery, setSearchQuery] = useState(""); //Searched thing
+  interface Product {
+    id: number;
+    name: string;
+    displayName?: React.ReactNode;
+    description: string;
+    image: string;
+  }
+  const [products, setProducts] = useState<Product[]>([]); //Products from sanity
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); //filtering Products based on search query
 
-  const [isPagesOpen, setIsPagesOpen] = useState(false);
+  //for fetching data from sanity
+  useEffect(() => {
+    const query = `*[_type == "food"]{ id, name, description, image }`;
+    client
+      .fetch(query)
+      .then((data) => {
+        console.log("Fetched data:", data);
+        setProducts(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+      });
+  }, []);
 
-  const toggleIsPagesOpen = () => {
-    setIsPagesOpen(!isPagesOpen);
-  };
+  //handling Navigation with a delay for animation
   const handleNavigation = (path: string) => {
     if (path !== pathname) {
       setIsMenuOpen(false);
@@ -29,16 +54,169 @@ const TopHeader = () => {
     }
   };
 
+  //search functionality
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      const results = products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(results);
+    } else {
+      setFilteredProducts([]);
+    }
+  };
+
+  //for updating filtered products real time while searching
+  // const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const query = e.target.value;
+  //   setSearchQuery(query);
+
+  //   if (query.trim()) {
+  //     const results = products
+  //       .filter((product) =>
+  //         product.name.toLowerCase().includes(query.toLowerCase())
+  //       )
+  //       .map((product) => {
+  //         const matchIndex = product.name
+  //           .toLowerCase()
+  //           .indexOf(query.toLowerCase());
+  //         const beforeMatch = product.name.slice(0, matchIndex);
+  //         const match = product.name.slice(
+  //           matchIndex,
+  //           matchIndex + query.length
+  //         );
+  //         const afterMatch = product.name.slice(matchIndex + query.length);
+
+  //         return {
+  //           ...product,
+  //           displayName: (
+  //             <span>
+  //               {beforeMatch}
+  //               <span className="text-orangeLike font-semibold">{match}</span>
+  //               {afterMatch}
+  //             </span>
+  //           ),
+  //         };
+  //       });
+  //     setFilteredProducts(results);
+  //   } else {
+  //     setFilteredProducts([]);
+  //   }
+  // };
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.trim()) {
+      const results = products
+        .filter((product) => {
+          const productName = product.name.toLowerCase();
+          return query
+            .toLowerCase()
+            .split("")
+            .every((letter) => productName.includes(letter));
+        })
+        .map((product) => {
+          const productName = [...product.name];
+          const highlightedName = productName.map((letter) => {
+            if (query.toLowerCase().includes(letter.toLowerCase())) {
+              return (
+                <span
+                  key={Math.random()}
+                  className="text-orangeLike font-semibold"
+                >
+                  {letter}
+                </span>
+              );
+            }
+            return letter;
+          });
+
+          return {
+            ...product,
+            displayName: <span>{highlightedName}</span>,
+          };
+        });
+      setFilteredProducts(results);
+    } else {
+      setFilteredProducts([]);
+    }
+  };
+
+  //key press to perform functions
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+    if (e.key === "Escape") {
+      setIsMenuOpen(false);
+      setIsPagesOpen(false);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  //handling click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const searchArea = document.getElementById("search-area");
+      const pagesDropdown = document.getElementById("pages-dropdown");
+      const searchIcon = document.getElementById("search-icon");
+
+      if (
+        searchArea &&
+        !searchArea.contains(event.target as Node) &&
+        searchIcon &&
+        !searchIcon.contains(event.target as Node)
+      ) {
+        setIsClosingSearch(true);
+        setTimeout(() => {
+          setIsSearchOpen(false);
+          setIsClosingSearch(false);
+          setSearchQuery("");
+          setFilteredProducts([]);
+        }, 1000);
+      }
+
+      if (pagesDropdown && !pagesDropdown.contains(event.target as Node)) {
+        setIsPagesOpen(false);
+      }
+    };
+
+    if (isSearchOpen || isPagesOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSearchOpen, isPagesOpen]);
+
+  //handling scroll animation
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsClosingSearch(true);
+      setTimeout(() => {
+        setIsSearchOpen(false);
+        setIsClosingSearch(false);
+        setSearchQuery("");
+      }, 1000);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isClosingSearch]);
+
   return (
     <header className="text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
       <div className="w-full flex py-5 flex-col min-[800px]:flex-row items-center z-20">
         {/* Logo */}
         <div
           onClick={() => handleNavigation("/")}
-          className="flex title-font font-medium items-center mb-4 min-[800px]:mb-0 cursor-pointer"
+          className="flex title-font font-medium items-center mb-4 min-[800px]:mb-0"
         >
-          <h1 className="ml-3 text-xl text-white font-sans text-[24px] font-bold z-20">
-            Food<span className="text-orangeLike">tuck</span>
+          <h1 className="ml-3 text-xl cursor-pointer text-white font-sans text-[24px] font-bold z-20">
+            Food<span className="text-orangeLike cursor-pointer">Chukh</span>
           </h1>
         </div>
 
@@ -69,7 +247,7 @@ const TopHeader = () => {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } min-[800px]:flex w-full overflow-x-auto min-[800px]:overflow-visible min-[800px]:mx-auto min-[800px]:w-auto justify-center items-center text-base text-[14px] min-[800px]:text-[16px] font-normal gap-2`}
+          }  flex-shrink-0 min-[800px]:flex w-full overflow-x-auto min-[800px]:overflow-visible min-[800px]:mx-auto min-[800px]:w-auto justify-center items-center text-base text-[14px] min-[800px]:text-[16px] font-normal gap-2`}
         >
           <div className="flex flex-col items-center justify-center min-[800px]:flex-row gap-2 md:gap-[2px] min-[780px]:gap-1 min-[820px]:gap-2 min-[900px]:gap-3 lg:gap-4 min-[800px]:w-full flex-nowrap min-[800px]:flex-wrap">
             {[
@@ -83,10 +261,11 @@ const TopHeader = () => {
             ].map((link) =>
               link.label === "Pages" ? (
                 <div
+                  id="pages-dropdown"
                   key={link.label}
                   className="group relative"
                   onClick={() => {
-                    toggleIsPagesOpen();
+                    setIsPagesOpen(!isPagesOpen);
                   }}
                 >
                   <div className="flex gap-1 items-center justify-center cursor-pointer transition-all duration-150 whitespace-nowrap hover:text-orangeLike text-white lg:hover:fill-orangeLike">
@@ -100,6 +279,14 @@ const TopHeader = () => {
                         : "opacity-0 invisible -translate-y-2"
                     } px-6 py-4`}
                   >
+                    <li className="border-b py-2 ">
+                      <Link
+                        href="/chefs"
+                        className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
+                      >
+                        Our Chefs
+                      </Link>
+                    </li>
                     <li className="border-b py-2 ">
                       <Link
                         href="/notFound"
@@ -161,13 +348,88 @@ const TopHeader = () => {
 
         {/* Icons */}
         <div className="flex gap-3 sm:gap-5 mt-4 min-[800px]:mt-0">
-          <div onClick={() => handleNavigation("/")} className="cursor-pointer">
+          <div className="relative cursor-pointer">
+            {isSearchOpen && (
+              <div
+                id="search-area"
+                className={`fixed left-5 right-5 top-10 max-[800px]:top-24 mx-auto max-w-[600px] z-50 ${
+                  isClosingSearch
+                    ? "animate-searchSlideUp"
+                    : "animate-slideDown"
+                }`}
+              >
+                <div
+                  className={`${searchQuery.trim() ? "rounded-b-none" : ""} flex items-center justify-center mx-auto rounded-md border-2 border-orangeLike overflow-hidden shadow-lg bg-white transition-all duration-300 ease-in-out`}
+                >
+                  <input
+                    type="text"
+                    placeholder="Search Something..."
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    onKeyDown={handleKeyPress}
+                    autoFocus
+                    className="w-full outline-none text-gray-600 text-sm px-4 py-3 transition-all duration-200"
+                  />
+                  {/* showing search Results */}
+                  {filteredProducts.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-md max-h-[300px] overflow-y-auto">
+                      {filteredProducts.map((product) => (
+                        <div
+                          key={product.id}
+                          className="p-3 flex items-start justify-start rounded-md hover:bg-gray-100 border-b-2 border-outline cursor-pointer gap-3"
+                          onClick={() => {
+                            router.push(`/shop/${product.id}`);
+                            setIsSearchOpen(false);
+                            setSearchQuery("");
+                            setFilteredProducts([]);
+                          }}
+                        >
+                          <Image
+                            src={urlFor(product.image).url()}
+                            alt={product.name}
+                            width={50}
+                            height={50}
+                            className="rounded-md"
+                          />
+                          <div>
+                            <h2 className="text-txtBlack">
+                              {product.displayName
+                                ? product.displayName
+                                : product.name}
+                            </h2>
+                            <p className="text-txtBlack">
+                              {product.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <button
+                    onClick={handleSearch}
+                    className={`flex items-center justify-center bg-orangeLike px-5 py-[15px] transition-all duration-200 group`}
+                  >
+                    <Image
+                      id="search-icon"
+                      src={searchIcon}
+                      alt="search-icon"
+                      width={24}
+                      height={24}
+                      className="group-hover:rotate-[360deg] cursor-pointer transition-all duration-500"
+                    />
+                  </button>
+                </div>
+              </div>
+            )}
             <Image
+              id="search-icon"
               src={searchIcon}
               alt="search-icon"
               width={24}
               height={24}
-              className="hover:-translate-y-1 transition-all duration-200"
+              className="hover:-translate-y-1 cursor-pointer transition-all duration-200"
+              onClick={() => setIsSearchOpen(true)}
             />
           </div>
           <div
@@ -179,7 +441,7 @@ const TopHeader = () => {
               alt="user-icon"
               width={24}
               height={24}
-              className="hover:-translate-y-1 transition-all duration-200"
+              className="hover:-translate-y-1 cursor-pointer transition-all duration-200"
             />
           </div>
           <div
@@ -187,7 +449,13 @@ const TopHeader = () => {
             className="cursor-pointer"
           >
             <div className="relative hover:-translate-y-1 transition-all duration-200">
-              <Image src={bagIcon} alt="bag-icon" width={24} height={24} />
+              <Image
+                src={bagIcon}
+                alt="bag-icon"
+                width={24}
+                height={24}
+                className="cursor-pointer"
+              />
               {cart.length > 0 && (
                 <span className="absolute -top-[9px] -right-[9px] bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                   {cart.length}

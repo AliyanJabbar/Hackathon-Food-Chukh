@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Blog } from "../../app/blogDb";
+import { Blog } from "../../data/blogs";
 
 const BlogCard: React.FC<Blog> = ({
   date,
