@@ -129,8 +129,10 @@ const EachItem = (props: { params: Promise<Params> }) => {
           {/* Right content */}
           <div className="mt-6 lg:mt-0 lg:pl-14 lg:w-[300px] min-[1100px]:w-[380px] min-[1200px]:w-[480px] min-[1300px]:w-[550px] min-[1400px]:w-[650px] min-[1500px]:w-[730px] min-[1600px]:w-[830px] w-full">
             <div className="flex flex-row justify-between items-center mb-1">
-              <div className="py-[2px] h-fit px-4 bg-orangeLike inline-block rounded-lg text-white text-[12px] lg:text-[14px] text-nowrap">
-                In stock
+              <div
+                className={`${selectedItem?.availiable ? "bg-orangeLike" : "bg-red-600"} py-[2px] h-fit px-4 inline-block rounded-lg text-white text-[12px] lg:text-[14px] text-nowrap`}
+              >
+                {selectedItem?.availiable ? "In stock" : "Out of stock"}
               </div>
               <div className="mt-3 lg:mt-0">
                 <ItemPagination nextLink="/shop" prevLink="/shop" />
