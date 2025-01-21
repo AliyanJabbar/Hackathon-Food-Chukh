@@ -25,25 +25,62 @@ interface Params {
 const EachItem = (props: { params: Promise<Params> }) => {
   // States
   const [quantity, setQuantity] = useState<number>(1);
-  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [selectedItem, setSelectedItem] = useState<Data | null>(null); //state for storing data from api
 
   // fetching Params from props & data from sanity
   useEffect(() => {
-    async function loadData() {
-      //for props
-      const resolvedParams = await props.params;
+    const loadData = async () => {
+      try {
+        const resolvedParams = await props.params;
+        if (!resolvedParams.item) return;
 
-      //fetching from sanity
-      if (resolvedParams.item) {
-        console.log("resolvedParams:", resolvedParams.item);
         const query = `*[_type == "food" && id == ${resolvedParams.item}][0]`;
-        const data = await client.fetch(query);
-        console.log("FetchedData:", data);
+        const data = await client.fetch(
+          query,
+          {},
+          {
+            cache: "no-store", // Disable caching if needed
+          }
+        );
+
+        if (!data) {
+          console.log("No data found for this item");
+          return;
+        }
+
         setSelectedItem(data);
+      } catch (error) {
+        console.error("Sanity data fetch error:", error);
+        setMessage("Unable to load data. Please try again later.");
       }
+    };
+
+    const updateOnlineStatus = () => {
+      if (!navigator.onLine) {
+        setMessage("Check Your Internet Connection!");
+      } else {
+        setMessage("Back Online!");
+        // Refetch data when connection is restored
+        loadData();
+      }
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
+    };
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    // Initial load
+    if (typeof window !== "undefined" && navigator.onLine) {
+      loadData();
     }
-    loadData();
+
+    return () => {
+      window.removeEventListener("online", updateOnlineStatus);
+      window.removeEventListener("offline", updateOnlineStatus);
+    };
   }, [props.params]);
 
   // Safely calculating details
@@ -73,36 +110,36 @@ const EachItem = (props: { params: Promise<Params> }) => {
   //handling add to cart
   const handleAddToCart = () => {
     addToCart({ ...selectedItem!, quantity, image: selectedImage });
-    setSuccessMessage(`${title} has been added to Cart Successfully!`);
+    setMessage(`${title} has been added to Cart Successfully!`);
     setTimeout(() => {
-      setSuccessMessage("");
+      setMessage("");
     }, 3000);
   };
 
   // handling add to wish list
   const handleAddToWishList = () => {
     addToWishList({ ...selectedItem!, quantity, image: selectedImage });
-    setSuccessMessage(`${title} has been added to WishList Successfully!`);
+    setMessage(`${title} has been added to WishList Successfully!`);
     setTimeout(() => {
-      setSuccessMessage("");
+      setMessage("");
     }, 3000);
   };
 
   // handling remove from wish list
   const handleRemoveFromWishList = () => {
     removeFromWish(selectedItem?.id ? selectedItem?.id : 0);
-    setSuccessMessage(`${title} has been removed from WishList!`);
+    setMessage(`${title} has been removed from WishList!`);
     setTimeout(() => {
-      setSuccessMessage("");
+      setMessage("");
     }, 3000);
   };
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <PageHeader heading="Shop Details" title="Shop details" />
-      {successMessage && (
+      {message && (
         <div className="fixed bottom-28 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
-          {successMessage}
+          {message}
         </div>
       )}
       <div className="py-10 px-[5%] mx-auto lg:py-24 lg:px-[7%]">

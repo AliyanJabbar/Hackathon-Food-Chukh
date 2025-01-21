@@ -29,21 +29,51 @@ const TopHeader = () => {
     image: string;
   }
   const [products, setProducts] = useState<Product[]>([]); //Products from sanity
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); //filtering Products based on search query
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); //filtering Products
+  // based on search query
+  const [isOnline, setIsOnline] = useState<boolean>(true);
+  const [message, setMessage] = useState<string>("");
 
-  //for fetching data from sanity
+  // Monitor online/offline status
   useEffect(() => {
-    const query = `*[_type == "food"]{ id, name, description, image }`;
-    client
-      .fetch(query)
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setProducts(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
-  }, []);
+    const updateOnlineStatus = () => {
+      const isNowOnline = navigator.onLine;
+      if (isNowOnline && !isOnline) {
+        setMessage("Back Online!");
+        setTimeout(() => setMessage(""), 5000);
+      } else if (!isNowOnline) {
+        setMessage("Check Your Internet Connection!");
+      }
+      setIsOnline(isNowOnline);
+    };
+    updateOnlineStatus();
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    return () => {
+      window.removeEventListener("online", updateOnlineStatus);
+      window.removeEventListener("offline", updateOnlineStatus);
+    };
+  }, [isOnline]);
+
+  // Fetch data when coming back online
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (isOnline) {
+          const query = `*[_type == "food"]{ id, name, description, image }`;
+          const data = await client.fetch(query);
+          console.log("Fetched data:", data);
+          setProducts(data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [isOnline]);
 
   //handling Navigation with a delay for animation
   const handleNavigation = (path: string) => {
@@ -179,6 +209,12 @@ const TopHeader = () => {
 
   return (
     <header className="text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
+      {/* notification */}
+      {message && (
+        <div className="fixed bottom-28 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
+          {message}
+        </div>
+      )}
       <div className="w-full flex py-5 flex-col min-[800px]:flex-row items-center z-20">
         {/* Logo */}
         <div
@@ -319,6 +355,7 @@ const TopHeader = () => {
         {/* Icons */}
         <div className="flex gap-3 sm:gap-5 mt-4 min-[800px]:mt-0">
           <div className="relative cursor-pointer">
+            {/* search bar */}
             {isSearchOpen && (
               <div
                 id="search-area"
@@ -329,7 +366,7 @@ const TopHeader = () => {
                 }`}
               >
                 <div
-                  className={`${searchQuery.trim() ? "rounded-b-none" : ""} flex items-center justify-center mx-auto rounded-md border-2 border-orangeLike overflow-hidden shadow-lg bg-white transition-all duration-300 ease-in-out`}
+                  className={`${searchQuery.trim() ? "rounded-b-none" : ""} flex items-center justify-center mx-auto rounded-lg border-2 border-orangeLike overflow-hidden shadow-lg bg-white transition-all duration-300 ease-in-out`}
                 >
                   <input
                     type="text"
@@ -338,7 +375,7 @@ const TopHeader = () => {
                     onChange={handleSearchInputChange}
                     onKeyDown={handleKeyPress}
                     autoFocus
-                    className="w-full outline-none text-gray-600 text-sm px-4 py-3 transition-all duration-200"
+                    className="bg-white w-full outline-none text-gray-600 text-sm px-4 py-3 transition-all duration-200"
                   />
                   {/* showing search Results */}
                   {filteredProducts.length > 0 && (

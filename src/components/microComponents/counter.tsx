@@ -40,7 +40,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
         type="text"
         value={quantity}
         readOnly
-        className="w-[60px] h-[50px] font-sans text-txtBlack text-[20px] text-bold text-center border border-x-0 border-txtlight "
+        className="w-[60px] h-[50px] font-sans bg-white text-txtBlack text-[20px] text-bold text-center border border-x-0 border-txtlight "
       />
       <button
         onClick={increment}

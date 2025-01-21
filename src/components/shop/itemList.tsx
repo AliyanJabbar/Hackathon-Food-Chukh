@@ -10,18 +10,57 @@ import { client } from "../../sanity/lib/client";
 
 const ItemList = () => {
   const [products, setProducts] = useState<Data[]>([]);
+  //fetching data from sanity
+  // useEffect(() => {
+  //   try {
+  //     // Check if user is online
+  //     if (!navigator.onLine) {
+  //       console.error("Internet is not connected. Skipping data fetch.");
+  //       return;
+  //     }
+  //     const query = `*[_type == "food"]`;
+  //     client
+  //       .fetch(query)
+  //       .then((data) => {
+  //         console.log("Fetched data:", data);
+  //         setProducts(data);
+  //       })
+  //       .catch((err) => {
+  //         console.error("Error fetching data:", err);
+  //       });
+  //   } catch (error) {
+  //     console.error("Error while fetching data:", error);
+  //   }
+  // }, []);
+  const fetchData = async () => {
+    try {
+      const query = `*[_type == "food"]`;
+      const data = await client.fetch(query);
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    const query = `*[_type == "food"]`;
-    client
-      .fetch(query)
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setProducts(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
+    // Initial fetch
+    if (navigator.onLine) {
+      fetchData();
+    }
+
+    // Handle online events
+    const handleOnline = () => {
+      fetchData();
+    };
+
+    window.addEventListener("online", handleOnline);
+    //offline is handled through header
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+    };
   }, []);
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-[2%] md:px-[7%] py-24 mx-auto">
