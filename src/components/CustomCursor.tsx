@@ -105,14 +105,17 @@ const CustomCursor = () => {
         style={{
           top: position.y,
           left: position.x,
-          backgroundImage: `url(${cursorImage})`, // Dynamically set background image for cursor
-          backgroundSize: "contain", // Ensure image fits cursor area
+          backgroundImage: `url(${cursorImage})`,
+          backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
-          width: "32px", // Customize cursor size
+          backgroundColor: "transparent",
+          width: "32px",
           height: "32px",
-          pointerEvents: "none", // Ensure cursor doesn't block interactions
-          transform: "translate(-25%, -25%)", // Center the cursor
-          zIndex: 9999, // Ensure it's on top
+          pointerEvents: "none",
+          transform: "translate(-25%, -25%)",
+          zIndex: 9999,
+          WebkitBackgroundSize: "contain",
+          MozBackgroundSize: "contain",
         }}
         className="fixed"
       />
@@ -125,11 +128,14 @@ const CustomCursor = () => {
         style={{
           top: position.y,
           left: position.x,
-          backgroundImage: `url(${cursorImage})`, // Optional: Apply the cursor image on click effect
+          backgroundImage: `url(${cursorImage})`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
-          transform: "translate(-25%, -25%)", // Center the click effect
+          backgroundColor: "transparent",
+          transform: "translate(-25%, -25%)",
           transition: "all 0.5s ease-in",
+          WebkitBackgroundSize: "contain",
+          MozBackgroundSize: "contain",
         }}
       />
     </>
