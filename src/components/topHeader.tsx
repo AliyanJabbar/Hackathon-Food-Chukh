@@ -12,11 +12,12 @@ import { urlFor } from "@/sanity/lib/image";
 import { client } from "../sanity/lib/client";
 
 const TopHeader = () => {
-  const { cart } = useCart();
+  const { cart, wishList } = useCart();
   const pathname = usePathname();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false); //for responsiveness of menu(navbar)
   const [isPagesOpen, setIsPagesOpen] = useState(false); //for dropdown of pages
+  const [isUserOpen, setIsUserOpen] = useState(false); //for dropdown of user/admin
   const [isSearchOpen, setIsSearchOpen] = useState(false); //if search is Open
   const [isClosingSearch, setIsClosingSearch] = useState(false); //if search is Closing for animation
   const [searchQuery, setSearchQuery] = useState(""); //Searched thing
@@ -67,42 +68,6 @@ const TopHeader = () => {
   };
 
   //for updating filtered products real time while searching
-  // const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const query = e.target.value;
-  //   setSearchQuery(query);
-
-  //   if (query.trim()) {
-  //     const results = products
-  //       .filter((product) =>
-  //         product.name.toLowerCase().includes(query.toLowerCase())
-  //       )
-  //       .map((product) => {
-  //         const matchIndex = product.name
-  //           .toLowerCase()
-  //           .indexOf(query.toLowerCase());
-  //         const beforeMatch = product.name.slice(0, matchIndex);
-  //         const match = product.name.slice(
-  //           matchIndex,
-  //           matchIndex + query.length
-  //         );
-  //         const afterMatch = product.name.slice(matchIndex + query.length);
-
-  //         return {
-  //           ...product,
-  //           displayName: (
-  //             <span>
-  //               {beforeMatch}
-  //               <span className="text-orangeLike font-semibold">{match}</span>
-  //               {afterMatch}
-  //             </span>
-  //           ),
-  //         };
-  //       });
-  //     setFilteredProducts(results);
-  //   } else {
-  //     setFilteredProducts([]);
-  //   }
-  // };
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -151,6 +116,7 @@ const TopHeader = () => {
     if (e.key === "Escape") {
       setIsMenuOpen(false);
       setIsPagesOpen(false);
+      setIsUserOpen(false);
       setIsSearchOpen(false);
       setSearchQuery("");
     }
@@ -160,7 +126,8 @@ const TopHeader = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const searchArea = document.getElementById("search-area");
-      const pagesDropdown = document.getElementById("pages-dropdown");
+      const PagesDropdown = document.getElementById("pages-dropdown");
+      const userDropdown = document.getElementById("user-dropdown");
       const searchIcon = document.getElementById("search-icon");
 
       if (
@@ -178,19 +145,22 @@ const TopHeader = () => {
         }, 1000);
       }
 
-      if (pagesDropdown && !pagesDropdown.contains(event.target as Node)) {
+      if (PagesDropdown && !PagesDropdown.contains(event.target as Node)) {
         setIsPagesOpen(false);
+      }
+      if (userDropdown && !userDropdown.contains(event.target as Node)) {
+        setIsUserOpen(false);
       }
     };
 
-    if (isSearchOpen || isPagesOpen) {
+    if (isSearchOpen || isPagesOpen || isUserOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isSearchOpen, isPagesOpen]);
+  }, [isSearchOpen, isPagesOpen, isUserOpen]);
 
   //handling scroll animation
   useEffect(() => {
@@ -405,7 +375,6 @@ const TopHeader = () => {
                       ))}
                     </div>
                   )}
-
                   <button
                     onClick={handleSearch}
                     className={`flex items-center justify-center bg-orangeLike px-5 py-[15px] transition-all duration-200 group`}
@@ -422,6 +391,7 @@ const TopHeader = () => {
                 </div>
               </div>
             )}
+            {/* search Icon on header */}
             <Image
               id="search-icon"
               src={searchIcon}
@@ -432,18 +402,78 @@ const TopHeader = () => {
               onClick={() => setIsSearchOpen(true)}
             />
           </div>
-          <div
-            onClick={() => handleNavigation("/userDetails")}
-            className="cursor-pointer"
-          >
-            <Image
+          <div className="cursor-pointer">
+            {/* user Icon */}
+            {/* <Image
               src={userIcon}
               alt="user-icon"
               width={24}
               height={24}
               className="hover:-translate-y-1 cursor-pointer transition-all duration-200"
-            />
+              onClick={() => {
+                setIsUserOpen(!isUserOpen);
+              }}
+            /> */}
+            <div
+              className="relative hover:-translate-y-1 transition-all duration-200"
+              onClick={() => {
+                setIsUserOpen(!isUserOpen);
+              }}
+            >
+              <Image
+                src={userIcon}
+                alt="user-icon"
+                width={24}
+                height={24}
+                className="cursor-pointer"
+              />
+              {wishList.length > 0 && (
+                <span className="absolute -top-[9px] -right-[9px] bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {wishList.length}
+                </span>
+              )}
+            </div>
+            {isUserOpen && (
+              <div
+                id="user-dropdown"
+                className="group relative"
+                onClick={() => {
+                  setIsUserOpen(!isUserOpen);
+                }}
+              >
+                <ul
+                  className={`absolute shadow-lg bg-black/10 backdrop-blur-md text-white space-y-3 top-5  -left-32 min-w-[250px] z-50 transition-all duration-300 ${
+                    isUserOpen
+                      ? "opacity-100 visible translate-y-0"
+                      : "opacity-0 invisible -translate-y-2"
+                  } px-6 py-4`}
+                >
+                  <li className="border-b py-2 ">
+                    <Link
+                      href="/userDetails"
+                      className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
+                    >
+                      Login / SignUp
+                    </Link>
+                  </li>
+                  <li className="relative border-b py-2 ">
+                    <Link
+                      href="/wishList"
+                      className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
+                    >
+                      Your WishList
+                    </Link>
+                    {wishList.length > 0 && (
+                      <span className="absolute top-2 right-0 bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        {wishList.length}
+                      </span>
+                    )}
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
+          {/* bag icon (Cart) */}
           <div
             onClick={() => handleNavigation("/shoppingCart")}
             className="cursor-pointer"

@@ -49,9 +49,9 @@ export default function ClientLayout({
 
   return (
     <AuthProvider>
-      <html lang="en" className="cursor-none">
+      <html lang="en" className=" cursor-default md:cursor-none ">
         <body
-          className={`${inter.className} ${animationClass} cursor-none h-full ${
+          className={`${inter.className} ${animationClass} cursor-default md:cursor-none h-full ${
             isContentVisible ? "bg-white" : "bg-blackish"
           }`}
         >

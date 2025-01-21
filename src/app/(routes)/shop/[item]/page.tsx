@@ -16,6 +16,7 @@ import { useCart } from "@/context/CartContext";
 import { Data } from "../../../../data/foods";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
+import { FaHeart } from "react-icons/fa6";
 
 interface Params {
   item?: number;
@@ -63,11 +64,34 @@ const EachItem = (props: { params: Promise<Params> }) => {
     setQuantity(newQuantity);
   };
 
-  const { addToCart } = useCart();
+  const { addToCart, addToWishList, wishList, removeFromWish } = useCart();
 
+  //checking if item is in wishlist or not
+  const isInWishlist =
+    selectedItem && wishList.some((item) => item.id === selectedItem.id);
+
+  //handling add to cart
   const handleAddToCart = () => {
     addToCart({ ...selectedItem!, quantity, image: selectedImage });
     setSuccessMessage(`${title} has been added to Cart Successfully!`);
+    setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
+  };
+
+  // handling add to wish list
+  const handleAddToWishList = () => {
+    addToWishList({ ...selectedItem!, quantity, image: selectedImage });
+    setSuccessMessage(`${title} has been added to WishList Successfully!`);
+    setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
+  };
+
+  // handling remove from wish list
+  const handleRemoveFromWishList = () => {
+    removeFromWish(selectedItem?.id ? selectedItem?.id : 0);
+    setSuccessMessage(`${title} has been removed from WishList!`);
     setTimeout(() => {
       setSuccessMessage("");
     }, 3000);
@@ -193,12 +217,33 @@ const EachItem = (props: { params: Promise<Params> }) => {
               </button>
             </div>
             <div className="flex flex-col space-y-2">
+              {/* Add to wish list */}
+              <div
+                className="flex group gap-2 items-center my-3"
+                onClick={() => {
+                  isInWishlist
+                    ? handleRemoveFromWishList()
+                    : handleAddToWishList();
+                }}
+              >
+                <FaHeart
+                  size={25}
+                  color={`${isInWishlist ? "red" : "black"}`}
+                />
+
+                <p className="text-txtBlack font-bold group-hover:text-orangeLike transition">
+                  Add to WishList
+                </p>
+              </div>
+              {/* category */}
               <p className="text-txtBlack">
                 Category: <span className="text-txtGray">{category}</span>
               </p>
+              {/* tags */}
               <p className="text-txtBlack">
                 Tags: <span className="text-txtGray">{tags.join(" | ")}</span>
               </p>
+              {/* social links */}
               <div className="flex flex-col lg:flex-row gap-2 pt-3 border-b-2 border-gray-100 pb-7 w-full">
                 <span className="text-txtBlack">Share:</span>
                 <div className="flex gap-4 ">
