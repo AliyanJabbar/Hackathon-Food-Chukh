@@ -16,7 +16,6 @@
   box-sizing: border-box;
 }
 
-
 @media (max-width: 768px) {
   * {
     cursor: default !important;
@@ -223,4 +222,35 @@
 
 .animate-slideDown {
   animation: slideDown 1s ease-in-out forwards;
+}
+
+
+@keyframes slideInBounce {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  80% {
+    transform: translateX(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 0; /* Fade out at the end */
+  }
+}
+.animate-message {
+  animation: slideInBounce 4s ease-in-out forwards;
 }

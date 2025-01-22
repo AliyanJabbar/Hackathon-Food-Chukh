@@ -17,6 +17,7 @@ import { Data } from "../../../../data/foods";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { FaHeart } from "react-icons/fa6";
+import Loading from "@/app/loading";
 
 interface Params {
   item?: number;
@@ -25,7 +26,9 @@ interface Params {
 const EachItem = (props: { params: Promise<Params> }) => {
   // States
   const [quantity, setQuantity] = useState<number>(1);
-  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<{ id: number; message: string }[]>(
+    []
+  );
   const [selectedItem, setSelectedItem] = useState<Data | null>(null); //state for storing data from api
 
   // fetching Params from props & data from sanity
@@ -40,7 +43,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
           query,
           {},
           {
-            cache: "no-store", // Disable caching if needed
+            cache: "no-store",
           }
         );
 
@@ -52,21 +55,14 @@ const EachItem = (props: { params: Promise<Params> }) => {
         setSelectedItem(data);
       } catch (error) {
         console.error("Sanity data fetch error:", error);
-        setMessage("Unable to load data. Please try again later.");
+        addMessage("Unable to load data. Please try again later.");
       }
     };
 
     const updateOnlineStatus = () => {
-      if (!navigator.onLine) {
-        setMessage("Check Your Internet Connection!");
-      } else {
-        setMessage("Back Online!");
-        // Refetch data when connection is restored
+      if (navigator.onLine) {
         loadData();
       }
-      setTimeout(() => {
-        setMessage("");
-      }, 5000);
     };
 
     window.addEventListener("online", updateOnlineStatus);
@@ -84,17 +80,36 @@ const EachItem = (props: { params: Promise<Params> }) => {
   }, [props.params]);
 
   // Safely calculating details
-  const selectedImage = selectedItem?.image
-    ? urlFor(selectedItem?.image).url()
-    : "/assets/shop/item1.png"; // Default to item1 or food1 if out of range
-  const title = selectedItem?.name || "Fresh Lime"; // for title
-  const price = selectedItem?.price || 43; // for price
-  const rating = selectedItem?.rating || 4; //for rating
-  const category = selectedItem?.category || "Fast Food"; //for category
-  const description = selectedItem?.description || "Very Yummy Very Delicious"; //for description
-  const tags = selectedItem?.tags || ["Fast Food"]; //for tags
-  const TotalReviews = selectedItem?.TotalReviews || 22; //for totalReviews
-  const Reviews = selectedItem?.reviews || ["Good", "Yummy"]; //for reviews
+  const selectedImage =
+    (selectedItem?.image && urlFor(selectedItem?.image).url()) ||
+    "assets/shop/item1.png";
+  const title = selectedItem?.name;
+  const price = selectedItem?.price;
+  const rating = selectedItem?.rating || 4;
+  const category = selectedItem?.category;
+  const description = selectedItem?.description;
+  const tags = selectedItem?.tags || ["Delicious", "Fast Food"];
+  const TotalReviews = selectedItem?.TotalReviews || 2;
+  const Reviews = selectedItem?.reviews || [
+    "Very Good Taste",
+    "Smell is amazing",
+  ];
+
+  //function for handling messages
+  const addMessage = (newMessage: string) => {
+    const id = Date.now(); // Use timestamp as unique ID
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { id, message: newMessage },
+    ]);
+
+    // Remove the message after 5 seconds
+    setTimeout(() => {
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== id)
+      );
+    }, 5000);
+  };
 
   // Handler for quantity change
   const handleQuantityChange = (newQuantity: number) => {
@@ -110,38 +125,33 @@ const EachItem = (props: { params: Promise<Params> }) => {
   //handling add to cart
   const handleAddToCart = () => {
     addToCart({ ...selectedItem!, quantity, image: selectedImage });
-    setMessage(`${title} has been added to Cart Successfully!`);
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    addMessage(`${title} has been added to Cart Successfully!`);
   };
 
   // handling add to wish list
   const handleAddToWishList = () => {
     addToWishList({ ...selectedItem!, quantity, image: selectedImage });
-    setMessage(`${title} has been added to WishList Successfully!`);
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    addMessage(`${title} has been added to WishList Successfully!`);
   };
 
   // handling remove from wish list
   const handleRemoveFromWishList = () => {
     removeFromWish(selectedItem?.id ? selectedItem?.id : 0);
-    setMessage(`${title} has been removed from WishList!`);
-    setTimeout(() => {
-      setMessage("");
-    }, 3000);
+    addMessage(`${title} has been removed from WishList!`);
   };
 
-  return (
+  return selectedItem ? (
     <section className="text-gray-600 body-font overflow-hidden">
       <PageHeader heading="Shop Details" title="Shop details" />
-      {message && (
-        <div className="fixed bottom-28 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
-          {message}
+      {messages.map((msg) => (
+        <div
+          key={msg.id}
+          className="animate-message fixed right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50"
+          style={{ bottom: messages.indexOf(msg) * 50 + 100 }}
+        >
+          {msg.message}
         </div>
-      )}
+      ))}
       <div className="py-10 px-[5%] mx-auto lg:py-24 lg:px-[7%]">
         <div className="flex flex-wrap justify-center items-center lg:justify-normal lg:items-start flex-col lg:flex-row">
           {/* Left images */}
@@ -325,6 +335,8 @@ const EachItem = (props: { params: Promise<Params> }) => {
       {/* description */}
       <EachItemDet TotalReviews={TotalReviews} reviews={Reviews} />
     </section>
+  ) : (
+    <Loading />
   );
 };
 

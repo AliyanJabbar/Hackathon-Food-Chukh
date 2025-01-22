@@ -4,25 +4,42 @@ import { ChefData } from "../../data/chefs";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "../../sanity/lib/client";
 import { useState, useEffect } from "react";
+import Loading from "@/app/loading";
 
 const ChefList = () => {
   const [chefs, setChefs] = useState<ChefData[]>([]);
-  //fetching from sanity
+  //function for fetching data from sanity
+  const fetchData = async () => {
+    try {
+      const query = `*[_type == "chef"]`;
+      const data = await client.fetch(query);
+      setChefs(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  //for internet connection handling
   useEffect(() => {
-    const query = `*[_type == "chef"]`;
-    client
-      .fetch(query)
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setChefs(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
+    // Initial fetch
+    if (navigator.onLine) {
+      fetchData();
+    }
+
+    // Handle online events
+    const handleOnline = () => {
+      fetchData();
+    };
+
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+    };
   }, []);
-  return (
+
+  return chefs.length > 0 ? (
     <section className="px-6 sm:px-10 lg:px-[7%] py-12 sm:py-[100px]">
-      {/* Chefs with images */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 mt-10 sm:mt-12">
         {/* Chef Card Template */}
         {chefs?.map((chef, index) => (
@@ -57,6 +74,8 @@ const ChefList = () => {
         ))}
       </div>
     </section>
+  ) : (
+    <Loading />
   );
 };
 

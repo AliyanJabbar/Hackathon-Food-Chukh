@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import searchIcon from "../../public/assets/icons/MagnifyingGlass-icon.png";
 import userIcon from "../../public/assets/icons/User-icon.png";
@@ -31,21 +31,39 @@ const TopHeader = () => {
   const [products, setProducts] = useState<Product[]>([]); //Products from sanity
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); //filtering Products
   // based on search query
-  const [isOnline, setIsOnline] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
 
-  // Monitor online/offline status
+  //function for fetching data from sanity
+  const fetchProducts = async () => {
+    try {
+      const query = `*[_type == "food"]{ id, name, description, image }`;
+      const data = await client.fetch(query);
+      setProducts(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return products; // Use existing products state as fallback
+    }
+  };
+
   useEffect(() => {
+    let isFirstLoad = true; // Flag to track the initial page load
+
     const updateOnlineStatus = () => {
       const isNowOnline = navigator.onLine;
-      if (isNowOnline && !isOnline) {
-        setMessage("Back Online!");
-        setTimeout(() => setMessage(""), 5000);
-      } else if (!isNowOnline) {
+
+      if (isNowOnline) {
+        if (!isFirstLoad) {
+          setMessage("Back Online!");
+          setTimeout(() => setMessage(""), 5000);
+        }
+        fetchProducts(); // fetching products if online
+      } else {
         setMessage("Check Your Internet Connection!");
       }
-      setIsOnline(isNowOnline);
+      isFirstLoad = false; // Reset the flag after the first check
     };
+
     updateOnlineStatus();
 
     window.addEventListener("online", updateOnlineStatus);
@@ -55,25 +73,7 @@ const TopHeader = () => {
       window.removeEventListener("online", updateOnlineStatus);
       window.removeEventListener("offline", updateOnlineStatus);
     };
-  }, [isOnline]);
-
-  // Fetch data when coming back online
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (isOnline) {
-          const query = `*[_type == "food"]{ id, name, description, image }`;
-          const data = await client.fetch(query);
-          console.log("Fetched data:", data);
-          setProducts(data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [isOnline]);
+  }, []);
 
   //handling Navigation with a delay for animation
   const handleNavigation = (path: string) => {
@@ -441,16 +441,6 @@ const TopHeader = () => {
           </div>
           <div className="cursor-pointer">
             {/* user Icon */}
-            {/* <Image
-              src={userIcon}
-              alt="user-icon"
-              width={24}
-              height={24}
-              className="hover:-translate-y-1 cursor-pointer transition-all duration-200"
-              onClick={() => {
-                setIsUserOpen(!isUserOpen);
-              }}
-            /> */}
             <div
               className="relative hover:-translate-y-1 transition-all duration-200"
               onClick={() => {
