@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Food Chukh
 
-## Getting Started
+Food Chukh is a web application developed during a hackathon to provide users with an interactive platform for exploring and sharing culinary experiences. The application allows users to discover new recipes, share their own creations, and connect with a community of food enthusiasts.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Recipe Discovery**: Browse a wide variety of recipes submitted by users.
+- **User Submissions**: Share your own recipes with the community.
+- **Community Interaction**: Engage with other users through comments and ratings.
+- **Personalized Recommendations**: Receive suggestions based on your preferences.
+- **Responsive Design**: The application provides full responsiveness to it's users.
+- **Cross Browser Compatibility**: Users can use this website on their desired browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Next.js**: A React framework for server-side rendering and generating static websites.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **Daisy UI**: External library for better UI/UX & ready to use design.
+- **React Icons**: External library for desired icons.
+- **Sanity.io**: A platform for structured content, used as the content management system.
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+The project configurations includes:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js Configuration**: Located in `next.config.mjs`.
+- **Tailwind CSS Configuration**: Located in `tailwind.config.ts`.
+- **Sanity Configuration**: Located in `sanity.config.ts` and `sanity.cli.ts`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Documentation
+- **System Architecture**
+ ![Overview System Design](public/assets/system-design/system-architecture.png)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ ![Detail System Design](public/assets/system-design/det-system-architecture.png)
+For detailed information on the project's architecture, components, and APIs, refer to the documentation available in the `documentation` folder of the repository.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributors
+
+- **Aliyan Jabbar**: [GitHub Profile](https://github.com/AliyanJabbar)
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.

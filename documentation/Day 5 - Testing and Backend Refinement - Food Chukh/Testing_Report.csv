@@ -1,0 +1,23 @@
+Test Case ID,Description,Steps Taken ,Expected Result,Actual Result,Status,Severity,Remarks
+TC001,Initial Website Load Time,"1. Opened PostMan
+2. Enter URL https://hackathon-ui-ux-nine.vercel.app/
+3. Send a GET request",The website should load in under 1-3 seconds,The website loads in 2.58 s,Passed,Low,All steps executed successfully
+TC002,Getting all Products,"1. add /shop in the URL
+2. selected GET request
+3. Send a GET request",The Products should display after fetching from sanity,The products displayed!,Passed,Low,Works as expected
+TC003,Getting Each Products Page,"1. add /shop/[id] in the URL
+2. selected GET request
+3. Send a GET request",Each Product Details page should show!,The Details shown Successfully,Passed,Low,Works as expected
+TC004,Getting Chefs Page,"1. add /ourChefs in the URL
+2. selected GET request
+3. Send a GET request",All chefs should Show after fetching data from sanity!,The Details shown Successfully,Passed,Low,Works as expected
+TC005,Checking Search Functionality,"1. Click on Search Icon 
+2. Add Text on Searc Bar ",The Products should show Based on the text provided!,The Products are showing Successfully,Passed,Low,Works as expected
+TC006,Checking Custom Cursor ,1. Check Custom Cursor on different Browsers,Custom Cursor & pointer should show!,"Not properly Showing on Safari browser! 
+Resolved by updating code for custom cursor",Resolved,Medium,Working as expected after update
+TC007,Checking Responsiveness across browser,"1. Opening & changing layout on different browsers including: Chrome, Edge, FireFox , Safari",Website Should Be responsive!,Website is responsive across different browsers,Passed,Low,Works as expected
+TC008,Checking For Internet Issue Handling,"1.Disconnected the internet 
+2.Opened Website on local host","Website Should give a notification showing That User
+is Offline & fetch the data after the user comes back 
+online!","Working good and handling the no internet issue
+gracefully!",Passed,low,works as expected
