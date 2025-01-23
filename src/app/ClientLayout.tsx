@@ -23,31 +23,33 @@ export default function ClientLayout({
   const router = useRouter();
   const tileCount = 5;
   const isFirstRender = useRef(true);
+  const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]);
 
   useEffect(() => {
     if (isFirstRender.current) {
-      isFirstRender.current = false; // Mark the first render as complete
+      isFirstRender.current = false;
       return;
     }
 
-    const handleRouteChange = () => {
+    if (!visitedRoutes.includes(pathname)) {
+      setVisitedRoutes([...visitedRoutes, pathname]);
+
       requestAnimationFrame(() => {
         setContentVisible(false);
         setAnimationClass("exit");
+
+        setTimeout(() => {
+          router.push(pathname);
+          setTimeout(() => {
+            setAnimationClass("enter");
+            setContentVisible(true);
+          }, 1000);
+        }, 1000);
       });
-
-      setTimeout(() => {
-        router.push(pathname);
-
-        requestAnimationFrame(() => {
-          setAnimationClass("enter");
-          setContentVisible(true);
-        });
-      }, 750);
-    };
-
-    handleRouteChange();
-  }, [pathname, router]);
+    } else {
+      router.push(pathname);
+    }
+  }, [pathname, router, visitedRoutes]);
 
   return (
     <AuthProvider>

@@ -76,12 +76,23 @@ const TopHeader = () => {
   }, []);
 
   //handling Navigation with a delay for animation
+  const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]); //collecting visited routes so that we will not show animation on them
   const handleNavigation = (path: string) => {
     if (path !== pathname) {
       setIsMenuOpen(false);
-      setTimeout(() => {
+      setIsPagesOpen(false);
+      setIsUserOpen(false);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+
+      if (!visitedRoutes.includes(path)) {
+        setVisitedRoutes([...visitedRoutes, path]);
+        setTimeout(() => {
+          router.push(path);
+        }, 1000);
+      } else {
         router.push(path);
-      }, 750);
+      }
     }
   };
 
