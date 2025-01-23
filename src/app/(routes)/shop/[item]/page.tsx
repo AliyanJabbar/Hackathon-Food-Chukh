@@ -18,6 +18,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { FaHeart } from "react-icons/fa6";
 import Loading from "@/app/loading";
+import RelatedProducts from "@/components/shop/eachItem/relatedProducts";
 
 interface Params {
   item?: number;
@@ -192,7 +193,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
                 className="w-full max-w-[400px] h-auto lg:w-[400px] lg:h-[615px] object-cover object-center rounded"
                 src={selectedImage}
                 width={400}
-                height={600}
+                height={615}
               />
             </div>
           </div>
@@ -334,6 +335,8 @@ const EachItem = (props: { params: Promise<Params> }) => {
       </div>
       {/* description */}
       <EachItemDet TotalReviews={TotalReviews} reviews={Reviews} />
+      {/* similar Products */}
+      <RelatedProducts id={selectedItem.id} />
     </section>
   ) : (
     <Loading />

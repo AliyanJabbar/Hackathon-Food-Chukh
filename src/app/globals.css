@@ -7,6 +7,7 @@
 :root {
   --primary: #ff9f0d;
   --secondary: #0d0d0d;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -131,10 +132,12 @@
   height: 20%;
   background-color: var(--primary);
   transform-origin: left;
-  transition:
-    width 0.7s ease,
-    opacity 0.7s ease;
   opacity: 0;
+  will-change: width, opacity;
+  backface-visibility: hidden;
+  transition:
+    width 0.5s var(--transition-timing),
+    opacity 0.5s var(--transition-timing);
 }
 
 .tiles-container.exit .tile {
@@ -150,23 +153,23 @@
 /* Sequential delays for each tile */
 .tiles-container.exit .tile:nth-child(1),
 .tiles-container.enter .tile:nth-child(1) {
-  transition-delay: 0.2s;
+  transition-delay: 0.15s;
 }
 .tiles-container.exit .tile:nth-child(2),
 .tiles-container.enter .tile:nth-child(2) {
-  transition-delay: 0.4s;
+  transition-delay: 0.3s;
 }
 .tiles-container.exit .tile:nth-child(3),
 .tiles-container.enter .tile:nth-child(3) {
-  transition-delay: 0.6s;
+  transition-delay: 0.45s;
 }
 .tiles-container.exit .tile:nth-child(4),
 .tiles-container.enter .tile:nth-child(4) {
-  transition-delay: 0.8s;
+  transition-delay: 0.6s;
 }
 .tiles-container.exit .tile:nth-child(5),
 .tiles-container.enter .tile:nth-child(5) {
-  transition-delay: 1s;
+  transition-delay: 0.75s;
 }
 
 /* blur effect during route change animation */
@@ -223,7 +226,6 @@
 .animate-slideDown {
   animation: slideDown 1s ease-in-out forwards;
 }
-
 
 @keyframes slideInBounce {
   0% {

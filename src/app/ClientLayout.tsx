@@ -31,17 +31,19 @@ export default function ClientLayout({
     }
 
     const handleRouteChange = () => {
-      setContentVisible(false);
-      setAnimationClass("exit");
+      requestAnimationFrame(() => {
+        setContentVisible(false);
+        setAnimationClass("exit");
+      });
 
       setTimeout(() => {
         router.push(pathname);
 
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           setAnimationClass("enter");
           setContentVisible(true);
-        }, 1000);
-      }, 1000);
+        });
+      }, 750);
     };
 
     handleRouteChange();

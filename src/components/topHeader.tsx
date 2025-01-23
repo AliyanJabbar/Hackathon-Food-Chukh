@@ -81,7 +81,7 @@ const TopHeader = () => {
       setIsMenuOpen(false);
       setTimeout(() => {
         router.push(path);
-      }, 1000);
+      }, 750);
     }
   };
 
@@ -208,7 +208,7 @@ const TopHeader = () => {
   }, [isClosingSearch]);
 
   return (
-    <header className="text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
+    <header className="select-none text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
       {/* notification */}
       {message && (
         <div className="fixed bottom-28 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">

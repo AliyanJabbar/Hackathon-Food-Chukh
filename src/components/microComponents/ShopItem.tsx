@@ -17,14 +17,14 @@ const ShopItem = (props: {
     <div className="lg:w-1/4 md:w-1/2 p-3 w-[312px] group">
       <Link
         href={`/shop/${props.link}`}
-        className="block relative h-[267px] w-auto rounded overflow-hidden"
+        className="block relative h-[267px] w-[300px] overflow-hidden"
       >
         <Image
           alt={props.title}
-          className="object-cover object-center w-full h-full block group-hover:scale-110 transition-all duration-300"
+          className="object-cover cursor-pointer object-center w-full h-full block group-hover:scale-110 transition-all duration-300"
           src={props.src}
-          width={200}
-          height={200}
+          width={312}
+          height={267}
         />
       </Link>
       <div className="mt-4 flex justify-between">

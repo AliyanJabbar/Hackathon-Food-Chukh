@@ -1,55 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ShopItem from "../microComponents/ShopItem";
 import DropDown from "../microComponents/dropDown";
 import { PaginationDemo } from "../microComponents/pagination";
 import { urlFor } from "@/sanity/lib/image";
 import { Data } from "../../data/foods";
-import { client } from "../../sanity/lib/client";
 import Loading from "@/app/loading";
+import { useFetchFoods } from "./fetchFoodsFromSanity";
 
 const ItemList = () => {
-  const [products, setProducts] = useState<Data[]>([]);
-
-  //function for fetching data from sanity
-  const fetchData = async () => {
-    try {
-      const query = `*[_type == "food"]`;
-      const data = await client.fetch(query);
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    // Initial fetch
-    if (navigator.onLine) {
-      fetchData();
-    }
-
-    // Handle online events
-    const handleOnline = () => {
-      fetchData();
-    };
-
-    window.addEventListener("online", handleOnline);
-
-    return () => {
-      window.removeEventListener("online", handleOnline);
-    };
-  }, []);
+  const products = useFetchFoods();
 
   return (
     <section className="text-gray-600 body-font">
       {products.length > 0 ? (
-        <div className="container px-[2%] md:px-[7%] py-24 mx-auto">
+        <div className="container px-[2%] md:px-[7%] py-24">
           <div className="flex flex-col justify-center items-center md:justify-start md:items-start gap-7 md:flex-row">
             <DropDown text="Sort By :" />
             <DropDown text="Show :" />
           </div>
-          <div className="flex flex-wrap justify-center">
+          <div className="grid grid-cols-1 min-[660px]:grid-cols-2 lg:grid-cols-3 min-[660px]:gap-3 md:gap-5 lg:gap-10 min-[1100px]:gap-16">
             {products.map((product: Data, ind: number) => (
               <ShopItem
                 key={ind}
