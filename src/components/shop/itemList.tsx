@@ -43,7 +43,7 @@ const ItemList = () => {
               </div>
               <div className="1.5xl:hidden">
                 <button
-                  className="bg-amber-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-600 transition-all duration-300 z-50"
+                  className="bg-amber-500 text-white p-3 sm:p-4 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-600 transition-all duration-300 z-50"
                   onClick={() => setIsSidebarVisible(!isSidebarVisible)}
                 >
                   <Filter className="w-5 h-5" />

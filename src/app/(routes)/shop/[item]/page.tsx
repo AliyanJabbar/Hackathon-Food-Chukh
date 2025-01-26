@@ -23,6 +23,9 @@ import RelatedProducts from "@/components/shop/eachItem/relatedProducts";
 interface Params {
   item?: number;
 }
+interface Product extends Data {
+  removeOpt?: boolean;
+}
 
 const EachItem = (props: { params: Promise<Params> }) => {
   // States
@@ -131,7 +134,13 @@ const EachItem = (props: { params: Promise<Params> }) => {
 
   // handling add to wish list
   const handleAddToWishList = () => {
-    addToWishList({ ...selectedItem!, quantity, image: selectedImage });
+    const productWithRemoveOpt: Product = {
+      ...selectedItem!,
+      quantity,
+      image: selectedImage,
+      removeOpt: true,
+    };
+    addToWishList(productWithRemoveOpt);
     addMessage(`${title} has been added to WishList Successfully!`);
   };
 

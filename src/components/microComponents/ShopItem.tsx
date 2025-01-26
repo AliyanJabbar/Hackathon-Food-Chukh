@@ -13,6 +13,12 @@ const ShopItem = (props: {
 }) => {
   const { removeFromWish } = useCart();
 
+  //hadling delete wishList
+  const handleDelete = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation
+    removeFromWish(props.link);
+  };
+
   return (
     <Link href={`/shop/${props.link}`} className="cursor-pointer group">
       <div className="lg:w-1/4 md:w-1/2 p-3 w-[270px] sm:w-[312px]">
@@ -27,7 +33,7 @@ const ShopItem = (props: {
           />
         </div>
         {/* text */}
-        <div className="mt-4 flex justify-between">
+        <div className="mt-4 flex w-[258px] sm:w-[300px] justify-between">
           <div>
             <h2 className="text-txtBlack md:text-nowrap text-[18px] font-bold">
               {props.title}
@@ -41,13 +47,15 @@ const ShopItem = (props: {
           </div>
 
           {props.RemoveOpt && (
-            <RiDeleteBin2Line
-              onClick={() => {
-                removeFromWish(props.link);
-              }}
-              className="text-red-500 hover:text-red-700"
-              size={25}
-            />
+            <div className="cursor-pointer" onClick={handleDelete}>
+              <RiDeleteBin2Line
+                onClick={() => {
+                  removeFromWish(props.link);
+                }}
+                className="text-red-500 hover:text-red-700"
+                size={25}
+              />
+            </div>
           )}
         </div>
       </div>

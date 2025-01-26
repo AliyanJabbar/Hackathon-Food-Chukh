@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { Data } from "../data/foods";
+
 type CartContextType = {
   cart: Data[];
   wishList: Data[];
@@ -21,14 +22,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   const [cart, setCart] = useState<Data[]>([]);
   const [wishList, setWishList] = useState<Data[]>([]);
 
-  // add to cart
+  // add to wishList
   const addToWishList = (item: Data) => {
     setWishList((prevWishList) => {
       const existingItem = prevWishList.find((i) => i.id === item.id);
       if (existingItem) {
-        return prevWishList.map((i: Data) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
-        );
+        return prevWishList
       }
       return [...prevWishList, item];
     });
@@ -68,7 +67,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   //remove a product from the wish List
   const removeFromWish = (id: number) => {
-    setWishList((prevWishList) => prevWishList.filter((product) => product.id !== id));
+    setWishList((prevWishList) =>
+      prevWishList.filter((product) => product.id !== id)
+    );
   };
 
   return (
@@ -80,7 +81,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         addToWishList,
         updateQuantity,
         removeProduct,
-        removeFromWish
+        removeFromWish,
       }}
     >
       {children}
