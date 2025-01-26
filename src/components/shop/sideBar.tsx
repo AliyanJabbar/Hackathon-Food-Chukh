@@ -55,6 +55,7 @@ export function Sidebar() {
     (item) => item.id === 5 || item.id === 7 || item.id === 2 || item.id === 3
   );
 
+  //for price range
   const [priceRange, setPriceRange] = React.useState<[number, number]>([0, 50]);
 
   const [, setPriceRangeAtom] = useAtom(priceRangeAtom);
@@ -63,6 +64,7 @@ export function Sidebar() {
     setPriceRangeAtom(priceRange);
   };
 
+  // for categories
   const [selectedCategories, setSelectedCategories] = useAtom(
     selectedCategoriesAtom
   );
@@ -74,6 +76,7 @@ export function Sidebar() {
     }
   };
 
+  //for tags
   const [selectedTags, setSelectedTags] = useAtom(selectedTagsAtom);
   const handleTagsChange = (tag: string) => {
     if (selectedTags.includes(tag)) {
@@ -83,7 +86,8 @@ export function Sidebar() {
     }
   };
 
-  const [, setSearchQuery] = useAtom(searchQueryAtom);
+  //for search query
+  const [searchQuery, setSearchQuery] = useAtom(searchQueryAtom);
   return (
     <div className="select-none w-72 border border-outline bg-white text-txtBlack py-4 px-5">
       {/* Search */}
@@ -92,6 +96,7 @@ export function Sidebar() {
           onChange={(e) => {
             setSearchQuery(e.target.value);
           }}
+          value={searchQuery}
           placeholder="Search Product"
           className="w-full bg-[#fff5e7] text-txtBlack rounded-none outline-none border-[#fff5e7] focus:border-orangeLike focus:border placeholder:text-txtlight h-[46px]"
         />

@@ -15,9 +15,9 @@ const ShopItem = (props: {
 
   return (
     <Link href={`/shop/${props.link}`} className="cursor-pointer group">
-      <div className="lg:w-1/4 md:w-1/2 p-3 w-[270px] min-[400px]:w-[312px]">
+      <div className="lg:w-1/4 md:w-1/2 p-3 w-[270px] sm:w-[312px]">
         {/* image */}
-        <div className="block relative h-[225px] w-[258px] min-[400px]:h-[267px] min-[400px]:w-[300px] overflow-hidden">
+        <div className="block relative h-[225px] w-[258px] sm:h-[267px] sm:w-[300px] overflow-hidden">
           <Image
             alt={props.title}
             className="object-cover cursor-pointer object-center w-full h-full block group-hover:scale-110 transition-all duration-300"

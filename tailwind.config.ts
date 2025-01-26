@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: { 
+        '1.5xl': "1370px"
+      },
       cursor: {
         "custom-cursor": "url(/assets/cursor/OnlyCursor.png), auto",
         "custom-cursor-pointer":
