@@ -28,10 +28,11 @@ const ScrollToTop = () => {
   return (
     <div
       onClick={scrollToTop}
-      className={` fixed bottom-8 right-8 bg-orangeLike p-3 rounded-full cursor-pointer hover:bg-orange-600 transition-all duration-500 z-50 
-      ${isVisible 
-        ? 'opacity-100 translate-y-0' 
-        : 'opacity-0 translate-y-20 pointer-events-none'
+      className={` fixed bottom-8 right-8 bg-orangeLike p-3  cursor-pointer transition-all duration-500 z-50 text-white rounded-full shadow-lg hover:bg-amber-600
+      ${
+        isVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-20 pointer-events-none"
       }`}
     >
       <IoIosArrowUp className="cursor-pointer text-white text-2xl" />

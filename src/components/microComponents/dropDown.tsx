@@ -9,7 +9,7 @@ const DropDown = (props: { text: string }) => {
   return (
     <div className="dropdown">
       <div className="flex flex-row items-center gap-2">
-        <p className="text-txtBlack text-[20px] text-nowrap">{props.text}</p>
+        <p className="text-txtBlack text-[20px] text-wrap min-[400px]:text-nowrap">{props.text}</p>
         <div
           tabIndex={0}
           role="button"

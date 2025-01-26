@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import searchIcon from "../../public/assets/icons/MagnifyingGlass-icon.png";
 import userIcon from "../../public/assets/icons/User-icon.png";
@@ -226,11 +226,11 @@ const TopHeader = () => {
           {message}
         </div>
       )}
-      <div className="w-full flex py-5 flex-col min-[800px]:flex-row items-center z-20">
+      <div className="w-full flex py-5 flex-col md:flex-row items-center z-20">
         {/* Logo */}
         <div
           onClick={() => handleNavigation("/")}
-          className="flex title-font font-medium items-center mb-4 min-[800px]:mb-0"
+          className="flex title-font font-medium items-center mb-4 md:mb-0"
         >
           <h1 className="ml-3 text-xl cursor-pointer text-white font-sans text-[24px] font-bold z-20">
             Food<span className="text-orangeLike cursor-pointer">Chukh</span>
@@ -239,7 +239,7 @@ const TopHeader = () => {
 
         {/* Hamburger Icon */}
         <button
-          className="min-[800px]:hidden ml-auto text-white focus:outline-none"
+          className="md:hidden ml-auto text-white focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg
@@ -264,9 +264,9 @@ const TopHeader = () => {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          }  flex-shrink-0 min-[800px]:flex w-full overflow-x-auto min-[800px]:overflow-visible min-[800px]:mx-auto min-[800px]:w-auto justify-center items-center text-base text-[14px] min-[800px]:text-[16px] font-normal gap-2`}
+          }  flex-shrink-0 md:flex overflow-x-hidden w-full md:overflow-visible md:mx-auto md:w-auto justify-center items-center text-base text-[14px] md:text-[16px] font-normal gap-2`}
         >
-          <div className="flex flex-col items-center justify-center min-[800px]:flex-row gap-2 md:gap-[2px] min-[780px]:gap-1 min-[820px]:gap-2 min-[900px]:gap-3 lg:gap-4 min-[800px]:w-full flex-nowrap min-[800px]:flex-wrap">
+          <div className="flex flex-col items-center justify-center md:flex-row gap-2 md:gap-1  lg:gap-3 md:w-full flex-nowrap md:flex-wrap">
             {[
               { label: "Home", path: "/" },
               { label: "Menu", path: "/menu" },
@@ -364,7 +364,7 @@ const TopHeader = () => {
         </nav>
 
         {/* Icons */}
-        <div className="flex gap-3 sm:gap-5 mt-4 min-[800px]:mt-0">
+        <div className="flex gap-3 sm:gap-5 mt-4 md:mt-0">
           <div className="relative cursor-pointer">
             {/* search bar */}
             {isSearchOpen && (
