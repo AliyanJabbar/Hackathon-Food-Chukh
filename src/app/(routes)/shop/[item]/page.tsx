@@ -128,8 +128,12 @@ const EachItem = (props: { params: Promise<Params> }) => {
 
   //handling add to cart
   const handleAddToCart = () => {
-    addToCart({ ...selectedItem!, quantity, image: selectedImage });
-    addMessage(`${title} has been added to Cart Successfully!`);
+    if (selectedItem?.availiable) {
+      addToCart({ ...selectedItem!, quantity, image: selectedImage });
+      addMessage(`${title} has been added to Cart Successfully!`);
+    } else {
+      addMessage(`${title} is out of stock currently!`);
+    }
   };
 
   // handling add to wish list
@@ -196,6 +200,7 @@ const EachItem = (props: { params: Promise<Params> }) => {
                 height={90}
               />
             </div>
+            {/* main image */}
             <div className="mt-5 lg:mt-0">
               <Image
                 alt="ecommerce"

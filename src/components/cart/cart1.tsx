@@ -212,7 +212,7 @@ const ProductTable: React.FC = () => {
                   <input
                     type="text"
                     placeholder="Enter your code"
-                    className="flex-1 border border-gray-300 rounded-md py-2 md:py-[14px] px-4 text-gray-700 focus:outline-none placeholder:text-txtlight mb-3 sm:mb-0"
+                    className="flex-1 border border-gray-300 bg-white rounded-md py-2 md:py-[14px] px-4 text-gray-700 focus:outline-none placeholder:text-txtlight mb-3 sm:mb-0"
                   />
                   <button className="bg-orangeLike hover:bg-orange-500 text-white leading-[26px] text-base md:text-[18px] py-2 md:py-[14px] px-4 rounded-md transition-all duration-200 w-full sm:w-auto">
                     Apply

@@ -203,7 +203,7 @@ const TopHeader = () => {
     };
   }, [isSearchOpen, isPagesOpen, isUserOpen]);
 
-  //handling scroll animation
+  //handling scroll animation for search
   useEffect(() => {
     const handleScroll = () => {
       setIsClosingSearch(true);
@@ -450,14 +450,16 @@ const TopHeader = () => {
               onClick={() => setIsSearchOpen(true)}
             />
           </div>
-          <div className="cursor-pointer">
-            {/* user Icon */}
-            <div
-              className="relative hover:-translate-y-1 transition-all duration-200"
-              onClick={() => {
-                setIsUserOpen(!isUserOpen);
-              }}
-            >
+          {/* user Icon */}
+          <div
+            className="cursor-pointer"
+            id="user-dropdown"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsUserOpen(!isUserOpen);
+            }}
+          >
+            <div className="relative hover:-translate-y-1 transition-all duration-200">
               <Image
                 src={userIcon}
                 alt="user-icon"
@@ -465,51 +467,43 @@ const TopHeader = () => {
                 height={24}
                 className="cursor-pointer"
               />
-              {wishList.length > 0 && (
+              {!isUserOpen && wishList.length > 0 && (
                 <span className="absolute -top-[9px] -right-[9px] bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                   {wishList.length}
                 </span>
               )}
             </div>
-            {isUserOpen && (
-              <div
-                id="user-dropdown"
-                className="group relative"
-                onClick={() => {
-                  setIsUserOpen(!isUserOpen);
-                }}
+            <div className="group relative">
+              <ul
+                className={`absolute shadow-lg bg-black/10 backdrop-blur-md text-white space-y-3 top-5  -left-32 min-w-[250px] z-50 transition-all duration-300 ${
+                  isUserOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
+                } px-6 py-4`}
               >
-                <ul
-                  className={`absolute shadow-lg bg-black/10 backdrop-blur-md text-white space-y-3 top-5  -left-32 min-w-[250px] z-50 transition-all duration-300 ${
-                    isUserOpen
-                      ? "opacity-100 visible translate-y-0"
-                      : "opacity-0 invisible -translate-y-2"
-                  } px-6 py-4`}
-                >
-                  <li className="border-b py-2 ">
-                    <Link
-                      href="/userDetails"
-                      className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
-                    >
-                      Login / SignUp
-                    </Link>
-                  </li>
-                  <li className="relative border-b py-2 ">
-                    <Link
-                      href="/wishList"
-                      className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
-                    >
-                      Your WishList
-                    </Link>
-                    {wishList.length > 0 && (
-                      <span className="absolute top-2 right-0 bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        {wishList.length}
-                      </span>
-                    )}
-                  </li>
-                </ul>
-              </div>
-            )}
+                <li className="border-b py-2 ">
+                  <Link
+                    href="/userDetails"
+                    className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
+                  >
+                    Login / SignUp
+                  </Link>
+                </li>
+                <li className="relative border-b py-2 ">
+                  <Link
+                    href="/wishList"
+                    className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
+                  >
+                    Your WishList
+                  </Link>
+                  {wishList.length > 0 && (
+                    <span className="absolute top-2 right-0 bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                      {wishList.length}
+                    </span>
+                  )}
+                </li>
+              </ul>
+            </div>
           </div>
           {/* bag icon (Cart) */}
           <div

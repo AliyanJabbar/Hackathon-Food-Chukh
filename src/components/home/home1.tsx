@@ -24,7 +24,7 @@ const Home1 = () => {
         <div className="relative z-10 h-full py-[100px]">
           <div className="px-[5%] flex flex-col md:flex-row justify-between gap-10">
             {/* Left Section: Social Icons & Text */}
-            <div className="flex flex-col md:flex-row gap-10 items-center md:items-start">
+            <div className="flex flex-row gap-10 items-center md:items-start">
               {/* Social Icons */}
               <div className="flex flex-col items-center  space-y-8">
                 {/* Top line */}
