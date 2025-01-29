@@ -270,10 +270,10 @@ const EachItem = (props: { params: Promise<Params> }) => {
               {/* Add to cart button */}
               <button
                 onClick={handleAddToCart}
-                className="text-white bg-orangeLike h-[40px] lg:h-[50px] flex gap-2 items-center w-full lg:w-[191px] px-4 lg:px-5"
+                className="cursor-pointer text-white bg-orangeLike h-[40px] lg:h-[50px] flex gap-2 items-center w-full lg:w-[191px] px-4 lg:px-5"
               >
-                <Image src={bagIcon} alt="bag icon" />
-                <p className="text-[14px] lg:text-[18px] font-[300] text-nowrap">
+                <Image src={bagIcon} alt="bag icon" className="cursor-pointer" />
+                <p className="cursor-pointer text-[14px] lg:text-[18px] font-[300] text-nowrap">
                   Add to cart
                 </p>
               </button>

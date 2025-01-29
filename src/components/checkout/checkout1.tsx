@@ -7,6 +7,9 @@ import caretLeft from "../../../public/assets/icons/CaretLeft.png";
 import caretLeftBack from "../../../public/assets/icons/CaretLeft checkout.png";
 import Link from "next/link";
 import Button from "../microComponents/button";
+import handleCheckout from "./HandleCheckout";
+import { useSearchParams } from "next/navigation";
+import Loading from "@/app/loading";
 
 // for sanitizing inputs
 const sanitizeInput = (input: string): string => {
@@ -29,8 +32,9 @@ const CheckoutPage = () => {
   const [checked, setChecked] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("Pakistan");
   const [cities, setCities] = useState(countryCityMapping["Pakistan"]);
-  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
+  //handling country change
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const country = e.target.value;
     setSelectedCountry(country);
@@ -134,26 +138,50 @@ const CheckoutPage = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  //handling form submit
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Form submitted:", formValues);
-      setSuccessMessage("Order Has Been Placed Successfully!");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 4000);
+      setIsLoading(true);
+      await handleCheckout(cart);
+      setIsLoading(false);
     }
   };
 
+  //handling payment cancelled
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const CancelMessage = searchParams.get("message");
+    if (CancelMessage) {
+      setMessage(CancelMessage);
+      setTimeout(() => setMessage(""), 5000);
+    }
+  }, [searchParams]);
+
+  //waiting for local storage
+  const [dataLoaded, setDataLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDataLoaded(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!dataLoaded) {
+    return <Loading />;
+  }
   return (
     <div className="py-[100px] md:px-[7%] px-[3%] ">
       {cart.length > 0 ? (
         <form onSubmit={handleSubmit}>
           <div className="bg-white text-black min-h-screen ">
             {/* success message */}
-            {successMessage && (
-              <div className="fixed top-5 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
-                {successMessage}
+            {message && (
+              <div className="fixed bottom-24 right-5 bg-orangeLike text-white px-4 py-2 rounded shadow-lg z-50">
+                {message}
               </div>
             )}
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -369,9 +397,17 @@ const CheckoutPage = () => {
                   <button
                     type="submit"
                     className="flex items-center justify-center gap-1 bg-orangeLike text-white px-6 py-[10px]"
+                    onClick={handleSubmit}
+                    disabled={isLoading}
                   >
-                    Proceed to shipping{" "}
-                    <Image src={caretLeft} alt="caretLeft" />
+                    {isLoading ? (
+                      <h2>Loading...</h2>
+                    ) : (
+                      <div className="flex items-center justify-center gap-1">
+                        Proceed to payment{" "}
+                        <Image src={caretLeft} alt="caretLeft" />
+                      </div>
+                    )}
                   </button>
                 </div>
               </div>
@@ -427,8 +463,10 @@ const CheckoutPage = () => {
                 <button
                   type="submit"
                   className="group flex items-center justify-center gap-2 mt-6 bg-orangeLike text-white text-[18px] w-full py-3 rounded"
+                  onClick={handleSubmit}
+                  disabled={isLoading}
                 >
-                  Place an order
+                  {isLoading ? "Loading..." : "Place an order"}
                   <Image
                     className="group-hover:translate-x-2 transition-all duration-300"
                     src={arrow}

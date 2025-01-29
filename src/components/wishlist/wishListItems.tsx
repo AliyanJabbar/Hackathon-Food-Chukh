@@ -1,16 +1,32 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { Data } from "@/data/foods";
 import ShopItem from "@/components/microComponents/ShopItem";
 import { urlFor } from "@/sanity/lib/image";
 import Button from "../microComponents/button";
+import Loading from "@/app/loading";
 
 const WishListItems = () => {
   interface Product extends Data {
     removeOpt?: boolean;
   }
   const { wishList } = useCart();
+
+  //waiting for local storage
+  const [dataLoaded, setDataLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDataLoaded(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!dataLoaded) {
+    return <Loading />;
+  }
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-[2%] md:px-[7%] py-24 mx-auto">

@@ -7,6 +7,8 @@ import { useCart } from "@/context/CartContext";
 import Btn from "../microComponents/button";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
+import { useEffect, useState } from "react";
+import Loading from "@/app/loading";
 
 const ProductTable: React.FC = () => {
   const { cart, updateQuantity, removeProduct } = useCart();
@@ -25,6 +27,20 @@ const ProductTable: React.FC = () => {
   const handleRemoveProduct = (id: number) => {
     removeProduct(id);
   };
+
+  //waiting for local storage
+  const [dataLoaded, setDataLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDataLoaded(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!dataLoaded) {
+    return <Loading />;
+  }
 
   return (
     <div className="py-[100px]">
