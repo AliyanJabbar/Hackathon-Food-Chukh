@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 import {
   FaTwitter,
   FaInstagram,
@@ -7,8 +8,17 @@ import {
   FaPinterest,
   FaFacebookF,
 } from "react-icons/fa";
+import sanitizeInput from "../SanitizeInput";
 
 const BlogSidebar = () => {
+  //handling search & sanitizing search
+  const SearchRef = useRef<HTMLInputElement>(null);
+  const handleSearchInput = () => {
+    if (SearchRef.current) {
+      const SanitizedInput = sanitizeInput(String(SearchRef.current.value));
+      SearchRef.current.value = SanitizedInput;
+    }
+  };
   return (
     <aside className="px-4">
       {/* Search Section */}
@@ -18,6 +28,8 @@ const BlogSidebar = () => {
             type="text"
             placeholder="Search Your Keyword..."
             className="w-full border border-outline h-[50px] py-2 px-4 text-sm placeholder-txtVlight focus:outline-none focus:border-orangeLike"
+            onChange={handleSearchInput}
+            ref={SearchRef}
           />
           <button className="flex items-center justify-center absolute top-0 right-0 h-[50px] w-[50px] bg-orangeLike">
             <Image

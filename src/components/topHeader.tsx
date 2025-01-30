@@ -10,6 +10,7 @@ import Link from "next/link";
 import { FaAngleDown } from "react-icons/fa";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "../sanity/lib/client";
+import sanitizeInput from "./SanitizeInput";
 
 const TopHeader = () => {
   const { cart, wishList } = useCart();
@@ -46,6 +47,7 @@ const TopHeader = () => {
     }
   };
 
+  //handling network issues
   useEffect(() => {
     let isFirstLoad = true; // Flag to track the initial page load
 
@@ -99,6 +101,8 @@ const TopHeader = () => {
   //search functionality
   const handleSearch = () => {
     if (searchQuery.trim()) {
+      const sanitizedSearch = sanitizeInput(searchQuery);
+      setSearchQuery(sanitizedSearch);
       const results = products.filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -111,13 +115,14 @@ const TopHeader = () => {
   //for updating filtered products real time while searching
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
-    setSearchQuery(query);
+    const sanitizedSearch = sanitizeInput(query);
+    setSearchQuery(sanitizedSearch);
 
-    if (query.trim()) {
+    if (sanitizedSearch.trim()) {
       const results = products
         .filter((product) => {
           const productName = product.name.toLowerCase();
-          return query
+          return sanitizedSearch
             .toLowerCase()
             .split("")
             .every((letter) => productName.includes(letter));
@@ -125,7 +130,7 @@ const TopHeader = () => {
         .map((product) => {
           const productName = [...product.name];
           const highlightedName = productName.map((letter) => {
-            if (query.toLowerCase().includes(letter.toLowerCase())) {
+            if (sanitizedSearch.toLowerCase().includes(letter.toLowerCase())) {
               return (
                 <span
                   key={Math.random()}

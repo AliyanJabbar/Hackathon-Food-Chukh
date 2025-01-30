@@ -7,8 +7,9 @@ import { useCart } from "@/context/CartContext";
 import Btn from "../microComponents/button";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loading from "@/app/loading";
+import sanitizeInput from "../SanitizeInput";
 
 const ProductTable: React.FC = () => {
   const { cart, updateQuantity, removeProduct } = useCart();
@@ -26,6 +27,18 @@ const ProductTable: React.FC = () => {
   // removing product
   const handleRemoveProduct = (id: number) => {
     removeProduct(id);
+  };
+
+  //handling coupon input
+  const couponInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCouponInput = () => {
+    if (couponInputRef.current) {
+      const sanitizedInput = sanitizeInput(
+        String(couponInputRef.current.value)
+      );
+      couponInputRef.current.value = sanitizedInput;
+    }
   };
 
   //waiting for local storage
@@ -229,6 +242,8 @@ const ProductTable: React.FC = () => {
                     type="text"
                     placeholder="Enter your code"
                     className="flex-1 border border-gray-300 bg-white rounded-md py-2 md:py-[14px] px-4 text-gray-700 focus:outline-none placeholder:text-txtlight mb-3 sm:mb-0"
+                    ref={couponInputRef}
+                    onChange={handleCouponInput}
                   />
                   <button className="bg-orangeLike hover:bg-orange-500 text-white leading-[26px] text-base md:text-[18px] py-2 md:py-[14px] px-4 rounded-md transition-all duration-200 w-full sm:w-auto">
                     Apply

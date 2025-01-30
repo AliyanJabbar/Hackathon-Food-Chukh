@@ -10,13 +10,7 @@ import Button from "../microComponents/button";
 import handleCheckout from "./HandleCheckout";
 import { useSearchParams } from "next/navigation";
 import Loading from "@/app/loading";
-
-// for sanitizing inputs
-const sanitizeInput = (input: string): string => {
-  const div = document.createElement("div");
-  div.textContent = input;
-  return div.innerHTML;
-};
+import sanitizeInput from "../SanitizeInput";
 
 const CheckoutPage = () => {
   interface CountryCityMap {
@@ -159,6 +153,10 @@ const CheckoutPage = () => {
       setTimeout(() => setMessage(""), 5000);
     }
   }, [searchParams]);
+
+  //for difference in b/w proceed to payment and place an order
+  const [isProceeding, setIsProceeding] = useState(false);
+  const [isPlacing, setIsPlacing] = useState(false);
 
   //waiting for local storage
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -397,11 +395,19 @@ const CheckoutPage = () => {
                   <button
                     type="submit"
                     className="flex items-center justify-center gap-1 bg-orangeLike text-white px-6 py-[10px]"
-                    onClick={handleSubmit}
+                    onClick={() => {
+                      handleSubmit;
+                      setIsProceeding(true);
+                    }}
                     disabled={isLoading}
                   >
-                    {isLoading ? (
-                      <h2>Loading...</h2>
+                    {isLoading && isProceeding ? (
+                      <div className="loading-animation">
+                        <h1 className="text-white text-xl flex items-end">
+                          Loading
+                          <span className="bg-white loading loading-dots loading-md align-bottom ml-2"></span>
+                        </h1>
+                      </div>
                     ) : (
                       <div className="flex items-center justify-center gap-1">
                         Proceed to payment{" "}
@@ -463,10 +469,22 @@ const CheckoutPage = () => {
                 <button
                   type="submit"
                   className="group flex items-center justify-center gap-2 mt-6 bg-orangeLike text-white text-[18px] w-full py-3 rounded"
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    handleSubmit;
+                    setIsPlacing(true);
+                  }}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Loading..." : "Place an order"}
+                  {isLoading && isPlacing ? (
+                    <div className="loading-animation">
+                      <h1 className="text-white text-xl flex items-end">
+                        Loading
+                        <span className="bg-white loading loading-dots loading-md align-bottom ml-2"></span>
+                      </h1>
+                    </div>
+                  ) : (
+                    "Place an order"
+                  )}
                   <Image
                     className="group-hover:translate-x-2 transition-all duration-300"
                     src={arrow}

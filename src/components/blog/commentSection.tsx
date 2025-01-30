@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-
-// Helper function to sanitize input
-const sanitizeInput = (input: string): string => {
-  const temp = document.createElement("div");
-  temp.textContent = input;
-  return temp.innerHTML;
-};
+import sanitizeInput from "../SanitizeInput";
 
 // Validation helpers
 const isValidEmail = (email: string): boolean => {
@@ -26,7 +20,13 @@ const CommentForm = () => {
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingCommentText, setEditingCommentText] = useState("");
 
-  const colors = ["bg-blue-500", "bg-green-500", "bg-red-500", "bg-purple-500", "bg-yellow-500"];
+  const colors = [
+    "bg-blue-500",
+    "bg-green-500",
+    "bg-red-500",
+    "bg-purple-500",
+    "bg-yellow-500",
+  ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -189,7 +189,9 @@ const CommentForm = () => {
                   </div>
                 </form>
               ) : (
-                <p className="mt-2 max-w-[300px] break-words text-wrap">{comment.comment}</p>
+                <p className="mt-2 max-w-[300px] break-words text-wrap">
+                  {comment.comment}
+                </p>
               )}
               <div className="flex gap-3 mt-2">
                 <button
@@ -214,4 +216,3 @@ const CommentForm = () => {
 };
 
 export default CommentForm;
-
