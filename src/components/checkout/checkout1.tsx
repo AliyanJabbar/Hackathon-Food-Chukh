@@ -132,15 +132,26 @@ const CheckoutPage = () => {
     return Object.keys(errors).length === 0;
   };
 
-  //handling form submit
-  const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = async (e: React.FormEvent) => {
+  // **handling form submit
+  //handling proceed to payment
+  const [isProceeding, setIsProceeding] = useState(false);
+  const handleProceedToPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted:", formValues);
-      setIsLoading(true);
+      setIsProceeding(true);
       await handleCheckout(cart);
-      setIsLoading(false);
+      setIsProceeding(false);
+    }
+  };
+
+  //handling place an order
+  const [isPlacing, setIsPlacing] = useState(false);
+  const handlePlaceOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setIsPlacing(true);
+      await handleCheckout(cart);
+      setIsPlacing(false);
     }
   };
 
@@ -153,10 +164,6 @@ const CheckoutPage = () => {
       setTimeout(() => setMessage(""), 5000);
     }
   }, [searchParams]);
-
-  //for difference in b/w proceed to payment and place an order
-  const [isProceeding, setIsProceeding] = useState(false);
-  const [isPlacing, setIsPlacing] = useState(false);
 
   //waiting for local storage
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -174,7 +181,7 @@ const CheckoutPage = () => {
   return (
     <div className="py-[100px] md:px-[7%] px-[3%] ">
       {cart.length > 0 ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handlePlaceOrder}>
           <div className="bg-white text-black min-h-screen ">
             {/* success message */}
             {message && (
@@ -395,13 +402,10 @@ const CheckoutPage = () => {
                   <button
                     type="submit"
                     className="flex items-center justify-center gap-1 bg-orangeLike text-white px-6 py-[10px]"
-                    onClick={() => {
-                      handleSubmit;
-                      setIsProceeding(true);
-                    }}
-                    disabled={isLoading}
+                    onClick={handleProceedToPayment}
+                    disabled={isProceeding || isPlacing}
                   >
-                    {isLoading && isProceeding ? (
+                    {isProceeding ? (
                       <div className="loading-animation">
                         <h1 className="text-white text-xl flex items-end">
                           Loading
@@ -409,7 +413,7 @@ const CheckoutPage = () => {
                         </h1>
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center gap-1">
+                      <div className="cursor-pointer flex items-center justify-center gap-1">
                         Proceed to payment{" "}
                         <Image src={caretLeft} alt="caretLeft" />
                       </div>
@@ -469,13 +473,10 @@ const CheckoutPage = () => {
                 <button
                   type="submit"
                   className="group flex items-center justify-center gap-2 mt-6 bg-orangeLike text-white text-[18px] w-full py-3 rounded"
-                  onClick={() => {
-                    handleSubmit;
-                    setIsPlacing(true);
-                  }}
-                  disabled={isLoading}
+                  onClick={handlePlaceOrder}
+                  disabled={isPlacing || isProceeding}
                 >
-                  {isLoading && isPlacing ? (
+                  {isPlacing ? (
                     <div className="loading-animation">
                       <h1 className="text-white text-xl flex items-end">
                         Loading
