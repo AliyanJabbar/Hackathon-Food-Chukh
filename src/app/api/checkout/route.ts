@@ -22,8 +22,8 @@ export async function POST(req: Request) {
       quantity: item.quantity,
     })),
     mode: "payment",
-    success_url: `${req.headers.get("origin")}/`,
-    cancel_url: `${req.headers.get("origin")}/checkout?message=Payment%20cancelled`,
+    success_url: `${req.headers.get("origin")}/?message=Order%20Completed%20Successfully!`,
+    cancel_url: `${req.headers.get("origin")}/checkout?message=Payment%20cancelled!`,
   });
 
   return NextResponse.json({ sessionId: session.id });

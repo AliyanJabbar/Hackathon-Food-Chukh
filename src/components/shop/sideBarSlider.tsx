@@ -13,17 +13,16 @@ export function DualThumbSlider({
   value: [number, number];
   onChange: (value: [number, number]) => void;
 }) {
-  const [isDragging, setIsDragging] = React.useState<"min" | "max" | null>(
-    null
-  );
+  const [isDragging, setIsDragging] = React.useState<"min" | "max" | null>(null);
   const sliderRef = React.useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = (event: React.MouseEvent, thumb: "min" | "max") => {
+  const handlePointerDown = (event: React.PointerEvent, thumb: "min" | "max") => {
+    (event.target as HTMLElement).setPointerCapture(event.pointerId);
     setIsDragging(thumb);
   };
 
-  const handleMouseMove = React.useCallback(
-    (event: MouseEvent) => {
+  const handlePointerMove = React.useCallback(
+    (event: PointerEvent) => {
       if (!isDragging || !sliderRef.current) return;
 
       const rect = sliderRef.current.getBoundingClientRect();
@@ -42,26 +41,26 @@ export function DualThumbSlider({
     [isDragging, min, max, step, value, onChange]
   );
 
-  const handleMouseUp = () => {
+  const handlePointerUp = (event: PointerEvent) => {
     setIsDragging(null);
   };
 
   React.useEffect(() => {
     if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("pointermove", handlePointerMove);
+      window.addEventListener("pointerup", handlePointerUp);
     }
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
     };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [isDragging, handlePointerMove]);
 
   const minPercent = ((value[0] - min) / (max - min)) * 100;
   const maxPercent = ((value[1] - min) / (max - min)) * 100;
 
   return (
-    <div ref={sliderRef} className="relative h-6 w-full">
+    <div ref={sliderRef} className="relative h-6 w-full touch-none">
       <div className="absolute inset-0 h-2 top-1/2 -translate-y-1/2 bg-gray-200 rounded-full">
         <div
           className="absolute h-full bg-orangeLike rounded-full"
@@ -74,7 +73,7 @@ export function DualThumbSlider({
           left: `${minPercent}%`,
           zIndex: 20,
         }}
-        onMouseDown={(e) => handleMouseDown(e, "min")}
+        onPointerDown={(e) => handlePointerDown(e, "min")}
       />
       <div
         className="absolute w-6 h-6 -ml-3 top-1/2 -translate-y-1/2 bg-white border-2 border-orangeLike rounded-full cursor-pointer"
@@ -82,7 +81,7 @@ export function DualThumbSlider({
           left: `${maxPercent}%`,
           zIndex: 10,
         }}
-        onMouseDown={(e) => handleMouseDown(e, "max")}
+        onPointerDown={(e) => handlePointerDown(e, "max")}
       />
     </div>
   );
