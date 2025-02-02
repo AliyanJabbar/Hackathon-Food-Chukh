@@ -8,9 +8,17 @@ import {
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import PageHeader from "@/components/page-header";
+import { useEffect, useState } from "react";
 export default function ProfilePage() {
   const { user, isLoading, isAuthenticated } = useKindeAuth();
-  if (isLoading) {
+
+  //avoiding hydration failed issues
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  // conditional rendering based on the kindeResponse and on client
+  if (isLoading || !isClient) {
     return (
       <div>
         <Loading />

@@ -23,7 +23,7 @@ export default function ClientLayout({
   const router = useRouter();
   const tileCount = 5;
   const isFirstRender = useRef(true);
-  const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]);
+  const [visitedRoutes, setVisitedRoutes] = useState<string[]>(["/"]);
 
   useEffect(() => {
     if (isFirstRender.current) {

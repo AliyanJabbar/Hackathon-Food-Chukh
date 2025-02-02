@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import searchIcon from "../../public/assets/icons/MagnifyingGlass-icon.png";
 import userIcon from "../../public/assets/icons/User-icon.png";
 import bagIcon from "../../public/assets/icons/Bag-icon.png";
@@ -11,6 +11,8 @@ import { FaAngleDown } from "react-icons/fa";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "../sanity/lib/client";
 import sanitizeInput from "./SanitizeInput";
+
+// http://localhost:3000/?message=Order%20Completed%20Successfully!
 
 const TopHeader = () => {
   const { cart, wishList } = useCart();
@@ -78,7 +80,7 @@ const TopHeader = () => {
   }, []);
 
   //handling Navigation with a delay for animation
-  const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]); //collecting visited routes so that we will not show animation on them
+  const [visitedRoutes, setVisitedRoutes] = useState<string[]>(["/"]); //collecting visited routes so that we will not show animation on them
   const handleNavigation = (path: string) => {
     if (path !== pathname) {
       setIsMenuOpen(false);
@@ -222,6 +224,16 @@ const TopHeader = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isClosingSearch]);
+
+  //handling order payment success message
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const successMsg = searchParams.get("message");
+    if (successMsg) {
+      setMessage(successMsg);
+      setTimeout(() => setMessage(""), 5000);
+    }
+  }, [searchParams]);
 
   return (
     <header className="select-none text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
