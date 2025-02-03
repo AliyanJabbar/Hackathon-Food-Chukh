@@ -11,8 +11,9 @@ import { FaAngleDown } from "react-icons/fa";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "../sanity/lib/client";
 import sanitizeInput from "./SanitizeInput";
-
-// http://localhost:3000/?message=Order%20Completed%20Successfully!
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 
 const TopHeader = () => {
   const { cart, wishList } = useCart();
@@ -224,6 +225,17 @@ const TopHeader = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isClosingSearch]);
+
+  //checking if user is authenticated or not
+  const { getUser, isLoading, isAuthenticated } = useKindeAuth();
+  const [user, setUser] = useState<KindeUser<Record<string, string>> | null>(
+    null
+  );
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      setUser(getUser());
+    }
+  }, [isAuthenticated]);
 
   //handling order payment success message
   const searchParams = useSearchParams();
@@ -477,13 +489,23 @@ const TopHeader = () => {
             }}
           >
             <div className="relative hover:-translate-y-1 transition-all duration-200">
-              <Image
-                src={userIcon}
-                alt="user-icon"
-                width={24}
-                height={24}
-                className="cursor-pointer"
-              />
+              {isAuthenticated && !isLoading && user?.picture ? (
+                <Image
+                  src={user?.picture || userIcon}
+                  alt="user-icon"
+                  width={26}
+                  height={26}
+                  className="cursor-pointer rounded-full"
+                />
+              ) : (
+                <Image
+                  src={userIcon}
+                  alt="user-icon"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer"
+                />
+              )}
               {!isUserOpen && wishList.length > 0 && (
                 <span className="absolute -top-[9px] -right-[9px] bg-orangeLike text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                   {wishList.length}
