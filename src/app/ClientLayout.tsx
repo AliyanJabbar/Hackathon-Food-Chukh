@@ -31,7 +31,8 @@ export default function ClientLayout({
       return;
     }
 
-    if (!visitedRoutes.includes(pathname)) {
+    const isStudioRoute = pathname.startsWith("/studio");
+    if (!visitedRoutes.includes(pathname) && !isStudioRoute) {
       setVisitedRoutes([...visitedRoutes, pathname]);
 
       requestAnimationFrame(() => {
@@ -43,8 +44,8 @@ export default function ClientLayout({
           setTimeout(() => {
             setAnimationClass("enter");
             setContentVisible(true);
-          }, 1000);
-        }, 1000);
+          }, 550);
+        }, 550);
       });
     } else {
       router.push(pathname);
@@ -53,13 +54,12 @@ export default function ClientLayout({
 
   return (
     <AuthProvider>
-      <html lang="en" className=" cursor-default md:cursor-none ">
+      <html lang="en">
         <body
           className={`${inter.className} ${animationClass} cursor-default md:cursor-none h-full ${
             isContentVisible ? "bg-white" : "bg-blackish"
           }`}
         >
-          <CustomCursor />
           <Suspense fallback={<Loading />}>
             <CartProvider>
               {/* Tiles container */}
@@ -72,6 +72,7 @@ export default function ClientLayout({
               {/* Content with conditional blur */}
               <div className={isContentVisible ? "" : "blurred"}>
                 <TopHeader />
+                <CustomCursor />
                 {children}
                 <Footer />
               </div>

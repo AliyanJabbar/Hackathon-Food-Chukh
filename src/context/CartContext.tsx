@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { Data } from "../data/foods";
 
 type CartContextType = {
@@ -10,6 +16,7 @@ type CartContextType = {
   updateQuantity: (id: number, quantityChange: number) => void;
   removeProduct: (id: number) => void;
   removeFromWish: (id: number) => void;
+  orderConfirmed: () => void;
   isCartLoaded: boolean;
 };
 
@@ -90,6 +97,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const orderConfirmed = useCallback(() => {
+    setCart([]);
+    localStorage.setItem("cart", JSON.stringify([]));
+  }, []);
+
   return (
     <CartContext.Provider
       value={{
@@ -100,7 +112,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         updateQuantity,
         removeProduct,
         removeFromWish,
-        isCartLoaded, // ✅ Provide loading status
+        orderConfirmed,
+        isCartLoaded,
       }}
     >
       {children}

@@ -7,10 +7,12 @@ import caretLeft from "../../../public/assets/icons/CaretLeft.png";
 import caretLeftBack from "../../../public/assets/icons/CaretLeft checkout.png";
 import Link from "next/link";
 import Button from "../microComponents/button";
-import handleCheckout from "./HandleCheckout";
+import handleEmailSent from "./handleEmailSent";
 import { useSearchParams } from "next/navigation";
 import Loading from "@/app/loading";
 import sanitizeInput from "../SanitizeInput";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
+import handleOrderPost from "./handleOrderPost";
 
 const CheckoutPage = () => {
   interface CountryCityMap {
@@ -99,6 +101,7 @@ const CheckoutPage = () => {
     zipCode: "",
     address1: "",
   });
+
   const validateForm = () => {
     const errors: any = {};
 
@@ -132,6 +135,19 @@ const CheckoutPage = () => {
     return Object.keys(errors).length === 0;
   };
 
+  const { user, isAuthenticated } = useKindeAuth();
+  //checking if user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        firstName: user.given_name || "",
+        lastName: user.family_name || "",
+        email: user.email || "",
+      }));
+    }
+  }, [isAuthenticated, user, formErrors]);
+
   // **handling form submit
   //handling proceed to payment
   const [isProceeding, setIsProceeding] = useState(false);
@@ -139,7 +155,8 @@ const CheckoutPage = () => {
     e.preventDefault();
     if (validateForm()) {
       setIsProceeding(true);
-      await handleCheckout(cart);
+      await handleOrderPost(cart, formValues);
+      await handleEmailSent(cart);
       setIsProceeding(false);
     }
   };
@@ -150,7 +167,8 @@ const CheckoutPage = () => {
     e.preventDefault();
     if (validateForm()) {
       setIsPlacing(true);
-      await handleCheckout(cart);
+      await handleOrderPost(cart, formValues);
+      await handleEmailSent(cart);
       setIsPlacing(false);
     }
   };
@@ -158,9 +176,9 @@ const CheckoutPage = () => {
   //handling payment cancelled
   const searchParams = useSearchParams();
   useEffect(() => {
-    const CancelMessage = searchParams.get("message");
-    if (CancelMessage) {
-      setMessage(CancelMessage);
+    const Message = searchParams.get("message");
+    if (Message) {
+      setMessage(Message);
       setTimeout(() => setMessage(""), 5000);
     }
   }, [searchParams]);
@@ -204,9 +222,13 @@ const CheckoutPage = () => {
                     <input
                       type="text"
                       onChange={handleInputChange}
-                      value={formValues.firstName}
+                      value={
+                        (isAuthenticated && user?.given_name) ||
+                        formValues.firstName
+                      }
                       name="firstName"
                       className="p-3 rounded border border-outline w-full"
+                      disabled={!!(isAuthenticated && user?.given_name)}
                     />
                     {formErrors.firstName && (
                       <p className="text-red-500 text-sm mt-1">
@@ -222,9 +244,13 @@ const CheckoutPage = () => {
                     <input
                       type="text"
                       onChange={handleInputChange}
-                      value={formValues.lastName}
+                      value={
+                        (isAuthenticated && user?.family_name) ||
+                        formValues.lastName
+                      }
                       name="lastName"
                       className="p-3 rounded border border-outline w-full"
+                      disabled={!!(isAuthenticated && user?.family_name)}
                     />
                     {formErrors.lastName && (
                       <p className="text-red-500 text-sm mt-1">
@@ -239,9 +265,12 @@ const CheckoutPage = () => {
                     <input
                       type="email"
                       onChange={handleInputChange}
-                      value={formValues.email}
+                      value={
+                        (isAuthenticated && user?.email) || formValues.email
+                      }
                       name="email"
                       className="p-3 rounded border border-outline w-full"
+                      disabled={!!(isAuthenticated && user?.email)}
                     />
                     {formErrors.email && (
                       <p className="text-red-500 text-sm mt-1">

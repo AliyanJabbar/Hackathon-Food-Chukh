@@ -8,7 +8,6 @@ export default withAuth(
     isReturnToCurrentPage: true,
   }
 );
-
 export const config = {
-  matcher: "/checkout",
+  matcher: ["/checkout", "/api/email", "/api/checkout", "/userDetails"],
 };

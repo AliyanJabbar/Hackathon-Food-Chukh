@@ -10,7 +10,7 @@
 }
 
 * {
-  cursor: none !important;
+  cursor:  none !important;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -123,18 +123,22 @@
   flex-direction: column;
   pointer-events: none;
   overflow: hidden;
+  gap: 0;
 }
 
-/* Individual tile */
+/* individual tile */
 .tile {
   width: 0%;
   height: 20%;
   background-color: var(--primary);
   transform-origin: left;
   transition:
-    width 1s ease,
-    opacity 1s ease;
-  opacity: 0;
+    width 0.5s ease,
+    opacity 0.5s ease;
+  opacity: 1;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 .tiles-container.exit .tile {
@@ -150,23 +154,23 @@
 /* Sequential delays for each tile */
 .tiles-container.exit .tile:nth-child(1),
 .tiles-container.enter .tile:nth-child(1) {
-  transition-delay: 0.2s;
+  transition-delay: 0.11s;
 }
 .tiles-container.exit .tile:nth-child(2),
 .tiles-container.enter .tile:nth-child(2) {
-  transition-delay: 0.4s;
+  transition-delay: 0.22s;
 }
 .tiles-container.exit .tile:nth-child(3),
 .tiles-container.enter .tile:nth-child(3) {
-  transition-delay: 0.6s;
+  transition-delay: 0.33s;
 }
 .tiles-container.exit .tile:nth-child(4),
 .tiles-container.enter .tile:nth-child(4) {
-  transition-delay: 0.8s;
+  transition-delay: 0.44s;
 }
 .tiles-container.exit .tile:nth-child(5),
 .tiles-container.enter .tile:nth-child(5) {
-  transition-delay: 1s;
+  transition-delay: 0.55s;
 }
 
 /* blur effect during route change animation */
@@ -224,7 +228,6 @@
   animation: slideDown 1s ease-in-out forwards;
 }
 
-
 @keyframes slideInBounce {
   0% {
     transform: translateX(100%);
@@ -254,8 +257,6 @@
 .animate-message {
   animation: slideInBounce 4s ease-in-out forwards;
 }
-
-
 
 @keyframes slideLeft {
   0% {

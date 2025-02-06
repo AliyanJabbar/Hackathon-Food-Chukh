@@ -11,12 +11,14 @@ import { FaAngleDown } from "react-icons/fa";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "../sanity/lib/client";
 import sanitizeInput from "./SanitizeInput";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
+import handlePayment from "./checkout/handlePayment";
+import Dialog from "./microComponents/dialog";
+import handleUpdateStatus from "./checkout/handleUpdateStatus";
 
 const TopHeader = () => {
-  const { cart, wishList } = useCart();
+  const { cart, orderConfirmed, isCartLoaded, wishList } = useCart();
   const pathname = usePathname();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false); //for responsiveness of menu(navbar)
@@ -45,7 +47,6 @@ const TopHeader = () => {
       setProducts(data);
       return data;
     } catch (error) {
-      console.error("Error fetching data:", error);
       return products; // Use existing products state as fallback
     }
   };
@@ -90,11 +91,12 @@ const TopHeader = () => {
       setIsSearchOpen(false);
       setSearchQuery("");
 
-      if (!visitedRoutes.includes(path)) {
+      const isStudioRoute = pathname.startsWith("/studio");
+      if (!visitedRoutes.includes(path) && !isStudioRoute) {
         setVisitedRoutes([...visitedRoutes, path]);
         setTimeout(() => {
           router.push(path);
-        }, 1000);
+        }, 550);
       } else {
         router.push(path);
       }
@@ -237,15 +239,73 @@ const TopHeader = () => {
     }
   }, [isAuthenticated]);
 
-  //handling order payment success message
+  //handling messages using search params
   const searchParams = useSearchParams();
+  const [showOrderDialog, setShowOrderDialog] = useState(false); //for showing id to user
+
+  //handling messages
   useEffect(() => {
-    const successMsg = searchParams.get("message");
-    if (successMsg) {
-      setMessage(successMsg);
-      setTimeout(() => setMessage(""), 5000);
-    }
-  }, [searchParams]);
+    const handleEffect = async () => {
+      const Msg = searchParams.get("message");
+      let orderId = localStorage.getItem("orderId");
+      
+      if (Msg) {
+        if (Msg === "Check Your Email To Confirm Order!") {
+          setMessage("Check Your Email To Confirm Order. You Can Close This Tab!");
+        
+        } else if (Msg === "Order Confirmed!") {
+          const orderId = localStorage.getItem("orderId");
+          localStorage.removeItem("copyId");
+  
+          if (orderId && cart.length > 0) {
+            try {
+              localStorage.setItem("copyId", orderId);
+              console.log("copyId", localStorage.getItem("copyId"));
+              setMessage("Moving Towards Payment...");
+              isCartLoaded && await handlePayment(cart);
+              localStorage.removeItem("orderId");
+            } catch (error) {
+              setMessage("Payment failed");
+              console.error("Payment error:", error);
+            }
+          } else {
+            setMessage("This order has already been processed");
+            setTimeout(() => setMessage(""), 5000);
+          }
+  
+        } else if (Msg === "Order Declined!") {
+          if (!orderId) {
+            setMessage("This order has already been processed");
+            setTimeout(() => setMessage(""), 5000);
+            return;
+          } else {
+            setMessage("cancelling Order...");
+            await handleUpdateStatus(orderId, "cancelled");
+            localStorage.removeItem("orderId");
+            setMessage("order Cancelled!");
+            setTimeout(() => setMessage(""), 5000);
+          }
+  
+        } else if (Msg === "Order Has Been Placed Successfully!") {
+          orderConfirmed();
+          setShowOrderDialog(true);
+          setMessage("Order Has Been Placed Successfully!");
+          handleUpdateStatus(localStorage.getItem("copyId")!, "paid").then(() => {
+            setTimeout(() => {
+              localStorage.removeItem("copyId");
+              setMessage("");
+            }, 5000);
+          });
+  
+        } else {
+          setMessage(Msg);
+          setTimeout(() => setMessage(""), 5000);
+        }
+      }
+    };
+    handleEffect();
+  }, [searchParams, isCartLoaded]);
+  
 
   return (
     <header className="select-none text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
@@ -255,6 +315,19 @@ const TopHeader = () => {
           {message}
         </div>
       )}
+      {/* showing order id */}
+      {showOrderDialog && (
+        <Dialog
+          orderId={localStorage.getItem("copyId") || ""}
+          onClose={() => setShowOrderDialog(false)}
+          handleCopy={() => {
+            navigator.clipboard.writeText(localStorage.getItem("copyId") || "");
+            setMessage("Order Id Copied To Clipboard!");
+            setTimeout(async () => {}, 4000);
+          }}
+        />
+      )}
+
       <div className="w-full flex py-5 flex-col md:flex-row items-center z-20">
         {/* Logo */}
         <div
@@ -525,7 +598,7 @@ const TopHeader = () => {
                     href="/userDetails"
                     className="hover:text-orangeLike transition text-white text-[15px] font-bold block"
                   >
-                    Login / SignUp
+                    User Details
                   </Link>
                 </li>
                 <li className="relative border-b py-2 ">
