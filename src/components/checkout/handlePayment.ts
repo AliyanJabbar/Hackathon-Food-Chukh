@@ -22,7 +22,7 @@ const handlePayment = async (items: Data[]) => {
     await stripe?.redirectToCheckout({ sessionId });
   } catch (error) {
     // Redirect with error message if something fails
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}?message=Order%20Failed.%20Please%20try%20again.`;
+    window.location.href = `/?message=Order%20Failed.%20Please%20try%20again.`;
   }
 };
 

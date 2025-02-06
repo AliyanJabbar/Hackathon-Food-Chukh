@@ -27,10 +27,10 @@ const handleOrderPost = async (items: Data[], formValues: FormValues) => {
         throw new Error("Order ID is missing in the API response.");
       }
     } else {
-      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}?message=Unable%20To%20Submit%20Order%20Details!`;
+      window.location.href = `/?message=Unable%20To%20Submit%20Order%20Details!`;
     }
   } catch (error) {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}?message=Order%20Failed.%20Please%20try%20again.`;
+    window.location.href = `/?message=Order%20Failed.%20Please%20try%20again.`;
   }
 };
 
