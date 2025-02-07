@@ -9,5 +9,11 @@ export default withAuth(
   }
 );
 export const config = {
-  matcher: ["/checkout", "/api/email", "/api/checkout", "/userDetails"],
+  matcher: [
+    "/checkout",
+    "/api/email",
+    "/api/checkout",
+    "/userDetails",
+    "/orderStatus",
+  ],
 };
