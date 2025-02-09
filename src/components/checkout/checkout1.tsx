@@ -13,6 +13,7 @@ import Loading from "@/app/loading";
 import sanitizeInput from "../SanitizeInput";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 import handleOrderPost from "./handleOrderPost";
+import getImageUrl from "@/scripts/getImage";
 
 const CheckoutPage = () => {
   interface CountryCityMap {
@@ -457,7 +458,7 @@ const CheckoutPage = () => {
                   {cart.map((item, ind) => (
                     <div key={ind} className="flex items-center gap-1">
                       <Image
-                        src={item.image}
+                        src={getImageUrl(item.image)}
                         width={100}
                         height={100}
                         alt={item.name}

@@ -44,8 +44,8 @@ export default function ClientLayout({
           setTimeout(() => {
             setAnimationClass("enter");
             setContentVisible(true);
-          }, 550);
-        }, 550);
+          }, 700);
+        }, 700);
       });
     } else {
       router.push(pathname);

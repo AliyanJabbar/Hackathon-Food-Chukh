@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { Data } from "@/data/foods";
 import ShopItem from "@/components/microComponents/ShopItem";
-import { urlFor } from "@/sanity/lib/image";
 import Button from "../microComponents/button";
 import Loading from "@/app/loading";
+import getImageUrl from "@/scripts/getImage";
 
 const WishListItems = () => {
   interface Product extends Data {
@@ -37,7 +37,7 @@ const WishListItems = () => {
                 key={ind}
                 title={product.name}
                 price={product.price}
-                src={urlFor(product.image).url()}
+                src={getImageUrl(product.image)}
                 link={product.id}
                 originalPrice={product.originalPrice}
                 RemoveOpt={true}

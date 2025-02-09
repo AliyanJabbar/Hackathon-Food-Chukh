@@ -6,10 +6,10 @@ import { PiCheckSquareOffset } from "react-icons/pi";
 import { useCart } from "@/context/CartContext";
 import Btn from "../microComponents/button";
 import Link from "next/link";
-import { urlFor } from "@/sanity/lib/image";
 import { useEffect, useRef, useState } from "react";
 import Loading from "@/app/loading";
 import sanitizeInput from "../SanitizeInput";
+import getImageUrl from "@/scripts/getImage";
 
 const ProductTable: React.FC = () => {
   const { cart, updateQuantity, removeProduct } = useCart();
@@ -156,7 +156,7 @@ const ProductTable: React.FC = () => {
                     <Image
                       src={
                         product?.image
-                          ? urlFor(product?.image).url()
+                          ? getImageUrl(product.image)
                           : "/assets/shop/item1.png"
                       }
                       width={50}

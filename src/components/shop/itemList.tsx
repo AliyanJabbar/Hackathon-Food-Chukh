@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import ShopItem from "../microComponents/ShopItem";
 import DropDown from "../microComponents/dropDown";
 import { PaginationDemo } from "../microComponents/pagination";
-import { urlFor } from "@/sanity/lib/image";
 import type { Data } from "../../data/foods";
 import Loading from "@/app/loading";
 import { useFetchFoods } from "./fetchFoodsFromSanity";
@@ -12,6 +11,7 @@ import { Sidebar } from "./sideBar";
 import { Filter, X } from "lucide-react";
 import { useAtom } from "jotai";
 import { filteredProductsAtom, productsAtom } from "./products";
+import getImageUrl from "@/scripts/getImage";
 
 interface Products extends Data {
   displayName?: string;
@@ -56,7 +56,7 @@ const ItemList = () => {
                   key={ind}
                   title={product.displayName || product.name}
                   price={product.price}
-                  src={urlFor(product.image).url()}
+                  src={getImageUrl(product.image)}
                   link={product.id}
                   originalPrice={product.originalPrice}
                 />

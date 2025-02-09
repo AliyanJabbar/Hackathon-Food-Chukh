@@ -96,7 +96,7 @@ const TopHeader = () => {
         setVisitedRoutes([...visitedRoutes, path]);
         setTimeout(() => {
           router.push(path);
-        }, 550);
+        }, 700);
       } else {
         router.push(path);
       }

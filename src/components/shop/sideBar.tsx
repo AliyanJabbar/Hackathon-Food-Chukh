@@ -13,9 +13,9 @@ import {
   selectedTagsAtom,
 } from "./products";
 import { DualThumbSlider } from "./sideBarSlider";
-import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
+import getImageUrl from "@/scripts/getImage";
 
 const categories = [
   "Drink",
@@ -177,7 +177,7 @@ export function Sidebar() {
                 className="flex gap-3 border-b pb-2 border-outline"
               >
                 <Image
-                  src={urlFor(product.image).url()}
+                  src={getImageUrl(product.image)}
                   width={100}
                   height={100}
                   alt={product.name}
