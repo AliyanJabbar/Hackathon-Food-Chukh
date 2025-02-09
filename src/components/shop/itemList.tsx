@@ -10,7 +10,12 @@ import { useFetchFoods } from "./fetchFoodsFromSanity";
 import { Sidebar } from "./sideBar";
 import { Filter, X } from "lucide-react";
 import { useAtom } from "jotai";
-import { filteredProductsAtom, productsAtom } from "./products";
+import {
+  filterByAtom,
+  filteredProductsAtom,
+  productsAtom,
+  sortByAtom,
+} from "./products";
 import getImageUrl from "@/scripts/getImage";
 
 interface Products extends Data {
@@ -27,8 +32,18 @@ const ItemList = () => {
     }
   }, [fetchedProducts, setProducts]);
 
-  const [filteredProducts] = useAtom(filteredProductsAtom);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [filteredProducts] = useAtom<Data[]>(filteredProductsAtom);
+  const [, setSortBy] = useAtom(sortByAtom);
+  const [, setFilterBy] = useAtom(filterByAtom);
+
+  const handleSort = (selectedOption: string) => {
+    setSortBy(selectedOption);
+  };
+
+  const handleFilter = (selectedOption: string) => {
+    setFilterBy(selectedOption);
+  };
 
   return (
     <section className="text-gray-600 body-font">
@@ -38,9 +53,18 @@ const ItemList = () => {
           <main className="w-full 1.5xl:w-[75%] order-2 xl:order-1">
             <div className="flex flex-col lg:flex-row justify-center items-center sm:justify-between sm:items-center gap-4 sm:gap-7 mb-8">
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-                <DropDown text="Sort By:" />
-                <DropDown text="Show:" />
+                <DropDown
+                  text="Sort By:"
+                  options={["Low To High Price", "High To Low Price"]}
+                  onSelect={handleSort}
+                />
+                <DropDown
+                  text="Show:"
+                  options={["Newest", "Oldest"]}
+                  onSelect={handleFilter}
+                />
               </div>
+
               <div className="1.5xl:hidden">
                 <button
                   className="bg-amber-500 text-white p-3 sm:p-4 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-600 transition-all duration-300 z-50"

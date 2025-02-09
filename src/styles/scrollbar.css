@@ -11,6 +11,11 @@
   background-color: var(--secondary) !important;
   display: block !important;
 }
+body::-webkit-scrollbar{
+  width:20px !important;
+  background-color: var(--secondary) !important;
+  display: block !important;
+}
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(

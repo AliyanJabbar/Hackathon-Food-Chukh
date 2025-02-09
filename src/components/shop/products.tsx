@@ -6,6 +6,8 @@ export const selectedCategoriesAtom = atom<string[]>([]);
 export const selectedTagsAtom = atom<string[]>([]);
 export const priceRangeAtom = atom<[number, number]>([0, 1000]);
 export const searchQueryAtom = atom("");
+export const sortByAtom = atom<string>("");
+export const filterByAtom = atom<string>("");
 
 export const highlightSearchResults = (
   products: Data[],
@@ -39,8 +41,10 @@ export const filteredProductsAtom = atom((get) => {
   const tags = get(selectedTagsAtom);
   const priceRange = get(priceRangeAtom);
   const searchQuery = get(searchQueryAtom);
+  const sortBy = get(sortByAtom);
+  const filterBy = get(filterByAtom);
 
-  const filteredProducts = products.filter((product) => {
+  let filteredProducts = products.filter((product) => {
     const matchesCategory =
       categories.length === 0 || categories.includes(product.category);
     const matchesTags =
@@ -54,5 +58,17 @@ export const filteredProductsAtom = atom((get) => {
     return matchesCategory && matchesPrice && matchesSearch && matchesTags;
   });
 
+  // Apply sorting
+  if (sortBy === "Low To High Price") {
+    filteredProducts.sort((a, b) => a.price - b.price);
+  } else if (sortBy === "High To Low Price") {
+    filteredProducts.sort((a, b) => b.price - a.price);
+  }
+  // Apply date filtering
+  if (filterBy === "Newest") {
+    filteredProducts = [...filteredProducts].reverse();
+  } else if (filterBy === "Oldest") {
+    filteredProducts = [...filteredProducts];
+  }
   return highlightSearchResults(filteredProducts, searchQuery);
 });

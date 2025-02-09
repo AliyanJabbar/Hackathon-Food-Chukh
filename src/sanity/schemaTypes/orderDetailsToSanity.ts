@@ -60,6 +60,15 @@ export default {
             { name: "name", type: "string" },
             { name: "price", type: "number" },
             { name: "quantity", type: "number" },
+            { name: "quantity", type: "number" },
+            {
+              name: "image",
+              title: "Item Image",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+            },
           ],
         },
       ],

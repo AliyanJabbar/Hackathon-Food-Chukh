@@ -12,6 +12,7 @@ export interface Data {
   quantity: number;
   availiable: boolean;
   inventory: number;
+  createdAt?:string;
   tags: string[];
   category: string;
 }

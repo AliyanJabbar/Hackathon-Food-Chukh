@@ -27,7 +27,6 @@ export async function POST(req: Request) {
       );
     }
 
-
     // Generate unique order ID
     const orderId = uuidv4();
 
@@ -48,6 +47,7 @@ export async function POST(req: Request) {
         name: item.name,
         price: Number(item.price),
         quantity: Number(item.quantity),
+        image: item.image,
       })),
       totalAmount: items.reduce(
         (total, item) => total + item.price * item.quantity,
@@ -56,11 +56,7 @@ export async function POST(req: Request) {
       orderDate: new Date().toISOString(),
       status: "pending",
     });
-    // Ensure orderId is returned
-    return NextResponse.json(
-      { success: true, orderId },
-      { status: 200 }
-    );
+    return NextResponse.json({ success: true, orderId }, { status: 200 });
   } catch (error) {
     console.error("❌ Error creating order in Sanity:", error);
     return NextResponse.json(
