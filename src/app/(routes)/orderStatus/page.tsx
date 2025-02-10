@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiChevronDown, FiChevronUp, FiSearch } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { client } from "@/sanity/lib/client";
@@ -39,42 +39,57 @@ const OrderTable: React.FC = () => {
     {}
   );
   const [searchTerm, setSearchTerm] = useState<string>("");
-  useEffect(() => {
-    const fetchOrder = async () => {
-      const query = `*[_type == "order" && orderId == "${searchTerm}"][0] {
-        orderId,
-        customerDetails {
-          firstName,
-          lastName,
-          email,
-          phone,
-          address,
-          zipCode
-        },
-        items[]{
-          name,
-          price,
-          quantity
-          image
-        },
-        totalAmount,
-        orderDate,
-        status
-      }`;
+  const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
-      try {
-        const data = await client.fetch(query);
+  const fetchOrder = async () => {
+    setIsLoading(true);
+    const query = `*[_type == "order" && orderId == "${searchTerm}"][0] {
+      orderId,
+      customerDetails {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        zipCode
+      },
+      items[]{
+        name,
+        price,
+        quantity,
+        image
+      },
+      totalAmount,
+      orderDate,
+      status
+    }`;
+
+    try {
+      const data = await client.fetch(query);
+      if (data) {
         setOrder(data);
-      } catch (error) {
-        console.error("Error fetching order:", error);
+        setNoResults(false);
+      } else {
         setOrder(null);
+        setNoResults(true);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      setOrder(null);
+      setNoResults(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  const handleSearch = () => {
     if (searchTerm.trim()) {
+      setShowResults(true);
       fetchOrder();
     }
-  }, [searchTerm]);
+  };
 
   const toggleRowExpansion = (orderId: string) => {
     setExpandedRows((prev) => ({
@@ -109,20 +124,31 @@ const OrderTable: React.FC = () => {
           className="mb-4 md:mb-6 bg-white p-4 md:p-8 rounded-3xl shadow-lg border"
           whileHover={{ scale: 1.01 }}
         >
-          <div className="relative">
+          <div className="relative flex items-center">
             <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-txtlight text-xl md:text-2xl" />
             <input
               type="text"
               placeholder="Enter your Order ID"
-              className="w-full pl-12 md:pl-14 pr-4 md:pr-6 py-3 md:py-5 border border-outline rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-100 focus:border-orangeLike transition-all duration-300 text-base md:text-lg shadow-sm"
+              className="w-full pl-12 md:pl-14 pr-20 md:pr-24 py-3 md:py-5 border-2 border-outline rounded-2xl outline-none focus:border-orangeLike transition-all duration-300 text-base md:text-lg shadow-sm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
             />
+            <button
+              onClick={handleSearch}
+              className="absolute right-4 px-4 py-2 bg-gray-100 rounded-xl hover:bg-gray-200 text-orangeLike transition-colors duration-300 flex items-center gap-2"
+            >
+              <span className="hidden md:inline">Search</span>
+            </button>
           </div>
         </motion.div>
 
         <AnimatePresence>
-          {searchTerm && (
+          {showResults && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -130,7 +156,14 @@ const OrderTable: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="mt-4 md:mt-6 overflow-x-auto"
             >
-              {order ? (
+              {isLoading ? (
+                <div className="flex justify-center items-center p-8 bg-white rounded-3xl shadow-lg">
+                  <h1 className="text-txtBlack text-4xl flex items-end">
+                    Loading
+                    <span className="loading loading-dots loading-lg text-orangeLike ml-2"></span>
+                  </h1>
+                </div>
+              ) : order ? (
                 <div className="bg-white rounded-3xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl">
                   <table className="min-w-full divide-y divide-outline">
                     <thead className="bg-gray-50">
@@ -256,7 +289,18 @@ const OrderTable: React.FC = () => {
                     </tbody>
                   </table>
                 </div>
-              ) : null}
+              ) : (
+                noResults && (
+                  <div className="bg-white rounded-3xl shadow-lg p-8 text-center">
+                    <h3 className="text-xl font-semibold text-txtBlack">
+                      No Order Found
+                    </h3>
+                    <p className="text-txtGray mt-2">
+                      Please check your Order ID and try again
+                    </p>
+                  </div>
+                )
+              )}
             </motion.div>
           )}
         </AnimatePresence>
