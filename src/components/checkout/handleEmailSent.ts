@@ -1,5 +1,6 @@
 import { Data } from "@/data/foods";
 const handleEmialSent = async (items: Data[]) => {
+  const orderId = localStorage.getItem("orderId");
   try {
     // sending confirmation email
     const emailResponse = await fetch("/api/email", {
@@ -7,7 +8,7 @@ const handleEmialSent = async (items: Data[]) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ items }),
+      body: JSON.stringify({ items, orderId }),
     });
     if (emailResponse.ok) {
       window.location.href = `/?message=Check%20Your%20Email%20To%20Confirm%20Order!`;

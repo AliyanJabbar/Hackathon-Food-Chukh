@@ -140,7 +140,7 @@ const OrderTable: React.FC = () => {
             />
             <button
               onClick={handleSearch}
-              className="absolute right-4 px-4 py-2 bg-gray-100 rounded-xl hover:bg-gray-200 text-orangeLike transition-colors duration-300 flex items-center gap-2"
+              className="absolute right-4 px-4 py-2 bg-orangeLike rounded-xl hover:bg-orange-600 text-white transition-colors duration-300 flex items-center gap-2"
             >
               <span className="hidden md:inline">Search</span>
             </button>

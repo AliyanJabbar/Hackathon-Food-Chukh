@@ -248,21 +248,21 @@ const TopHeader = () => {
     const handleEffect = async () => {
       const Msg = searchParams.get("message");
       let orderId = localStorage.getItem("orderId");
-      
+      const currentId = searchParams.get("orderId");
       if (Msg) {
         if (Msg === "Check Your Email To Confirm Order!") {
-          setMessage("Check Your Email To Confirm Order. You Can Close This Tab!");
-        
+          setMessage(
+            "Check Your Email To Confirm Order. You Can Close This Tab!"
+          );
         } else if (Msg === "Order Confirmed!") {
           const orderId = localStorage.getItem("orderId");
           localStorage.removeItem("copyId");
-  
-          if (orderId && cart.length > 0) {
+
+          if (orderId && orderId === currentId && cart.length > 0) {
             try {
               localStorage.setItem("copyId", orderId);
-              console.log("copyId", localStorage.getItem("copyId"));
               setMessage("Moving Towards Payment...");
-              isCartLoaded && await handlePayment(cart);
+              isCartLoaded && (await handlePayment(cart));
               localStorage.removeItem("orderId");
             } catch (error) {
               setMessage("Payment failed");
@@ -272,31 +272,25 @@ const TopHeader = () => {
             setMessage("This order has already been processed");
             setTimeout(() => setMessage(""), 5000);
           }
-  
         } else if (Msg === "Order Declined!") {
-          if (!orderId) {
-            setMessage("This order has already been processed");
-            setTimeout(() => setMessage(""), 5000);
-            return;
-          } else {
+          if (orderId && orderId === currentId) {
             setMessage("cancelling Order...");
             await handleUpdateStatus(orderId, "cancelled");
             localStorage.removeItem("orderId");
             setMessage("order Cancelled!");
             setTimeout(() => setMessage(""), 5000);
+          } else {
+            setMessage("This order has already been processed");
+            setTimeout(() => setMessage(""), 5000);
           }
-  
         } else if (Msg === "Order Has Been Placed Successfully!") {
           orderConfirmed();
           setShowOrderDialog(true);
           setMessage("Order Has Been Placed Successfully!");
-          handleUpdateStatus(localStorage.getItem("copyId")!, "paid").then(() => {
-            setTimeout(() => {
-              localStorage.removeItem("copyId");
-              setMessage("");
-            }, 5000);
-          });
-  
+          handleUpdateStatus(localStorage.getItem("copyId")!, "paid");
+          setTimeout(() => {
+            setMessage("");
+          }, 5000);
         } else {
           setMessage(Msg);
           setTimeout(() => setMessage(""), 5000);
@@ -305,7 +299,6 @@ const TopHeader = () => {
     };
     handleEffect();
   }, [searchParams, isCartLoaded]);
-  
 
   return (
     <header className="select-none text-white bg-blackish w-full body-font flex flex-wrap items-center z-20 px-[7%]">
@@ -319,11 +312,14 @@ const TopHeader = () => {
       {showOrderDialog && (
         <Dialog
           orderId={localStorage.getItem("copyId") || ""}
-          onClose={() => setShowOrderDialog(false)}
-          handleCopy={() => {
+          handleFunction={() => {
             navigator.clipboard.writeText(localStorage.getItem("copyId") || "");
             setMessage("Order Id Copied To Clipboard!");
-            setTimeout(async () => {}, 4000);
+            setShowOrderDialog(false);
+            setTimeout(async () => {
+              localStorage.removeItem("copyId");
+              setMessage("");
+            }, 4000);
           }}
         />
       )}

@@ -15,8 +15,8 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     }
-
-    const { items } = await req.json();
+    const { items, orderId } = await req.json();
+    const baseUrl = new URL(req.url).origin;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -49,11 +49,11 @@ export async function POST(req: NextRequest) {
           )
           .join("")}
         <div style="margin-top: 30px; text-align: center;">
-          <a href="${process.env.NEXT_PUBLIC_API_URL}/?message=Order%20Confirmed!"
+          <a href="${baseUrl}/?message=Order%20Confirmed!&orderId=${orderId}"
              style="display: inline-block; background-color: #008000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; margin-right: 30px;">
             Confirm Order
           </a>
-          <a href="${process.env.NEXT_PUBLIC_API_URL}/?message=Order%20Declined!"
+          <a href="${baseUrl}/?message=Order%20Declined!&orderId=${orderId}"
              style="display: inline-block; background-color: #FF0000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">
             Decline Order
           </a>
