@@ -16,8 +16,7 @@ export async function POST(req: NextRequest) {
       );
     }
     const { items, orderId } = await req.json();
-    const baseUrl = new URL(req.url).origin;
-
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
