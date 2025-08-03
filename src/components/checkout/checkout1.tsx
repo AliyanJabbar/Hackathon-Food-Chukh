@@ -228,7 +228,7 @@ const CheckoutPage = () => {
                         formValues.firstName
                       }
                       name="firstName"
-                      className="p-3 rounded border border-outline w-full"
+                      className="p-3 bg-white rounded border border-outline w-full"
                       disabled={!!(isAuthenticated && user?.given_name)}
                     />
                     {formErrors.firstName && (
@@ -250,7 +250,7 @@ const CheckoutPage = () => {
                         formValues.lastName
                       }
                       name="lastName"
-                      className="p-3 rounded border border-outline w-full"
+                      className="p-3 bg-white rounded border border-outline w-full"
                       disabled={!!(isAuthenticated && user?.family_name)}
                     />
                     {formErrors.lastName && (
